@@ -451,7 +451,7 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
                 <div className="flex items-center justify-center gap-3 mb-6">
                   <BookOpen className={`w-8 h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
                   <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
-                    📖 Versículo para vos hoy
+                    Versículo para vos hoy
                   </h3>
                 </div>
 
