@@ -352,6 +352,15 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
             </div>
           </motion.div>
 
+                      <motion.h1 
+              className="text-5xl md:text-7xl font-black mb-6 leading-tight"
+              variants={itemVariants}
+            >
+              <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
+                Cristo Te Ama
+              </span>
+            </motion.h1>
+
           {/* Sección de Tres Bloques Actualizada */}
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
@@ -360,7 +369,7 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
             {[
               {
                 icon: <Shield className="w-8 h-8" />,
-                title: "🔹 Amor sin filtros",
+                title: "Amor sin filtros",
                 description: "No importa tu pasado, Dios te ama tal como eres",
                 color: "from-blue-500 to-cyan-500"
               },
