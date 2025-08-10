@@ -13,7 +13,9 @@ import {
   Check,
   Zap,
   Crown,
-  Shield
+  Shield,
+  RefreshCw,
+  BookOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -31,35 +33,48 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
   toggleTheme 
 }) => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
+  const [currentVerse, setCurrentVerse] = useState('');
   const [isVisible, setIsVisible] = useState(false);
 
-  // Mensajes juveniles cristianos
+  // Frases juveniles cristianas actualizadas
   const messages = [
     {
-      text: "Cristo te ama. Tu ex no.",
+      text: "Cristo te ama. Tu ex no. 😉",
       icon: <Heart className="w-6 h-6" />,
       color: "from-pink-500 to-red-500"
     },
     {
-      text: "Dios no te deja en visto",
-      icon: <MessageCircle className="w-6 h-6" />,
+      text: "Su amor es 24/7, sin modo avión. 📶",
+      icon: <Zap className="w-6 h-6" />,
       color: "from-blue-500 to-purple-500"
     },
     {
-      text: "Jesús sí responde tus mensajes",
-      icon: <Send className="w-6 h-6" />,
+      text: "Con Él no hay ghosting, siempre responde. 💬",
+      icon: <MessageCircle className="w-6 h-6" />,
       color: "from-green-500 to-emerald-500"
     },
     {
-      text: "Tu valor no depende de likes",
-      icon: <Star className="w-6 h-6" />,
+      text: "Lo que otros dejaron, Él lo restaura. 🔄",
+      icon: <RefreshCw className="w-6 h-6" />,
       color: "from-yellow-500 to-orange-500"
     },
     {
-      text: "Dios tiene el mejor plan para ti",
+      text: "Cristo no solo te ama… te cambia la vida. 🚀",
       icon: <Crown className="w-6 h-6" />,
       color: "from-purple-500 to-indigo-500"
     }
+  ];
+
+  // Versículos bíblicos
+  const verses = [
+    "Josué 1:9 — Sé fuerte y valiente. No tengas miedo ni te desanimes, porque el Señor tu Dios te acompañará dondequiera que vayas.",
+    "Isaías 41:10 — No tengas miedo, porque yo estoy contigo; no te desanimes, porque yo soy tu Dios. Te daré fuerzas y te ayudaré; te sostendré con mi mano victoriosa.",
+    "Jeremías 29:11 — Mis planes para ustedes son planes de bienestar y no de calamidad, para darles un futuro y una esperanza.",
+    "Salmos 37:4 — Deléitate en el Señor, y él te concederá los deseos de tu corazón.",
+    "Romanos 8:38-39 — Nada podrá separarnos del amor de Dios que está en Cristo Jesús nuestro Señor.",
+    "Filipenses 4:13 — Todo lo puedo en Cristo que me fortalece.",
+    "2 Corintios 5:17 — El que está unido a Cristo es una nueva creación; lo viejo ha pasado, ha llegado lo nuevo.",
+    "Salmos 46:1 — Dios es nuestro amparo y nuestra fortaleza, nuestra ayuda segura en momentos de angustia."
   ];
 
   // Cambiar mensaje cada 4 segundos
@@ -69,6 +84,18 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
     }, 4000);
     return () => clearInterval(interval);
   }, [messages.length]);
+
+  // Seleccionar versículo aleatorio al cargar
+  useEffect(() => {
+    const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+    setCurrentVerse(randomVerse);
+  }, []);
+
+  // Función para obtener nuevo versículo
+  const getNewVerse = () => {
+    const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+    setCurrentVerse(randomVerse);
+  };
 
   // Animación de entrada
   useEffect(() => {
@@ -110,6 +137,21 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
   const pulseVariants = {
     animate: {
       scale: [1, 1.05, 1],
+      transition: {
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    }
+  };
+
+  const glowVariants = {
+    animate: {
+      boxShadow: [
+        "0 0 20px rgba(59, 130, 246, 0.3)",
+        "0 0 40px rgba(59, 130, 246, 0.5)",
+        "0 0 20px rgba(59, 130, 246, 0.3)"
+      ],
       transition: {
         duration: 2,
         repeat: Infinity,
@@ -168,10 +210,7 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
           <nav className="flex items-center justify-between mb-8">
             <Link
               to="/"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              component={motion.div}
-              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 backdrop-blur-sm ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 backdrop-blur-sm hover:scale-105 ${
                 isDark 
                   ? 'bg-white/10 border border-white/20 hover:bg-white/20' 
                   : 'bg-white/70 border border-white/40 hover:bg-white/90 shadow-lg'
@@ -241,35 +280,28 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
               </motion.div>
             </motion.div>
 
-            {/* Título Principal */}
+            {/* Título Principal Actualizado */}
             <motion.h1 
               className="text-5xl md:text-7xl font-black mb-6 leading-tight"
               variants={itemVariants}
             >
               <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                Cristo
-              </span>
-              <br />
-              <span className="bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 bg-clip-text text-transparent">
-                Te Ama
+                ❤️ Cristo Te Ama ✨
               </span>
             </motion.h1>
 
-            {/* Subtítulo */}
+            {/* Subtítulo Actualizado */}
             <motion.p 
               className={`text-xl md:text-2xl font-medium mb-12 max-w-3xl mx-auto leading-relaxed ${
                 isDark ? 'text-gray-300' : 'text-gray-700'
               }`}
               variants={itemVariants}
             >
-              Un amor que no falla, que no te abandona y que siempre está ahí para ti. 
-              <span className="font-bold bg-gradient-to-r from-pink-500 to-purple-500 bg-clip-text text-transparent">
-                {" "}¡Descúbrelo! ✨
-              </span>
+              Un amor real, que no falla y siempre está de tu lado.
             </motion.p>
           </div>
 
-          {/* Mensaje Rotativo */}
+          {/* Carrusel de Frases Actualizado */}
           <motion.div 
             className="mb-16"
             variants={itemVariants}
@@ -320,7 +352,7 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
             </div>
           </motion.div>
 
-          {/* Features Grid */}
+          {/* Sección de Tres Bloques Actualizada */}
           <motion.div 
             className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16"
             variants={itemVariants}
@@ -328,19 +360,19 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
             {[
               {
                 icon: <Shield className="w-8 h-8" />,
-                title: "Amor Incondicional",
+                title: "🔹 Amor sin filtros",
                 description: "No importa tu pasado, Dios te ama tal como eres",
                 color: "from-blue-500 to-cyan-500"
               },
               {
                 icon: <Zap className="w-8 h-8" />,
-                title: "Poder Real",
-                description: "Experimenta una transformación auténtica en tu vida",
+                title: "⚡ Poder que transforma",
+                description: "No es teoría, es experiencia real que cambia tu vida",
                 color: "from-yellow-500 to-orange-500"
               },
               {
                 icon: <Crown className="w-8 h-8" />,
-                title: "Propósito Único",
+                title: "👑 Un propósito único",
                 description: "Descubre para qué fuiste creado y vive con sentido",
                 color: "from-purple-500 to-pink-500"
               }
@@ -365,7 +397,81 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
             ))}
           </motion.div>
 
-          {/* Call to Action */}
+          {/* Versículo Aleatorio */}
+          <motion.div 
+            className="mb-16"
+            variants={itemVariants}
+          >
+            <div className="max-w-4xl mx-auto">
+              <motion.div
+                variants={glowVariants}
+                animate="animate"
+                className={`relative p-8 md:p-12 rounded-3xl text-center backdrop-blur-sm ${
+                  isDark 
+                    ? 'bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/30' 
+                    : 'bg-gradient-to-br from-blue-50 to-purple-50 border border-blue-200 shadow-2xl'
+                }`}
+              >
+                {/* Partículas decorativas */}
+                <div className="absolute inset-0 overflow-hidden rounded-3xl">
+                  <motion.div
+                    animate={{ 
+                      x: [0, 100, 0],
+                      y: [0, -50, 0],
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ duration: 4, repeat: Infinity }}
+                    className={`absolute top-4 left-4 w-2 h-2 rounded-full ${
+                      isDark ? 'bg-blue-400' : 'bg-blue-500'
+                    }`}
+                  />
+                  <motion.div
+                    animate={{ 
+                      x: [0, -80, 0],
+                      y: [0, 60, 0],
+                      opacity: [0.3, 0.6, 0.3]
+                    }}
+                    transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                    className={`absolute top-8 right-8 w-1.5 h-1.5 rounded-full ${
+                      isDark ? 'bg-purple-400' : 'bg-purple-500'
+                    }`}
+                  />
+                </div>
+
+                {/* Título del versículo */}
+                <div className="flex items-center justify-center gap-3 mb-6">
+                  <BookOpen className={`w-8 h-8 ${isDark ? 'text-blue-400' : 'text-blue-600'}`} />
+                  <h3 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-500 to-purple-500 bg-clip-text text-transparent">
+                    📖 Versículo para vos hoy
+                  </h3>
+                </div>
+
+                {/* Versículo */}
+                <p className={`text-lg md:text-xl leading-relaxed mb-6 italic ${
+                  isDark ? 'text-blue-200' : 'text-blue-800'
+                }`}>
+                  {currentVerse}
+                </p>
+
+                {/* Botón para nuevo versículo */}
+                <motion.button
+                  onClick={getNewVerse}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 ${
+                    isDark
+                      ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30 hover:bg-blue-500/30'
+                      : 'bg-blue-100 text-blue-700 border border-blue-200 hover:bg-blue-200'
+                  }`}
+                >
+                  <RefreshCw className="w-5 h-5" />
+                  <span>Dame otro versículo</span>
+                </motion.button>
+              </motion.div>
+            </div>
+          </motion.div>
+
+          {/* Call to Action Actualizado */}
           <motion.div 
             className="text-center"
             variants={itemVariants}
@@ -376,10 +482,10 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
                 : 'bg-gradient-to-br from-pink-50 to-purple-50 border border-pink-200 shadow-2xl'
             }`}>
               <h3 className="text-3xl md:text-4xl font-bold mb-6">
-                ¿Listo para conocer más?
+                💬 ¿Listo para conocer a Alguien que nunca te va a soltar?
               </h3>
               <p className={`text-lg mb-8 ${isDark ? 'text-gray-300' : 'text-gray-600'}`}>
-                No es solo una religión, es una relación real con alguien que te ama de verdad.
+                No es religión, es relación real.
               </p>
               
               <motion.button
@@ -387,11 +493,10 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="https://forms.gle/qrfGtC5iNDu46XS57"
+                  to="/contacto"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
                 >
-                  <MessageCircle className="w-6 h-6" />
-                  <span>Hablemos</span>
+                  <span>➡️ Quiero vivirlo</span>
                   <ArrowRight className="w-6 h-6" />
                 </Link>
               </motion.button>
