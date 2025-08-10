@@ -352,14 +352,14 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
             </div>
           </motion.div>
 
-                      <motion.h1 
+                      <motion.h2
               className="text-5xl md:text-7xl font-black mb-6 leading-tight"
               variants={itemVariants}
             >
               <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
                 Cristo Te Ama
               </span>
-            </motion.h1>
+            </motion.h2>
 
           {/* Sección de Tres Bloques Actualizada */}
           <motion.div 
