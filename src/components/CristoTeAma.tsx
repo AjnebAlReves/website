@@ -15,7 +15,8 @@ import {
   Crown,
   Shield,
   RefreshCw,
-  BookOpen
+  BookOpen,
+  MailOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -505,7 +506,8 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
                   to="/contacto"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
                 >
-                  <span>➡️ Quiero vivirlo</span>
+                  <MailOpen />
+                  <span>Quiero vivirlo</span>
                   <ArrowRight className="w-6 h-6" />
                 </Link>
               </motion.button>
