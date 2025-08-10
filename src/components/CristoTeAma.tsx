@@ -369,13 +369,13 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
             {[
               {
                 icon: <Shield className="w-8 h-8" />,
-                title: "Amor sin filtros",
+                title: "Un Amor sin filtros",
                 description: "No importa tu pasado, Dios te ama tal como eres",
                 color: "from-blue-500 to-cyan-500"
               },
               {
                 icon: <Zap className="w-8 h-8" />,
-                title: "⚡ Poder que transforma",
+                title: "Su poder te transforma",
                 description: "No es teoría, es experiencia real que cambia tu vida",
                 color: "from-yellow-500 to-orange-500"
               },
