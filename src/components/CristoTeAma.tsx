@@ -353,7 +353,7 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
           </motion.div>
 
                       <motion.h2
-              className="text-5xl md:text-7xl font-black mb-6 leading-tight text-center"
+              className="text-5xl py-4 md:text-7xl font-black mb-6 leading-tight text-center"
               variants={itemVariants}
             >
               <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
