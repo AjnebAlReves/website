@@ -286,7 +286,7 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
               variants={itemVariants}
             >
               <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 bg-clip-text text-transparent">
-                ❤️ Cristo Te Ama ✨
+                Cristo Te Ama
               </span>
             </motion.h1>
 
