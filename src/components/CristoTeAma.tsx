@@ -381,7 +381,7 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
               },
               {
                 icon: <Crown className="w-8 h-8" />,
-                title: "👑 Un propósito único",
+                title: "Te da un propósito",
                 description: "Descubre para qué fuiste creado y vive con sentido",
                 color: "from-purple-500 to-pink-500"
               }
