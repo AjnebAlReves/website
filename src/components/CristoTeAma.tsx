@@ -503,7 +503,7 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
                 whileTap={{ scale: 0.95 }}
               >
                 <Link
-                  to="/contacto"
+                  to="https://docs.google.com/forms/d/e/1FAIpQLSdMWZcRbUojQhNSrC2QUGxgW0D1_d_DBbjoPlQN-UeQflggow/viewform?usp=pp_url&entry.1162615029=Benja/byalreves.lat"
                   className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-bold text-lg rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300"
                 >
                   <MailOpen />
