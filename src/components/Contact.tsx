@@ -436,7 +436,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigateHome, isDark, toggleTheme }
   </p>
   
   <a
-    href="https://forms.gle/qrfGtC5iNDu46XS57"
+    href="https://docs.google.com/forms/d/e/1FAIpQLSdMWZcRbUojQhNSrC2QUGxgW0D1_d_DBbjoPlQN-UeQflggow/viewform?usp=pp_url&entry.1162615029=Benja/byalreves.lat"
     target="_blank"
     rel="noopener noreferrer"
     className={`inline-flex items-center gap-2 px-4 py-3 rounded-xl font-medium transition-all duration-300 hover:scale-105 ${
