@@ -52,14 +52,14 @@ function HomePage() {
       href: "https://github.com/ajnebalreves",
       icon: <Github className="w-5 h-5" />,
       text: "GitHub",
-      description: "Proyectos y código abierto",
+      description: t('github'),
       external: true
     },
     {
       href: "https://flyxnodes.xyz",
       icon: <FaUserAstronaut className="w-5 h-5" />,
       text: "FlyxNodes (Hosting)",
-      description: "Servicios de hosting premium",
+      description: t('hosting'),
       external: true
     },
     {
