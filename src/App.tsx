@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route, Link, useNavigate, useLocation 
 import { Sun, Moon, Github, Globe, Instagram, Briefcase, Heart } from 'lucide-react';
 import { FaUserAstronaut } from "react-icons/fa";
 import { Mail } from 'lucide-react';
+import { useI18n } from './hooks/useI18n';
+import LanguageSwitcher from './components/LanguageSwitcher';
 import Portfolio from './components/Portfolio';
 import Contact from './components/Contact';
 import CristoTeAma from './components/CristoTeAma';
@@ -12,7 +14,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 function HomePage() {
   const [isDark, setIsDark] = useState(true);
   const [currentVerse, setCurrentVerse] = useState('');
-  const navigate = useNavigate();
+  const { t, formatDate, isRTL } = useI18n();
 
   const verses = [
     "Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas. (Mateo 6:33)",
@@ -63,22 +65,22 @@ function HomePage() {
     {
       href: "/portfolio",
       icon: <Briefcase className="w-5 h-5" />,
-      text: "Portfolio",
-      description: "Mis proyectos y trabajos",
+      text: t('navigation.portfolio'),
+      description: t('portfolio.description'),
       external: false
     },
     {
       href: "/cristoteama",
       icon: <Heart className="w-5 h-5" />,
-      text: "CristoTeAma",
-      description: "Un mensaje especial para ti",
+      text: t('navigation.cristoteama'),
+      description: t('cristoteama.subtitle'),
       external: false
     },
     {
       href: "/contacto",
       icon: <Mail className="w-5 h-5" />,
-      text: "Contacto",
-      description: "Envíame un mensaje",
+      text: t('navigation.contact'),
+      description: t('contact.description'),
       external: false
     },
     {
@@ -99,17 +101,22 @@ function HomePage() {
       <div className="flex flex-col items-center px-4 pt-16 pb-8">
         
         {/* Toggle Tema */}
-        <button
-          onClick={toggleTheme}
-          className={`absolute top-6 right-6 p-3 rounded-full transition-all duration-300 hover:scale-110 ${
-            isDark 
-              ? 'bg-white/10 border border-white/20 hover:bg-white/20' 
-              : 'bg-gray-900/10 border border-gray-900/20 hover:bg-gray-900/20'
-          }`}
-          aria-label="Cambiar tema"
-        >
-          {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
-        </button>
+        <div className={`absolute top-6 flex items-center gap-3 ${
+          isRTL() ? 'left-6' : 'right-6'
+        }`}>
+          <LanguageSwitcher isDark={isDark} />
+          <button
+            onClick={toggleTheme}
+            className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
+              isDark 
+                ? 'bg-white/10 border border-white/20 hover:bg-white/20' 
+                : 'bg-gray-900/10 border border-gray-900/20 hover:bg-gray-900/20'
+            }`}
+            aria-label={t('navigation.toggleTheme')}
+          >
+            {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+          </button>
+        </div>
 
         {/* Avatar */}
         <div className="relative mb-6">
@@ -126,12 +133,12 @@ function HomePage() {
         {/* Información Personal */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-            @AjnebAlRevés
+            {t('home.title')}
           </h1>
           <p className={`text-sm mb-4 max-w-sm leading-relaxed ${
             isDark ? 'text-gray-300' : 'text-gray-600'
           }`}>
-            Creador de FlyxNodes, diseñador y desarrollador. En constante reinvención 🚀
+            {t('home.description')}
           </p>
         </div>
 
@@ -147,7 +154,7 @@ function HomePage() {
             📖 {currentVerse}
           </p>
           <button onClick={copyVerse} className="text-xs mt-2 underline hover:opacity-80">
-            Copiar versículo ✨
+            {t('home.copyVerse')}
           </button>
         </div>
 
@@ -227,7 +234,7 @@ function HomePage() {
           <p className={`text-xs ${
             isDark ? 'text-gray-500' : 'text-gray-400'
           }`}>
-            &copy; 2025 AjnebAlRevés · Todos los derechos reservados
+            {t('home.footer', { year: new Date().getFullYear() })}
           </p>
         </div>
 
