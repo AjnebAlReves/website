@@ -6,11 +6,8 @@ import {
   Moon, 
   Heart, 
   MessageCircle, 
-  Send,
-  Star,
   Sparkles,
   ArrowRight,
-  Check,
   Zap,
   Crown,
   Shield,
@@ -19,6 +16,7 @@ import {
   MailOpen
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { staggerContainer, staggerItem, floatVariants as sharedFloat, pulseVariants as sharedPulse, glowVariants as sharedGlow } from '../utils/animations';
 
 interface CristoTeAmaProps {
   onNavigateHome: () => void;
@@ -26,16 +24,14 @@ interface CristoTeAmaProps {
   isDark: boolean;
   toggleTheme: () => void;
 }
-
+ 
 const CristoTeAma: React.FC<CristoTeAmaProps> = ({ 
-  onNavigateHome, 
-  onNavigateContact, 
   isDark, 
   toggleTheme 
 }) => {
   const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
   const [currentVerse, setCurrentVerse] = useState('');
-  const [isVisible, setIsVisible] = useState(false);
+  
 
   // Frases juveniles cristianas actualizadas
   const messages = [
@@ -100,66 +96,17 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
 
   // Animación de entrada
   useEffect(() => {
-    setIsVisible(true);
+    // no-op: keep for future entrance control
   }, []);
 
-  // Variantes de animación
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.6,
-        staggerChildren: 0.2
-      }
-    }
-  };
+  // use shared container/item variants
+  const containerVariants = staggerContainer;
+  const itemVariants = staggerItem;
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6, ease: "easeOut" }
-    }
-  };
-
-  const floatingVariants = {
-    animate: {
-      y: [-10, 10, -10],
-      transition: {
-        duration: 3,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const pulseVariants = {
-    animate: {
-      scale: [1, 1.05, 1],
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  };
-
-  const glowVariants = {
-    animate: {
-      boxShadow: [
-        "0 0 20px rgba(59, 130, 246, 0.3)",
-        "0 0 40px rgba(59, 130, 246, 0.5)",
-        "0 0 20px rgba(59, 130, 246, 0.3)"
-      ],
-      transition: {
-        duration: 2,
-        repeat: Infinity,
-        ease: "easeInOut"
-      }
-    }
-  };
+// use shared animations
+const floatVariants = sharedFloat;
+const pulseVariants = sharedPulse;
+const glowVariants = sharedGlow;
 
   return (
     <div className={`min-h-screen transition-all duration-500 overflow-hidden ${
@@ -171,14 +118,16 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
       {/* Elementos decorativos de fondo */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <motion.div
-          variants={floatingVariants}
+          variants={floatVariants}
+          initial="initial"
           animate="animate"
           className={`absolute top-20 left-10 w-20 h-20 rounded-full opacity-20 ${
             isDark ? 'bg-pink-500' : 'bg-pink-300'
           }`}
         />
         <motion.div
-          variants={floatingVariants}
+          variants={floatVariants}
+          initial="initial"
           animate="animate"
           style={{ animationDelay: '1s' }}
           className={`absolute top-40 right-20 w-16 h-16 rounded-full opacity-20 ${
@@ -186,7 +135,8 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
           }`}
         />
         <motion.div
-          variants={floatingVariants}
+          variants={floatVariants}
+          initial="initial"
           animate="animate"
           style={{ animationDelay: '2s' }}
           className={`absolute bottom-40 left-20 w-12 h-12 rounded-full opacity-20 ${
@@ -194,7 +144,8 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
           }`}
         />
         <motion.div
-          variants={floatingVariants}
+          variants={floatVariants}
+          initial="initial"
           animate="animate"
           style={{ animationDelay: '0.5s' }}
           className={`absolute bottom-20 right-10 w-24 h-24 rounded-full opacity-20 ${
@@ -243,8 +194,8 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({
         <motion.div 
           className="max-w-6xl mx-auto"
           variants={containerVariants}
-          initial="hidden"
-          animate={isVisible ? "visible" : "hidden"}
+          initial="initial"
+          animate="animate"
         >
           
           {/* Hero Section */}

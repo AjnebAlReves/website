@@ -20,7 +20,7 @@ interface ContactProps {
   toggleTheme: () => void;
 }
 
-const Contact: React.FC<ContactProps> = ({ onNavigateHome, isDark, toggleTheme }) => {
+const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -200,7 +200,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigateHome, isDark, toggleTheme }
                 <form 
                   name="contact" 
                   method="POST" 
-                  data-netlify="true" 
+                  
                   data-netlify-honeypot="bot-field"
                   onSubmit={handleSubmit}
                   className="space-y-6"
