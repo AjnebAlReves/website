@@ -45,6 +45,7 @@
       "message": "الرسالة",
       "namePlaceholder": "اسمك الكامل",
       "emailPlaceholder": "your@email.com",
+  "honeypotLabel": "لا تملأ هذا الحقل إن كنت إنساناً:",
       "subjectPlaceholder": "عن ماذا تريد أن تتحدث؟",
       "messagePlaceholder": "أخبرني عن فكرتك أو مشروعك أو سؤالك...",
       "submit": "إرسال الرسالة",

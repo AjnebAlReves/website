@@ -6,7 +6,6 @@ import Backend from 'i18next-http-backend';
 // Importar traducciones
 import esTranslations from './locales/es.json';
 import enTranslations from './locales/en.json';
-import arTranslations from './locales/ar.json';
 
 // Configuración de i18next
 i18n
@@ -21,7 +20,7 @@ i18n
     fallbackLng: 'es',
     
     // Idiomas soportados
-    supportedLngs: ['es', 'en', 'ar'],
+    supportedLngs: ['es', 'en'],
     
     // Configuración de detección de idioma
     detection: {

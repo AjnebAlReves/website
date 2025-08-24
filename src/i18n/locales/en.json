@@ -47,6 +47,7 @@
       "message": "Message",
       "namePlaceholder": "Your full name",
       "emailPlaceholder": "your@email.com",
+  "honeypotLabel": "Do not fill if you're human:",
       "subjectPlaceholder": "What do you want to talk about?",
       "messagePlaceholder": "Tell me about your idea, project or question...",
       "submit": "Send Message",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ArrowLeft, 
@@ -13,6 +13,7 @@ import {
   ExternalLink,
   Star
 } from 'lucide-react';
+import { useI18n } from '../hooks/useI18n';
 
 interface ContactProps {
   onNavigateHome: () => void;
@@ -21,6 +22,7 @@ interface ContactProps {
 }
 
 const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
+  const { t } = useI18n();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -30,36 +32,58 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const DRAFT_KEY = 'contactDraft:v1';
+
+  // Refs for focusing fields on validation errors
+  const nameRef = useRef<HTMLInputElement | null>(null);
+  const emailRef = useRef<HTMLInputElement | null>(null);
+  const subjectRef = useRef<HTMLInputElement | null>(null);
+  const messageRef = useRef<HTMLTextAreaElement | null>(null);
+
+  // Keep last attempted payload to support retry
+  const lastAttemptRef = useRef<typeof formData | null>(null);
+
+  const MAX_RETRIES = 2; // number of automatic retries on transient failures
 
   const validateForm = () => {
     const newErrors: Record<string, string> = {};
 
     if (!formData.name.trim()) {
-      newErrors.name = 'El nombre es obligatorio';
+      newErrors.name = t('contact.validation.nameRequired');
     } else if (formData.name.trim().length < 2) {
-      newErrors.name = 'El nombre debe tener al menos 2 caracteres';
+      newErrors.name = t('contact.validation.nameMinLength');
     }
 
     if (!formData.email.trim()) {
-      newErrors.email = 'El email es obligatorio';
+      newErrors.email = t('contact.validation.emailRequired');
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
-      newErrors.email = 'Por favor ingresa un email válido';
+      newErrors.email = t('contact.validation.emailInvalid');
     }
 
     if (!formData.subject.trim()) {
-      newErrors.subject = 'El asunto es obligatorio';
+      newErrors.subject = t('contact.validation.subjectRequired');
     } else if (formData.subject.trim().length < 3) {
-      newErrors.subject = 'El asunto debe tener al menos 3 caracteres';
+      newErrors.subject = t('contact.validation.subjectMinLength');
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = 'El mensaje es obligatorio';
+      newErrors.message = t('contact.validation.messageRequired');
     } else if (formData.message.trim().length < 10) {
-      newErrors.message = 'El mensaje debe tener al menos 10 caracteres';
+      newErrors.message = t('contact.validation.messageMinLength');
     }
 
     setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+    // If there are validation errors, focus the first invalid field for accessibility
+    const keys = Object.keys(newErrors);
+    if (keys.length > 0) {
+      const first = keys[0];
+      if (first === 'name') nameRef.current?.focus();
+      else if (first === 'email') emailRef.current?.focus();
+      else if (first === 'subject') subjectRef.current?.focus();
+      else if (first === 'message') messageRef.current?.focus();
+    }
+
+    return keys.length === 0;
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -70,6 +94,91 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }
+
+    // Autosave draft
+    try {
+      const next = { ...formData, [name]: value };
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(next));
+    } catch {
+      // ignore localStorage errors (privacy mode etc.)
+    }
+  };
+
+  // Load draft on mount
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        // Only restore if form is empty (avoid overwriting intentional navigation)
+        if (formData.name === '' && formData.email === '' && formData.subject === '' && formData.message === '') {
+          setFormData(parsed);
+        }
+      }
+    } catch {
+      // ignore
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Helper to actually send the message with retries
+  const sendMessage = async (payload: typeof formData, attempt = 0): Promise<void> => {
+    lastAttemptRef.current = payload;
+    try {
+      const res = await fetch('https://eok6mbw1n9jwv47.m.pipedream.net', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        setSubmitStatus('success');
+        setErrors({});
+        setFormData({ name: '', email: '', subject: '', message: '' });
+        try { localStorage.removeItem(DRAFT_KEY); } catch { /* ignore */ }
+        return;
+      }
+
+      // Try to extract server-provided message
+      let serverMsg = `Error ${res.status}`;
+      try {
+        const txt = await res.text();
+        if (txt) {
+          // try JSON then fallback to text
+          try {
+            const j = JSON.parse(txt);
+            serverMsg = j.message || j.error || JSON.stringify(j);
+          } catch {
+            serverMsg = txt;
+          }
+        }
+      } catch {
+        // ignore
+      }
+
+      // For non-OK responses, treat as transient up to MAX_RETRIES
+      if (attempt < MAX_RETRIES) {
+        const backoff = 500 * Math.pow(2, attempt);
+        await new Promise(r => setTimeout(r, backoff));
+        return sendMessage(payload, attempt + 1);
+      }
+
+      setErrors(prev => ({ ...prev, server: serverMsg }));
+      throw new Error(serverMsg);
+    } catch (err) {
+      // If offline, provide a clearer message
+      if (!navigator.onLine) {
+        setErrors(prev => ({ ...prev, network: 'Parece que estás sin conexión. Intenta nuevamente cuando tengas conexión.' }));
+      }
+      // if there was a server error already set, keep it; otherwise set generic
+      if (!errors.server && navigator.onLine) {
+        setErrors(prev => ({ ...prev, server: 'Error al enviar el mensaje. Intenta nuevamente.' }));
+      }
+      setSubmitStatus('error');
+      console.error('Error sending message:', err);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,29 +187,9 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
     if (!validateForm()) {
       return;
     }
-
-    setIsSubmitting(true);
-    setSubmitStatus('idle');
-
-    try {
-      const response = await fetch('https://eok6mbw1n9jwv47.m.pipedream.net', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
-      });
-
-      if (response.ok) {
-        setSubmitStatus('success');
-        setFormData({ name: '', email: '', subject: '', message: '' });
-      } else {
-        throw new Error('Error en el envío');
-      }
-    } catch (error) {
-      setSubmitStatus('error');
-      console.error('Error sending message:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
+  setIsSubmitting(true);
+  setSubmitStatus('idle');
+  await sendMessage(formData, 0);
   };
 
   return (
@@ -125,7 +214,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
               }`}
             >
               <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm font-medium">Volver</span>
+              <span className="text-sm font-medium">{t('navigation.back')}</span>
             </Link>
 
             <button
@@ -135,7 +224,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                   ? 'bg-white/10 border border-white/20 hover:bg-white/20' 
                   : 'bg-gray-900/10 border border-gray-900/20 hover:bg-gray-900/20'
               }`}
-              aria-label="Cambiar tema"
+              aria-label={t('navigation.toggleTheme')}
             >
               {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
@@ -146,13 +235,13 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
             <div className="flex items-center justify-center gap-3 mb-4">
               <Mail className={`w-8 h-8 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
               <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-                Contacto
+                {t('contact.title')}
               </h1>
             </div>
-            <p className={`text-lg max-w-2xl mx-auto leading-relaxed ${
+              <p className={`text-lg max-w-2xl mx-auto leading-relaxed ${
               isDark ? 'text-gray-300' : 'text-gray-600'
             }`}>
-              ¿Tienes alguna pregunta o propuesta? Me encantaría escucharte. Completa el formulario y te responderé lo antes posible.
+              {t('contact.description')}
             </p>
           </div>
         </div>
@@ -178,8 +267,8 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                   }`}>
                     <CheckCircle className="w-5 h-5" />
                     <div>
-                      <p className="font-medium">¡Mensaje enviado exitosamente!</p>
-                      <p className="text-sm opacity-90">Te responderé lo antes posible.</p>
+                      <p className="font-medium">{t('contact.success.title')}</p>
+                      <p className="text-sm opacity-90">{t('contact.success.description')}</p>
                     </div>
                   </div>
                 )}
@@ -188,14 +277,37 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                 {submitStatus === 'error' && (
                   <div className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
                     isDark ? 'bg-red-500/20 border border-red-500/30 text-red-400' : 'bg-red-50 border border-red-200 text-red-700'
-                  }`}>
+                  }`} role="status" aria-live="polite">
                     <AlertCircle className="w-5 h-5" />
-                    <div>
+                    <div className="flex-1">
                       <p className="font-medium">Error al enviar el mensaje</p>
-                      <p className="text-sm opacity-90">Por favor intenta nuevamente.</p>
+                      <p className="text-sm opacity-90">
+                        {errors.network || errors.server || 'Por favor intenta nuevamente.'}
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <button
+                        type="button"
+                        onClick={async () => {
+                          if (!lastAttemptRef.current) return;
+                          setIsSubmitting(true);
+                          setSubmitStatus('idle');
+                          await sendMessage(lastAttemptRef.current, 0);
+                        }}
+                        className={`ml-2 inline-flex items-center gap-2 px-3 py-2 rounded-xl font-medium transition-all duration-200 hover:scale-105 ${
+                          isDark ? 'bg-red-600/20 border border-red-600/30 text-red-400' : 'bg-red-600 text-white hover:bg-red-700'
+                        }`}
+                      >
+                        Reintentar
+                      </button>
                     </div>
                   </div>
                 )}
+
+                {/* ARIA live region for general feedback */}
+                <div aria-live="polite" className="sr-only">
+                  {submitStatus === 'success' ? t('contact.success.title') : submitStatus === 'error' ? t('contact.error.title') : ''}
+                </div>
 
                 <form 
                   name="contact" 
@@ -211,7 +323,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                   
                   {/* Honeypot Field */}
                   <div className="hidden">
-                    <label htmlFor="bot-field">No llenar si eres humano:</label>
+                    <label htmlFor="bot-field">{t('contact.form.honeypotLabel') || 'No llenar si eres humano:'}</label>
                     <input id="bot-field" name="bot-field" />
                   </div>
 
@@ -223,7 +335,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                         isDark ? 'text-gray-200' : 'text-gray-700'
                       }`}
                     >
-                      Nombre completo *
+                      {t('contact.form.name')} *
                     </label>
                     <div className="relative">
                       <User className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
@@ -233,6 +345,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                         type="text"
                         id="name"
                         name="name"
+                        ref={nameRef}
                         value={formData.name}
                         onChange={handleInputChange}
                         required
@@ -246,7 +359,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                               ? 'bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30'
                               : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400'
                         }`}
-                        placeholder="Tu nombre completo"
+                        placeholder={t('contact.form.namePlaceholder')}
                         aria-describedby={errors.name ? "name-error" : undefined}
                       />
                     </div>
@@ -265,7 +378,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                         isDark ? 'text-gray-200' : 'text-gray-700'
                       }`}
                     >
-                      Email *
+                      {t('contact.form.email')} *
                     </label>
                     <div className="relative">
                       <Mail className={`absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 ${
@@ -275,6 +388,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                         type="email"
                         id="email"
                         name="email"
+                        ref={emailRef}
                         value={formData.email}
                         onChange={handleInputChange}
                         required
@@ -287,7 +401,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                               ? 'bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30'
                               : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400'
                         }`}
-                        placeholder="tu@email.com"
+                        placeholder={t('contact.form.emailPlaceholder')}
                         aria-describedby={errors.email ? "email-error" : undefined}
                       />
                     </div>
@@ -306,12 +420,13 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                         isDark ? 'text-gray-200' : 'text-gray-700'
                       }`}
                     >
-                      Asunto *
+                      {t('contact.form.subject')} *
                     </label>
                     <input
                       type="text"
                       id="subject"
                       name="subject"
+                      ref={subjectRef}
                       value={formData.subject}
                       onChange={handleInputChange}
                       required
@@ -325,7 +440,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                             ? 'bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30'
                             : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400'
                       }`}
-                      placeholder="¿De qué quieres hablar?"
+                      placeholder={t('contact.form.subjectPlaceholder')}
                       aria-describedby={errors.subject ? "subject-error" : undefined}
                     />
                     {errors.subject && (
@@ -343,7 +458,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                         isDark ? 'text-gray-200' : 'text-gray-700'
                       }`}
                     >
-                      Mensaje *
+                      {t('contact.form.message')} *
                     </label>
                     <div className="relative">
                       <MessageSquare className={`absolute left-3 top-3 w-5 h-5 ${
@@ -352,6 +467,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                       <textarea
                         id="message"
                         name="message"
+                        ref={messageRef}
                         value={formData.message}
                         onChange={handleInputChange}
                         required
@@ -366,7 +482,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                               ? 'bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30'
                               : 'bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400'
                         }`}
-                        placeholder="Cuéntame tu idea, proyecto o pregunta..."
+                        placeholder={t('contact.form.messagePlaceholder')}
                         aria-describedby={errors.message ? "message-error" : undefined}
                       />
                     </div>
@@ -376,7 +492,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                       </p>
                     )}
                     <p className={`mt-2 text-xs ${isDark ? 'text-gray-400' : 'text-gray-500'}`}>
-                      Mínimo 10 caracteres. Actual: {formData.message.length}
+                      {t('contact.form.characterCount', { count: formData.message.length })}
                     </p>
                   </div>
 
@@ -393,12 +509,12 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                     {isSubmitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                        <span>Enviando...</span>
+                        <span>{t('contact.form.submitting')}</span>
                       </>
                     ) : (
                       <>
                         <Send className="w-5 h-5" />
-                        <span>Enviar Mensaje</span>
+                        <span>{t('contact.form.submit')}</span>
                       </>
                     )}
                   </button>
@@ -424,13 +540,13 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
   <h3 className={`text-lg font-bold mb-3 ${
     isDark ? 'text-purple-300' : 'text-purple-800'
   }`}>
-    🙌 ¿Puedo orar por ti?
+  {t('contact.sidebar.prayerTitle')}
   </h3>
   
   <p className={`text-sm mb-4 leading-relaxed ${
     isDark ? 'text-purple-200' : 'text-purple-700'
   }`}>
-    Queremos acompañarte en lo que estés viviendo. Deja tu petición y un equipo estará orando por ti de forma confidencial.
+  {t('contact.sidebar.prayerDescription')}
   </p>
   
   <a
@@ -443,7 +559,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
         : 'bg-purple-600 text-white hover:bg-purple-700 shadow-md hover:shadow-lg'
     }`}
   >
-    <span>Link al Formulario</span>
+  <span>{t('contact.sidebar.prayerButton')}</span>
     <ExternalLink className="w-4 h-4" />
   </a>
 </div>
@@ -453,14 +569,14 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                   ? 'bg-white/5 border border-white/10' 
                   : 'bg-white border border-gray-200 shadow-lg'
               }`}>
-                <h3 className="text-lg font-bold mb-4">Información de Contacto</h3>
+                <h3 className="text-lg font-bold mb-4">{t('contact.sidebar.contactInfo')}</h3>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3">
                     <Mail className={`w-5 h-5 ${isDark ? 'text-emerald-400' : 'text-emerald-600'}`} />
                     <div>
-                      <p className="font-medium">Email</p>
+                      <p className="font-medium">{t('contact.sidebar.contactInfo')}</p>
                       <p className={`text-sm ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                        Respuesta en 24-48 horas
+                        {t('contact.sidebar.responseTime')}
                       </p>
                     </div>
                   </div>
@@ -473,18 +589,18 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
                   ? 'bg-white/5 border border-white/10' 
                   : 'bg-white border border-gray-200 shadow-lg'
               }`}>
-                <h3 className="text-lg font-bold mb-4">Preguntas Frecuentes</h3>
+                <h3 className="text-lg font-bold mb-4">{t('contact.sidebar.faq')}</h3>
                 <div className="space-y-4">
                   <div>
-                    <p className="font-medium text-sm mb-1">¿Cuánto tardas en responder?</p>
+                    <p className="font-medium text-sm mb-1">{t('contact.sidebar.faqResponse')}</p>
                     <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                      Normalmente respondo en 24-48 horas.
+                      {t('contact.sidebar.faqResponseAnswer')}
                     </p>
                   </div>
                   <div>
-                    <p className="font-medium text-sm mb-1">¿Qué tipo de proyectos aceptas?</p>
+                    <p className="font-medium text-sm mb-1">{t('contact.sidebar.faqProjects')}</p>
                     <p className={`text-xs ${isDark ? 'text-gray-400' : 'text-gray-600'}`}>
-                      Desarrollo web, hosting, diseño y consultoría.
+                      {t('contact.sidebar.faqProjectsAnswer')}
                     </p>
                   </div>
                 </div>
@@ -498,7 +614,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
       <footer className="px-6 py-8 border-t border-white/10">
         <div className="max-w-4xl mx-auto text-center">
           <p className={`text-sm ${isDark ? 'text-gray-500' : 'text-gray-400'}`}>
-            &copy; 2025 AjnebAlRevés · Formulario de Contacto
+            &copy; 2025 AjnebAlReves · {t('contact.footer')}
           </p>
         </div>
       </footer>

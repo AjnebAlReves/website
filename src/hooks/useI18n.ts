@@ -21,8 +21,7 @@ export const useI18n = () => {
   // Función para formatear moneda
   const formatCurrency = (value: number, currency?: string) => {
     const currencyCode = currency || (
-      i18n.language === 'en' ? 'USD' : 
-      i18n.language === 'ar' ? 'SAR' : 
+      i18n.language === 'en' ? 'USD' :  
       'PYG'
     );
     
