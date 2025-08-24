@@ -83,13 +83,10 @@ const Contact: React.FC<ContactProps> = ({ onNavigateHome, isDark, toggleTheme }
     setSubmitStatus('idle');
 
     try {
-      const form = e.target as HTMLFormElement;
-      const formDataToSend = new FormData(form);
-
-      const response = await fetch('/', {
+      const response = await fetch('https://eok6mbw1n9jwv47.m.pipedream.net', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(formDataToSend as any).toString()
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
       });
 
       if (response.ok) {
@@ -100,6 +97,7 @@ const Contact: React.FC<ContactProps> = ({ onNavigateHome, isDark, toggleTheme }
       }
     } catch (error) {
       setSubmitStatus('error');
+      console.error('Error sending message:', error);
     } finally {
       setIsSubmitting(false);
     }
