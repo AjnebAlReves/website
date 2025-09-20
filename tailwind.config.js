@@ -4,9 +4,6 @@ export default {
 	darkMode: "class",
 	theme: {
 		extend: {
-			fontFamily: {
-				arabic: ["Noto Sans Arabic", "Arial", "sans-serif"],
-			},
 			keyframes: {
 				fadeIn: {
 					"0%": { opacity: "0" },
