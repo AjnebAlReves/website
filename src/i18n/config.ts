@@ -1,11 +1,10 @@
 import i18n from "i18next";
-import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
 import Backend from "i18next-http-backend";
-
+import { initReactI18next } from "react-i18next";
+import enTranslations from "./locales/en.json";
 // Importar traducciones
 import esTranslations from "./locales/es.json";
-import enTranslations from "./locales/en.json";
 
 // Configuración de i18next
 i18n
@@ -46,7 +45,7 @@ i18n
 		interpolation: {
 			escapeValue: false, // React ya escapa por defecto
 			formatSeparator: ",",
-			format: function (value, format, lng) {
+			format: (value, format, lng) => {
 				// Formateo personalizado para números y fechas
 				if (format === "number") {
 					return new Intl.NumberFormat(lng).format(value);

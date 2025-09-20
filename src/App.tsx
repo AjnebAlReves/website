@@ -1,55 +1,59 @@
-import React, { useState, useEffect } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Moon, Sun } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { FaUserAstronaut } from "react-icons/fa";
 import {
+	Link,
+	Route,
 	BrowserRouter as Router,
 	Routes,
-	Route,
-	Link,
-	useNavigate,
 	useLocation,
 } from "react-router-dom";
-import {
-	Sun,
-	Moon,
-	Github,
-	Globe,
-	Instagram,
-	Briefcase,
-	Heart,
-} from "lucide-react";
-import { FaUserAstronaut } from "react-icons/fa";
-import { Mail } from "lucide-react";
-import { useI18n } from "./hooks/useI18n";
-import LanguageSwitcher from "./components/LanguageSwitcher";
-import Portfolio from "./components/Portfolio";
+import { BentoCard } from "./components/BentoCard";
 import Contact from "./components/Contact";
 import CristoTeAma from "./components/CristoTeAma";
-import { motion, AnimatePresence } from "framer-motion";
+import LanguageSwitcher from "./components/LanguageSwitcher";
+import Portfolio from "./components/Portfolio";
+import { ProfileBox } from "./components/ProfileBox";
+import { VerseBox } from "./components/VerseBox";
+import linksData from "./data/links.json";
+import { useI18n } from "./hooks/useI18n";
+
+interface Link {
+	href: string;
+	icon: string;
+	text: string;
+	description?: string;
+	descriptionKey?: string;
+	external: boolean;
+}
 
 // Componente principal de la página de inicio
 function HomePage() {
 	const [isDark, setIsDark] = useState(true);
 	const [currentVerse, setCurrentVerse] = useState("");
-	const { t, formatDate, isRTL } = useI18n();
+	const { t, isRTL } = useI18n();
 
-	const verses = [
-		"Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas. (Mateo 6:33)",
-		"Todo lo puedo en Cristo que me fortalece. (Filipenses 4:13)",
-		"El Señor es mi pastor; nada me faltará. (Salmos 23:1)",
-		"Porque yo sé los planes que tengo para ustedes, declara el Señor. (Jeremías 29:11)",
-		"Lámpara es a mis pies tu palabra, y lumbrera a mi camino. (Salmos 119:105)",
-	];
+	const verses = React.useMemo(
+		() => [
+			"Mas buscad primeramente el reino de Dios y su justicia, y todas estas cosas os serán añadidas. (Mateo 6:33)",
+			"Todo lo puedo en Cristo que me fortalece. (Filipenses 4:13)",
+			"El Señor es mi pastor; nada me faltará. (Salmos 23:1)",
+			"Porque yo sé los planes que tengo para ustedes, declara el Señor. (Jeremías 29:11)",
+			"Lámpara es a mis pies tu palabra, y lumbrera a mi camino. (Salmos 119:105)",
+		],
+		[],
+	);
 
 	useEffect(() => {
-		// Verificar tema guardado
 		const savedTheme = localStorage.getItem("theme");
 		if (savedTheme === "light") {
 			setIsDark(false);
 		}
 
-		// Seleccionar versículo aleatorio
 		const randomVerse = verses[Math.floor(Math.random() * verses.length)];
 		setCurrentVerse(randomVerse);
-	}, []);
+	}, [verses]);
 
 	const copyVerse = () => {
 		navigator.clipboard.writeText(currentVerse);
@@ -62,50 +66,22 @@ function HomePage() {
 		localStorage.setItem("theme", newTheme ? "dark" : "light");
 	};
 
-	const links = [
-		{
-			href: "https://github.com/ajnebalreves",
-			icon: <Github className="w-5 h-5" />,
-			text: "GitHub",
-			description: t("github"),
-			external: true,
-		},
-		{
-			href: "https://flyxnodes.xyz",
-			icon: <FaUserAstronaut className="w-5 h-5" />,
-			text: "FlyxNodes (Hosting)",
-			description: t("hosting"),
-			external: true,
-		},
-		{
-			href: "/portfolio",
-			icon: <Briefcase className="w-5 h-5" />,
-			text: t("navigation.portfolio"),
-			description: t("portfolio.description"),
-			external: false,
-		},
-		{
-			href: "/cristoteama",
-			icon: <Heart className="w-5 h-5" />,
-			text: t("navigation.cristoteama"),
-			description: t("cristoteama.subtitle"),
-			external: false,
-		},
-		{
-			href: "/contacto",
-			icon: <Mail className="w-5 h-5" />,
-			text: t("navigation.contact"),
-			description: t("contact.description"),
-			external: false,
-		},
-		{
-			href: "https://instagram.com/ajnebalreves",
-			icon: <Instagram className="w-5 h-5" />,
-			text: "Instagram",
-			description: "Contenido visual y updates",
-			external: true,
-		},
-	];
+	const getIcon = (iconName: string) => {
+		if (iconName === "FaUserAstronaut") {
+			return <FaUserAstronaut className="w-5 h-5" />;
+		}
+		if (iconName === "Sun") return <Sun className="w-5 h-5" />;
+		if (iconName === "Moon") return <Moon className="w-5 h-5" />;
+		return null;
+	};
+
+	const mappedLinks = (linksData as Link[]).map((link) => ({
+		...link,
+		icon: getIcon(link.icon),
+		description: link.descriptionKey
+			? t(link.descriptionKey)
+			: link.description,
+	}));
 
 	return (
 		<div
@@ -115,8 +91,8 @@ function HomePage() {
 					: "bg-gradient-to-br from-gray-50 via-white to-gray-100 text-gray-900"
 			}`}
 		>
-			<div className="flex flex-col items-center px-4 pt-16 pb-8">
-				{/* Toggle Tema */}
+			<div className="container mx-auto px-4 pt-16 pb-8">
+				{/* Theme Toggle & Language */}
 				<div
 					className={`absolute top-6 flex items-center gap-3 ${
 						isRTL() ? "left-6" : "right-6"
@@ -140,147 +116,50 @@ function HomePage() {
 					</button>
 				</div>
 
-				{/* Avatar */}
-				<div className="relative mb-6">
-					<div
-						className={`absolute inset-0 rounded-full blur-xl opacity-30 ${
-							isDark ? "bg-emerald-400" : "bg-emerald-500"
-						}`}
-					></div>
-					<img
-						src="https://avatars.githubusercontent.com/u/188276955"
-						alt="AjnebAlRevés"
-						className="relative w-32 h-32 rounded-full shadow-2xl border-4 border-white/20 hover:scale-105 transition-transform duration-300"
-					/>
-				</div>
+				{/* Bento Grid Layout */}
+				<div className="max-w-4xl mx-auto">
+					<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+						{/* Profile Box - Spans 2 columns */}
+						<ProfileBox
+							isDark={isDark}
+							avatarUrl="https://avatars.githubusercontent.com/u/188276955"
+							title={t("home.title")}
+							description={t("home.description")}
+						/>
 
-				{/* Información Personal */}
-				<div className="text-center mb-8">
-					<h1 className="text-3xl font-bold mb-2 bg-gradient-to-r from-emerald-400 to-blue-500 bg-clip-text text-transparent">
-						{t("home.title")}
-					</h1>
-					<p
-						className={`text-sm mb-4 max-w-sm leading-relaxed ${
-							isDark ? "text-gray-300" : "text-gray-600"
-						}`}
-					>
-						{t("home.description")}
-					</p>
-				</div>
+						{/* Verse Box */}
+						<VerseBox
+							isDark={isDark}
+							verse={currentVerse}
+							onCopy={copyVerse}
+							copyLabel={t("home.copyVerse")}
+						/>
 
-				{/* Versículo */}
-				<div
-					className={`mb-8 p-4 rounded-xl max-w-md text-center ${
-						isDark
-							? "bg-emerald-500/10 border border-emerald-500/20"
-							: "bg-emerald-50 border border-emerald-200"
-					}`}
-				>
-					<p
-						className={`text-sm italic leading-relaxed ${
-							isDark ? "text-emerald-300" : "text-emerald-700"
-						}`}
-					>
-						📖 {currentVerse}
-					</p>
-					<button
-						onClick={copyVerse}
-						className="text-xs mt-2 underline hover:opacity-80"
-					>
-						{t("home.copyVerse")}
-					</button>
-				</div>
-
-				{/* Enlaces */}
-				<div className="w-full max-w-md space-y-3">
-					{links.map((link, index) =>
-						link.external ? (
-							<a
+						{/* Link Cards */}
+						{mappedLinks.map((link, index) => (
+							<BentoCard
 								key={index}
+								isDark={isDark}
+								icon={link.icon}
+								title={link.text}
+								description={link.description}
 								href={link.href}
-								target="_blank"
-								rel="noopener noreferrer"
-								className={`group block p-4 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl ${
-									isDark
-										? "bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20"
-										: "bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 shadow-sm"
-								}`}
-							>
-								<div className="flex items-center gap-4">
-									<div
-										className={`p-2 rounded-xl ${
-											isDark ? "bg-white/10" : "bg-gray-100"
-										} group-hover:scale-110 transition-transform duration-300`}
-									>
-										{link.icon}
-									</div>
-									<div className="flex-1">
-										<div className="font-semibold text-base">{link.text}</div>
-										<div
-											className={`text-xs ${
-												isDark ? "text-gray-400" : "text-gray-500"
-											}`}
-										>
-											{link.description}
-										</div>
-									</div>
-									<div
-										className={`text-2xl opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 ${
-											isDark ? "text-white" : "text-gray-600"
-										}`}
-									>
-										→
-									</div>
-								</div>
-							</a>
-						) : (
-							<Link
-								key={index}
-								to={link.href}
-								className={`group block p-4 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] hover:shadow-xl ${
-									isDark
-										? "bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20"
-										: "bg-white border border-gray-200 hover:bg-gray-50 hover:border-gray-300 shadow-sm"
-								}`}
-							>
-								<div className="flex items-center gap-4">
-									<div
-										className={`p-2 rounded-xl ${
-											isDark ? "bg-white/10" : "bg-gray-100"
-										} group-hover:scale-110 transition-transform duration-300`}
-									>
-										{link.icon}
-									</div>
-									<div className="flex-1">
-										<div className="font-semibold text-base">{link.text}</div>
-										<div
-											className={`text-xs ${
-												isDark ? "text-gray-400" : "text-gray-500"
-											}`}
-										>
-											{link.description}
-										</div>
-									</div>
-									<div
-										className={`text-2xl opacity-50 group-hover:opacity-100 group-hover:translate-x-1 transition-all duration-300 ${
-											isDark ? "text-white" : "text-gray-600"
-										}`}
-									>
-										→
-									</div>
-								</div>
-							</Link>
-						),
-					)}
-				</div>
+								external={link.external}
+								className={index < 2 ? "md:col-span-2 lg:col-span-1" : ""}
+							/>
+						))}
+					</div>
 
-				{/* Footer */}
-				<div className="mt-16 text-center">
-					<p
-						className={`text-xs ${isDark ? "text-gray-500" : "text-gray-400"}`}
-					>
-						{t("home.footer", { year: new Date().getFullYear() })}
-					</p>
+					{/* Footer */}
+					<div className="mt-16 text-center">
+						<p
+							className={`text-xs ${
+								isDark ? "text-gray-500" : "text-gray-400"
+							}`}
+						>
+							{t("home.footer", { year: new Date().getFullYear() })}
+						</p>
+					</div>
 				</div>
 			</div>
 		</div>

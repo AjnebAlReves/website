@@ -1,5 +1,5 @@
-import { useTranslation } from "react-i18next";
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 // Hook personalizado para i18n con utilidades adicionales
 export const useI18n = () => {

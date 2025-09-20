@@ -1,21 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import {
-	ExternalLink,
-	Github,
-	Server,
-	Gamepad2,
-	Video,
-	Bot,
-	Church,
 	ArrowLeft,
-	Globe,
-	Star,
+	Bot,
 	Calendar,
+	Church,
 	Code,
-	Sun,
+	ExternalLink,
+	Gamepad2,
+	Github,
+	Globe,
 	Moon,
+	Server,
+	Star,
+	Sun,
+	Video,
 } from "lucide-react";
+import type React from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 interface Project {
 	id: string;

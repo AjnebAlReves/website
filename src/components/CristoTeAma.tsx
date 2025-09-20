@@ -1,27 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
 import {
 	ArrowLeft,
-	Sun,
-	Moon,
-	Heart,
-	MessageCircle,
-	Sparkles,
 	ArrowRight,
-	Zap,
-	Crown,
-	Shield,
-	RefreshCw,
 	BookOpen,
+	Crown,
+	Heart,
 	MailOpen,
+	MessageCircle,
+	Moon,
+	RefreshCw,
+	Shield,
+	Sparkles,
+	Sun,
+	Zap,
 } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import {
+	floatVariants as sharedFloat,
+	glowVariants as sharedGlow,
+	pulseVariants as sharedPulse,
 	staggerContainer,
 	staggerItem,
-	floatVariants as sharedFloat,
-	pulseVariants as sharedPulse,
-	glowVariants as sharedGlow,
 } from "../utils/animations";
 
 interface CristoTeAmaProps {

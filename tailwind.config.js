@@ -36,7 +36,7 @@ export default {
 	},
 	plugins: [
 		// Plugin para soporte RTL
-		function ({ addUtilities }) {
+		({ addUtilities }) => {
 			const newUtilities = {
 				".rtl": {
 					direction: "rtl",
