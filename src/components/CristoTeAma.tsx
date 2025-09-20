@@ -35,60 +35,60 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({ isDark, toggleTheme }) => {
 	const [currentMessageIndex, setCurrentMessageIndex] = useState(0);
 	const [currentVerse, setCurrentVerse] = useState("");
 
-	// Frases juveniles cristianas actualizadas
-	const messages = [
-		{
-			text: "Cristo te ama. Tu ex no. 😉",
-			icon: <Heart className="w-6 h-6" />,
-			color: "from-pink-500 to-red-500",
-		},
-		{
-			text: "Su amor es 24/7, sin modo avión. 📶",
-			icon: <Zap className="w-6 h-6" />,
-			color: "from-blue-500 to-purple-500",
-		},
-		{
-			text: "Con Él no hay ghosting, siempre responde. 💬",
-			icon: <MessageCircle className="w-6 h-6" />,
-			color: "from-green-500 to-emerald-500",
-		},
-		{
-			text: "Lo que otros dejaron, Él lo restaura. 🔄",
-			icon: <RefreshCw className="w-6 h-6" />,
-			color: "from-yellow-500 to-orange-500",
-		},
-		{
-			text: "Cristo no solo te ama… te cambia la vida. 🚀",
-			icon: <Crown className="w-6 h-6" />,
-			color: "from-purple-500 to-indigo-500",
-		},
-	];
+		// Frases juveniles cristianas actualizadas
+		const messages = React.useMemo(() => [
+			{
+				text: "Cristo te ama. Tu ex no. 😉",
+				icon: <Heart className="w-6 h-6" />,
+				color: "from-pink-500 to-red-500",
+			},
+			{
+				text: "Su amor es 24/7, sin modo avión. 📶",
+				icon: <Zap className="w-6 h-6" />,
+				color: "from-blue-500 to-purple-500",
+			},
+			{
+				text: "Con Él no hay ghosting, siempre responde. 💬",
+				icon: <MessageCircle className="w-6 h-6" />,
+				color: "from-green-500 to-emerald-500",
+			},
+			{
+				text: "Lo que otros dejaron, Él lo restaura. 🔄",
+				icon: <RefreshCw className="w-6 h-6" />,
+				color: "from-yellow-500 to-orange-500",
+			},
+			{
+				text: "Cristo no solo te ama… te cambia la vida. 🚀",
+				icon: <Crown className="w-6 h-6" />,
+				color: "from-purple-500 to-indigo-500",
+			},
+		], []);
 
-	// Versículos bíblicos
-	const verses = [
-		"Josué 1:9 — Sé fuerte y valiente. No tengas miedo ni te desanimes, porque el Señor tu Dios te acompañará dondequiera que vayas.",
-		"Isaías 41:10 — No tengas miedo, porque yo estoy contigo; no te desanimes, porque yo soy tu Dios. Te daré fuerzas y te ayudaré; te sostendré con mi mano victoriosa.",
-		"Jeremías 29:11 — Mis planes para ustedes son planes de bienestar y no de calamidad, para darles un futuro y una esperanza.",
-		"Salmos 37:4 — Deléitate en el Señor, y él te concederá los deseos de tu corazón.",
-		"Romanos 8:38-39 — Nada podrá separarnos del amor de Dios que está en Cristo Jesús nuestro Señor.",
-		"Filipenses 4:13 — Todo lo puedo en Cristo que me fortalece.",
-		"2 Corintios 5:17 — El que está unido a Cristo es una nueva creación; lo viejo ha pasado, ha llegado lo nuevo.",
-		"Salmos 46:1 — Dios es nuestro amparo y nuestra fortaleza, nuestra ayuda segura en momentos de angustia.",
-	];
+		// Versículos bíblicos
+		const verses = React.useMemo(() => [
+			"Josué 1:9 — Sé fuerte y valiente. No tengas miedo ni te desanimes, porque el Señor tu Dios te acompañará dondequiera que vayas.",
+			"Isaías 41:10 — No tengas miedo, porque yo estoy contigo; no te desanimes, porque yo soy tu Dios. Te daré fuerzas y te ayudaré; te sostendré con mi mano victoriosa.",
+			"Jeremías 29:11 — Mis planes para ustedes son planes de bienestar y no de calamidad, para darles un futuro y una esperanza.",
+			"Salmos 37:4 — Deléitate en el Señor, y él te concederá los deseos de tu corazón.",
+			"Romanos 8:38-39 — Nada podrá separarnos del amor de Dios que está en Cristo Jesús nuestro Señor.",
+			"Filipenses 4:13 — Todo lo puedo en Cristo que me fortalece.",
+			"2 Corintios 5:17 — El que está unido a Cristo es una nueva creación; lo viejo ha pasado, ha llegado lo nuevo.",
+			"Salmos 46:1 — Dios es nuestro amparo y nuestra fortaleza, nuestra ayuda segura en momentos de angustia.",
+		], []);
 
 	// Cambiar mensaje cada 4 segundos
-	useEffect(() => {
-		const interval = setInterval(() => {
-			setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
-		}, 4000);
-		return () => clearInterval(interval);
-	}, [messages.length]);
+		useEffect(() => {
+			const interval = setInterval(() => {
+				setCurrentMessageIndex((prev) => (prev + 1) % messages.length);
+			}, 4000);
+			return () => clearInterval(interval);
+		}, [messages]);
 
 	// Seleccionar versículo aleatorio al cargar
-	useEffect(() => {
-		const randomVerse = verses[Math.floor(Math.random() * verses.length)];
-		setCurrentVerse(randomVerse);
-	}, []);
+		useEffect(() => {
+			const randomVerse = verses[Math.floor(Math.random() * verses.length)];
+			setCurrentVerse(randomVerse);
+		}, [verses]);
 
 	// Función para obtener nuevo versículo
 	const getNewVerse = () => {
@@ -295,18 +295,18 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({ isDark, toggleTheme }) => {
 
 									{/* Indicadores de progreso */}
 									<div className="flex justify-center gap-2 mt-8">
-										{messages.map((_, index) => (
-											<div
-												key={index}
-												className={`w-3 h-3 rounded-full transition-all duration-300 ${
-													index === currentMessageIndex
-														? `bg-gradient-to-r ${messages[currentMessageIndex].color}`
-														: isDark
-															? "bg-white/20"
-															: "bg-gray-300"
-												}`}
-											/>
-										))}
+										   {messages.map((msg) => (
+											   <div
+												   key={msg.text}
+												   className={`w-3 h-3 rounded-full transition-all duration-300 ${
+													   messages.indexOf(msg) === currentMessageIndex
+														   ? `bg-gradient-to-r ${messages[currentMessageIndex].color}`
+														   : isDark
+															   ? "bg-white/20"
+															   : "bg-gray-300"
+												   }`}
+											   />
+										   ))}
 									</div>
 								</motion.div>
 							</AnimatePresence>
@@ -348,16 +348,16 @@ const CristoTeAma: React.FC<CristoTeAmaProps> = ({ isDark, toggleTheme }) => {
 									"Descubre para qué fuiste creado y vive con sentido",
 								color: "from-purple-500 to-pink-500",
 							},
-						].map((feature, index) => (
-							<motion.div
-								key={index}
-								whileHover={{ scale: 1.05, y: -10 }}
-								className={`p-6 rounded-2xl backdrop-blur-sm transition-all duration-300 ${
-									isDark
-										? "bg-white/5 border border-white/10 hover:bg-white/10"
-										: "bg-white/80 border border-white/40 shadow-lg hover:shadow-2xl"
-								}`}
-							>
+						   ].map((feature) => (
+							   <motion.div
+								   key={feature.title}
+								   whileHover={{ scale: 1.05, y: -10 }}
+								   className={`p-6 rounded-2xl backdrop-blur-sm transition-all duration-300 ${
+									   isDark
+										   ? "bg-white/5 border border-white/10 hover:bg-white/10"
+										   : "bg-white/80 border border-white/40 shadow-lg hover:shadow-2xl"
+								   }`}
+							   >
 								<div
 									className={`inline-flex p-3 rounded-xl bg-gradient-to-r ${feature.color} mb-4`}
 								>

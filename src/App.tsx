@@ -3,7 +3,6 @@ import { Moon, Sun } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { FaUserAstronaut } from "react-icons/fa";
 import {
-	Link,
 	Route,
 	BrowserRouter as Router,
 	Routes,
@@ -19,14 +18,7 @@ import { VerseBox } from "./components/VerseBox";
 import linksData from "./data/links.json";
 import { useI18n } from "./hooks/useI18n";
 
-interface Link {
-	href: string;
-	icon: string;
-	text: string;
-	description?: string;
-	descriptionKey?: string;
-	external: boolean;
-}
+// Removed redeclared Link interface
 
 // Componente principal de la página de inicio
 function HomePage() {
@@ -75,7 +67,7 @@ function HomePage() {
 		return null;
 	};
 
-	const mappedLinks = (linksData as Link[]).map((link) => ({
+	const mappedLinks = linksData.map((link: { href: string; icon: string; text: string; description?: string; descriptionKey?: string; external: boolean }) => ({
 		...link,
 		icon: getIcon(link.icon),
 		description: link.descriptionKey
@@ -99,21 +91,22 @@ function HomePage() {
 					}`}
 				>
 					<LanguageSwitcher isDark={isDark} />
-					<button
-						onClick={toggleTheme}
-						className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
-							isDark
-								? "bg-white/10 border border-white/20 hover:bg-white/20"
-								: "bg-gray-900/10 border border-gray-900/20 hover:bg-gray-900/20"
-						}`}
-						aria-label={t("navigation.toggleTheme")}
-					>
-						{isDark ? (
-							<Sun className="w-5 h-5" />
-						) : (
-							<Moon className="w-5 h-5" />
-						)}
-					</button>
+								<button
+									type="button"
+									onClick={toggleTheme}
+									className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
+										isDark
+											? "bg-white/10 border border-white/20 hover:bg-white/20"
+											: "bg-gray-900/10 border border-gray-900/20 hover:bg-gray-900/20"
+									}`}
+									aria-label={t("navigation.toggleTheme")}
+								>
+									{isDark ? (
+										<Sun className="w-5 h-5" />
+									) : (
+										<Moon className="w-5 h-5" />
+									)}
+								</button>
 				</div>
 
 				{/* Bento Grid Layout */}
@@ -136,18 +129,18 @@ function HomePage() {
 						/>
 
 						{/* Link Cards */}
-						{mappedLinks.map((link, index) => (
-							<BentoCard
-								key={index}
-								isDark={isDark}
-								icon={link.icon}
-								title={link.text}
-								description={link.description}
-								href={link.href}
-								external={link.external}
-								className={index < 2 ? "md:col-span-2 lg:col-span-1" : ""}
-							/>
-						))}
+								{mappedLinks.map((link) => (
+									<BentoCard
+										key={link.href || link.text}
+										isDark={isDark}
+										icon={link.icon}
+										title={link.text}
+										description={link.description}
+										href={link.href}
+										external={link.external}
+										// className logic can be improved if needed
+									/>
+								))}
 					</div>
 
 					{/* Footer */}
@@ -262,16 +255,16 @@ function App() {
 							transition={{ duration: 0.4 }}
 						>
 							<ThemeWrapper>
-								{(isDark, toggleTheme) => (
-									<CristoTeAma
-										onNavigateHome={() => window.history.back()}
-										onNavigateContact={() =>
-											(window.location.href = "/contacto")
-										}
-										isDark={isDark}
-										toggleTheme={toggleTheme}
-									/>
-								)}
+										{(isDark, toggleTheme) => (
+											<CristoTeAma
+												onNavigateHome={() => window.history.back()}
+												onNavigateContact={() => {
+													window.location.href = "/contacto";
+												}}
+												isDark={isDark}
+												toggleTheme={toggleTheme}
+											/>
+										)}
 							</ThemeWrapper>
 						</motion.div>
 					}
