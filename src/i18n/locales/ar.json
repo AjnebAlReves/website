@@ -1,153 +1,153 @@
 {
-  "navigation": {
-    "home": "الرئيسية",
-    "portfolio": "المعرض",
-    "contact": "اتصل بنا",
-    "cristoteama": "المسيح يحبك",
-    "back": "رجوع",
-    "toggleTheme": "تغيير المظهر"
-  },
-  "home": {
-    "title": "@AjnebAlRevés",
-    "description": "منشئ FlyxNodes، مصمم ومطور. في تجديد مستمر 🚀",
-    "copyVerse": "نسخ الآية ✨",
-    "verseCopied": "📋 تم نسخ الآية إلى الحافظة",
-    "footer": "© {{year}} AjnebAlRevés · جميع الحقوق محفوظة"
-  },
-  "portfolio": {
-    "title": "المعرض",
-    "description": "مجموعة من مشاريعي المميزة، من خدمات الاستضافة إلى تطوير البرمجيات والمحتوى السمعي البصري.",
-    "filters": {
-      "all": "جميع المشاريع",
-      "featured": "مميز",
-      "other": "مشاريع أخرى"
-    },
-    "status": {
-      "active": "نشط",
-      "ongoing": "قيد التطوير",
-      "completed": "مكتمل"
-    },
-    "actions": {
-      "viewProject": "عرض المشروع",
-      "viewCode": "عرض الكود"
-    },
-    "noProjects": "لا توجد مشاريع",
-    "noProjectsDescription": "لم يتم العثور على مشاريع في هذه الفئة.",
-    "footer": "© {{year}} AjnebAlRevés · معرض المشاريع"
-  },
-  "contact": {
-    "title": "اتصل بنا",
-    "description": "هل لديك أي أسئلة أو اقتراحات؟ أود أن أسمع منك. املأ النموذج وسأرد عليك في أقرب وقت ممكن.",
-    "form": {
-      "name": "الاسم الكامل",
-      "email": "البريد الإلكتروني",
-      "subject": "الموضوع",
-      "message": "الرسالة",
-      "namePlaceholder": "اسمك الكامل",
-      "emailPlaceholder": "your@email.com",
-  "honeypotLabel": "لا تملأ هذا الحقل إن كنت إنساناً:",
-      "subjectPlaceholder": "عن ماذا تريد أن تتحدث؟",
-      "messagePlaceholder": "أخبرني عن فكرتك أو مشروعك أو سؤالك...",
-      "submit": "إرسال الرسالة",
-      "submitting": "جاري الإرسال...",
-      "characterCount": "الحد الأدنى 10 أحرف. الحالي: {{count}}"
-    },
-    "validation": {
-      "nameRequired": "الاسم مطلوب",
-      "nameMinLength": "يجب أن يكون الاسم على الأقل حرفين",
-      "emailRequired": "البريد الإلكتروني مطلوب",
-      "emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
-      "subjectRequired": "الموضوع مطلوب",
-      "subjectMinLength": "يجب أن يكون الموضوع على الأقل 3 أحرف",
-      "messageRequired": "الرسالة مطلوبة",
-      "messageMinLength": "يجب أن تكون الرسالة على الأقل 10 أحرف"
-    },
-    "success": {
-      "title": "تم إرسال الرسالة بنجاح!",
-      "description": "سأرد عليك في أقرب وقت ممكن."
-    },
-    "error": {
-      "title": "خطأ في إرسال الرسالة",
-      "description": "يرجى المحاولة مرة أخرى."
-    },
-    "sidebar": {
-      "prayerTitle": "🙌 هل يمكنني أن أصلي من أجلك؟",
-      "prayerDescription": "نريد أن نرافقك فيما تمر به. اترك طلبك وسيصلي فريق من أجلك بسرية.",
-      "prayerButton": "رابط النموذج",
-      "contactInfo": "معلومات الاتصال",
-      "responseTime": "الرد خلال 24-48 ساعة",
-      "faq": "الأسئلة الشائعة",
-      "faqResponse": "كم من الوقت تستغرق للرد؟",
-      "faqResponseAnswer": "عادة أرد خلال 24-48 ساعة.",
-      "faqProjects": "ما نوع المشاريع التي تقبلها؟",
-      "faqProjectsAnswer": "تطوير الويب، الاستضافة، التصميم والاستشارات."
-    },
-    "footer": "© {{year}} AjnebAlRevés · نموذج الاتصال"
-  },
-  "cristoteama": {
-    "title": "المسيح يحبك",
-    "subtitle": "حب حقيقي لا يفشل ودائماً إلى جانبك.",
-    "messages": {
-      "message1": "المسيح يحبك. حبيبك السابق لا. 😉",
-      "message2": "حبه 24/7، بدون وضع الطيران. 📶",
-      "message3": "معه لا يوجد تجاهل، يرد دائماً. 💬",
-      "message4": "ما تركه الآخرون، هو يستعيده. 🔄",
-      "message5": "المسيح لا يحبك فقط... يغير حياتك. 🚀"
-    },
-    "features": {
-      "love": {
-        "title": "حب بلا مرشحات",
-        "description": "مهما كان ماضيك، الله يحبك كما أنت"
-      },
-      "power": {
-        "title": "قوته تحولك",
-        "description": "ليس نظرية، إنها تجربة حقيقية تغير حياتك"
-      },
-      "purpose": {
-        "title": "يعطيك هدفاً",
-        "description": "اكتشف لماذا خُلقت وعش بمعنى"
-      }
-    },
-    "verse": {
-      "title": "📖 آية لك اليوم",
-      "newVerse": "أعطني آية أخرى"
-    },
-    "cta": {
-      "title": "💬 مستعد لتلتقي بمن لن يتركك أبداً؟",
-      "subtitle": "ليس دين، إنها علاقة حقيقية.",
-      "button": "أريد أن أعيش ذلك",
-      "disclaimer": "بلا التزامات، فقط محادثة حقيقية"
-    },
-    "footer": "© {{year}} AjnebAlRevés · المسيح يحبك - رسالة أمل لك ❤️"
-  },
-  "common": {
-    "loading": "جاري التحميل...",
-    "error": "خطأ",
-    "retry": "إعادة المحاولة",
-    "close": "إغلاق",
-    "save": "حفظ",
-    "cancel": "إلغاء",
-    "confirm": "تأكيد",
-    "delete": "حذف",
-    "edit": "تعديل",
-    "view": "عرض",
-    "share": "مشاركة",
-    "copy": "نسخ",
-    "copied": "تم النسخ",
-    "required": "مطلوب",
-    "optional": "اختياري"
-  },
-  "dates": {
-    "today": "اليوم",
-    "yesterday": "أمس",
-    "tomorrow": "غداً",
-    "daysAgo": "منذ {{count}} يوم",
-    "daysAgo_plural": "منذ {{count}} أيام",
-    "weeksAgo": "منذ {{count}} أسبوع",
-    "weeksAgo_plural": "منذ {{count}} أسابيع",
-    "monthsAgo": "منذ {{count}} شهر",
-    "monthsAgo_plural": "منذ {{count}} أشهر",
-    "yearsAgo": "منذ {{count}} سنة",
-    "yearsAgo_plural": "منذ {{count}} سنوات"
-  }
+	"navigation": {
+		"home": "الرئيسية",
+		"portfolio": "المعرض",
+		"contact": "اتصل بنا",
+		"cristoteama": "المسيح يحبك",
+		"back": "رجوع",
+		"toggleTheme": "تغيير المظهر"
+	},
+	"home": {
+		"title": "@AjnebAlRevés",
+		"description": "منشئ FlyxNodes، مصمم ومطور. في تجديد مستمر 🚀",
+		"copyVerse": "نسخ الآية ✨",
+		"verseCopied": "📋 تم نسخ الآية إلى الحافظة",
+		"footer": "© {{year}} AjnebAlRevés · جميع الحقوق محفوظة"
+	},
+	"portfolio": {
+		"title": "المعرض",
+		"description": "مجموعة من مشاريعي المميزة، من خدمات الاستضافة إلى تطوير البرمجيات والمحتوى السمعي البصري.",
+		"filters": {
+			"all": "جميع المشاريع",
+			"featured": "مميز",
+			"other": "مشاريع أخرى"
+		},
+		"status": {
+			"active": "نشط",
+			"ongoing": "قيد التطوير",
+			"completed": "مكتمل"
+		},
+		"actions": {
+			"viewProject": "عرض المشروع",
+			"viewCode": "عرض الكود"
+		},
+		"noProjects": "لا توجد مشاريع",
+		"noProjectsDescription": "لم يتم العثور على مشاريع في هذه الفئة.",
+		"footer": "© {{year}} AjnebAlRevés · معرض المشاريع"
+	},
+	"contact": {
+		"title": "اتصل بنا",
+		"description": "هل لديك أي أسئلة أو اقتراحات؟ أود أن أسمع منك. املأ النموذج وسأرد عليك في أقرب وقت ممكن.",
+		"form": {
+			"name": "الاسم الكامل",
+			"email": "البريد الإلكتروني",
+			"subject": "الموضوع",
+			"message": "الرسالة",
+			"namePlaceholder": "اسمك الكامل",
+			"emailPlaceholder": "your@email.com",
+			"honeypotLabel": "لا تملأ هذا الحقل إن كنت إنساناً:",
+			"subjectPlaceholder": "عن ماذا تريد أن تتحدث؟",
+			"messagePlaceholder": "أخبرني عن فكرتك أو مشروعك أو سؤالك...",
+			"submit": "إرسال الرسالة",
+			"submitting": "جاري الإرسال...",
+			"characterCount": "الحد الأدنى 10 أحرف. الحالي: {{count}}"
+		},
+		"validation": {
+			"nameRequired": "الاسم مطلوب",
+			"nameMinLength": "يجب أن يكون الاسم على الأقل حرفين",
+			"emailRequired": "البريد الإلكتروني مطلوب",
+			"emailInvalid": "يرجى إدخال بريد إلكتروني صحيح",
+			"subjectRequired": "الموضوع مطلوب",
+			"subjectMinLength": "يجب أن يكون الموضوع على الأقل 3 أحرف",
+			"messageRequired": "الرسالة مطلوبة",
+			"messageMinLength": "يجب أن تكون الرسالة على الأقل 10 أحرف"
+		},
+		"success": {
+			"title": "تم إرسال الرسالة بنجاح!",
+			"description": "سأرد عليك في أقرب وقت ممكن."
+		},
+		"error": {
+			"title": "خطأ في إرسال الرسالة",
+			"description": "يرجى المحاولة مرة أخرى."
+		},
+		"sidebar": {
+			"prayerTitle": "🙌 هل يمكنني أن أصلي من أجلك؟",
+			"prayerDescription": "نريد أن نرافقك فيما تمر به. اترك طلبك وسيصلي فريق من أجلك بسرية.",
+			"prayerButton": "رابط النموذج",
+			"contactInfo": "معلومات الاتصال",
+			"responseTime": "الرد خلال 24-48 ساعة",
+			"faq": "الأسئلة الشائعة",
+			"faqResponse": "كم من الوقت تستغرق للرد؟",
+			"faqResponseAnswer": "عادة أرد خلال 24-48 ساعة.",
+			"faqProjects": "ما نوع المشاريع التي تقبلها؟",
+			"faqProjectsAnswer": "تطوير الويب، الاستضافة، التصميم والاستشارات."
+		},
+		"footer": "© {{year}} AjnebAlRevés · نموذج الاتصال"
+	},
+	"cristoteama": {
+		"title": "المسيح يحبك",
+		"subtitle": "حب حقيقي لا يفشل ودائماً إلى جانبك.",
+		"messages": {
+			"message1": "المسيح يحبك. حبيبك السابق لا. 😉",
+			"message2": "حبه 24/7، بدون وضع الطيران. 📶",
+			"message3": "معه لا يوجد تجاهل، يرد دائماً. 💬",
+			"message4": "ما تركه الآخرون، هو يستعيده. 🔄",
+			"message5": "المسيح لا يحبك فقط... يغير حياتك. 🚀"
+		},
+		"features": {
+			"love": {
+				"title": "حب بلا مرشحات",
+				"description": "مهما كان ماضيك، الله يحبك كما أنت"
+			},
+			"power": {
+				"title": "قوته تحولك",
+				"description": "ليس نظرية، إنها تجربة حقيقية تغير حياتك"
+			},
+			"purpose": {
+				"title": "يعطيك هدفاً",
+				"description": "اكتشف لماذا خُلقت وعش بمعنى"
+			}
+		},
+		"verse": {
+			"title": "📖 آية لك اليوم",
+			"newVerse": "أعطني آية أخرى"
+		},
+		"cta": {
+			"title": "💬 مستعد لتلتقي بمن لن يتركك أبداً؟",
+			"subtitle": "ليس دين، إنها علاقة حقيقية.",
+			"button": "أريد أن أعيش ذلك",
+			"disclaimer": "بلا التزامات، فقط محادثة حقيقية"
+		},
+		"footer": "© {{year}} AjnebAlRevés · المسيح يحبك - رسالة أمل لك ❤️"
+	},
+	"common": {
+		"loading": "جاري التحميل...",
+		"error": "خطأ",
+		"retry": "إعادة المحاولة",
+		"close": "إغلاق",
+		"save": "حفظ",
+		"cancel": "إلغاء",
+		"confirm": "تأكيد",
+		"delete": "حذف",
+		"edit": "تعديل",
+		"view": "عرض",
+		"share": "مشاركة",
+		"copy": "نسخ",
+		"copied": "تم النسخ",
+		"required": "مطلوب",
+		"optional": "اختياري"
+	},
+	"dates": {
+		"today": "اليوم",
+		"yesterday": "أمس",
+		"tomorrow": "غداً",
+		"daysAgo": "منذ {{count}} يوم",
+		"daysAgo_plural": "منذ {{count}} أيام",
+		"weeksAgo": "منذ {{count}} أسبوع",
+		"weeksAgo_plural": "منذ {{count}} أسابيع",
+		"monthsAgo": "منذ {{count}} شهر",
+		"monthsAgo_plural": "منذ {{count}} أشهر",
+		"yearsAgo": "منذ {{count}} سنة",
+		"yearsAgo_plural": "منذ {{count}} سنوات"
+	}
 }

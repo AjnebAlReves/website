@@ -1,155 +1,155 @@
 {
-  "github": "Proyectos de código abierto",
-  "hosting": "Servicios de Hosting Freemium.",
-  "navigation": {
-    "home": "Inicio",
-    "portfolio": "Portfolio",
-    "contact": "Contacto",
-    "cristoteama": "CristoTeAma",
-    "back": "Volver",
-    "toggleTheme": "Cambiar tema"
-  },
-  "home": {
-    "title": "@AjnebAlRevés",
-    "description": "Creador de FlyxNodes, diseñador y desarrollador. En constante reinvención 🚀",
-    "copyVerse": "Copiar versículo ✨",
-    "verseCopied": "📋 Versículo copiado al portapapeles",
-    "footer": "© {{year}} AjnebAlRevés · Todos los derechos reservados"
-  },
-  "portfolio": {
-    "title": "Portfolio",
-    "description": "Una colección de mis proyectos más destacados, desde servicios de hosting hasta desarrollo de software y contenido audiovisual.",
-    "filters": {
-      "all": "Todos los Proyectos",
-      "featured": "Destacados",
-      "other": "Otros Proyectos"
-    },
-    "status": {
-      "active": "Activo",
-      "ongoing": "En progreso",
-      "completed": "Completado"
-    },
-    "actions": {
-      "viewProject": "Ver Proyecto",
-      "viewCode": "Ver Código"
-    },
-    "noProjects": "No hay proyectos",
-    "noProjectsDescription": "No se encontraron proyectos en esta categoría.",
-    "footer": "© {{year}} AjnebAlRevés · Portfolio de Proyectos"
-  },
-  "contact": {
-    "title": "Contacto",
-    "description": "¿Tienes alguna pregunta o propuesta? Me encantaría escucharte. Completa el formulario y te responderé lo antes posible.",
-    "form": {
-      "name": "Nombre completo",
-      "email": "Email",
-      "subject": "Asunto",
-      "message": "Mensaje",
-  "namePlaceholder": "Tu nombre completo",
-      "emailPlaceholder": "tu@email.com",
-  "honeypotLabel": "No llenar si eres humano:",
-      "subjectPlaceholder": "¿De qué quieres hablar?",
-      "messagePlaceholder": "Cuéntame tu idea, proyecto o pregunta...",
-      "submit": "Enviar Mensaje",
-      "submitting": "Enviando...",
-      "characterCount": "Mínimo 10 caracteres. Actual: {{count}}"
-    },
-    "validation": {
-      "nameRequired": "El nombre es obligatorio",
-      "nameMinLength": "El nombre debe tener al menos 2 caracteres",
-      "emailRequired": "El email es obligatorio",
-      "emailInvalid": "Por favor ingresa un email válido",
-      "subjectRequired": "El asunto es obligatorio",
-      "subjectMinLength": "El asunto debe tener al menos 3 caracteres",
-      "messageRequired": "El mensaje es obligatorio",
-      "messageMinLength": "El mensaje debe tener al menos 10 caracteres"
-    },
-    "success": {
-      "title": "¡Mensaje enviado exitosamente!",
-      "description": "Te responderé lo antes posible."
-    },
-    "error": {
-      "title": "Error al enviar el mensaje",
-      "description": "Por favor intenta nuevamente."
-    },
-    "sidebar": {
-      "prayerTitle": "🙌 ¿Puedo orar por ti?",
-      "prayerDescription": "Queremos acompañarte en lo que estés viviendo. Deja tu petición y un equipo estará orando por ti de forma confidencial.",
-      "prayerButton": "Link al Formulario",
-      "contactInfo": "Información de Contacto",
-      "responseTime": "Respuesta en 24-48 horas",
-      "faq": "Preguntas Frecuentes",
-      "faqResponse": "¿Cuánto tardas en responder?",
-      "faqResponseAnswer": "Normalmente respondo en 24-48 horas.",
-      "faqProjects": "¿Qué tipo de proyectos aceptas?",
-      "faqProjectsAnswer": "Desarrollo web, hosting, diseño y consultoría."
-    },
-    "footer": "© {{year}} AjnebAlRevés · Formulario de Contacto"
-  },
-  "cristoteama": {
-    "title": "Cristo Te Ama",
-    "subtitle": "Un amor real, que no falla y siempre está de tu lado.",
-    "messages": {
-      "message1": "Cristo te ama. Tu ex no. 😉",
-      "message2": "Su amor es 24/7, sin modo avión. 📶",
-      "message3": "Con Él no hay ghosting, siempre responde. 💬",
-      "message4": "Lo que otros dejaron, Él lo restaura. 🔄",
-      "message5": "Cristo no solo te ama… te cambia la vida. 🚀"
-    },
-    "features": {
-      "love": {
-        "title": "Un Amor sin filtros",
-        "description": "No importa tu pasado, Dios te ama tal como eres"
-      },
-      "power": {
-        "title": "Su poder te transforma",
-        "description": "No es teoría, es experiencia real que cambia tu vida"
-      },
-      "purpose": {
-        "title": "Te da un propósito",
-        "description": "Descubre para qué fuiste creado y vive con sentido"
-      }
-    },
-    "verse": {
-      "title": "📖 Versículo para vos hoy",
-      "newVerse": "Dame otro versículo"
-    },
-    "cta": {
-      "title": "💬 ¿Listo para conocer a Alguien que nunca te va a soltar?",
-      "subtitle": "No es religión, es relación real.",
-      "button": "Quiero vivirlo",
-      "disclaimer": "Sin compromisos, solo una conversación real"
-    },
-    "footer": "© {{year}} AjnebAlRevés · CristoTeAma - Un mensaje de esperanza para ti ❤️"
-  },
-  "common": {
-    "loading": "Cargando...",
-    "error": "Error",
-    "retry": "Reintentar",
-    "close": "Cerrar",
-    "save": "Guardar",
-    "cancel": "Cancelar",
-    "confirm": "Confirmar",
-    "delete": "Eliminar",
-    "edit": "Editar",
-    "view": "Ver",
-    "share": "Compartir",
-    "copy": "Copiar",
-    "copied": "Copiado",
-    "required": "Obligatorio",
-    "optional": "Opcional"
-  },
-  "dates": {
-    "today": "Hoy",
-    "yesterday": "Ayer",
-    "tomorrow": "Mañana",
-    "daysAgo": "hace {{count}} día",
-    "daysAgo_plural": "hace {{count}} días",
-    "weeksAgo": "hace {{count}} semana",
-    "weeksAgo_plural": "hace {{count}} semanas",
-    "monthsAgo": "hace {{count}} mes",
-    "monthsAgo_plural": "hace {{count}} meses",
-    "yearsAgo": "hace {{count}} año",
-    "yearsAgo_plural": "hace {{count}} años"
-  }
+	"github": "Proyectos de código abierto",
+	"hosting": "Servicios de Hosting Freemium.",
+	"navigation": {
+		"home": "Inicio",
+		"portfolio": "Portfolio",
+		"contact": "Contacto",
+		"cristoteama": "CristoTeAma",
+		"back": "Volver",
+		"toggleTheme": "Cambiar tema"
+	},
+	"home": {
+		"title": "@AjnebAlRevés",
+		"description": "Creador de FlyxNodes, diseñador y desarrollador. En constante reinvención 🚀",
+		"copyVerse": "Copiar versículo ✨",
+		"verseCopied": "📋 Versículo copiado al portapapeles",
+		"footer": "© {{year}} AjnebAlRevés · Todos los derechos reservados"
+	},
+	"portfolio": {
+		"title": "Portfolio",
+		"description": "Una colección de mis proyectos más destacados, desde servicios de hosting hasta desarrollo de software y contenido audiovisual.",
+		"filters": {
+			"all": "Todos los Proyectos",
+			"featured": "Destacados",
+			"other": "Otros Proyectos"
+		},
+		"status": {
+			"active": "Activo",
+			"ongoing": "En progreso",
+			"completed": "Completado"
+		},
+		"actions": {
+			"viewProject": "Ver Proyecto",
+			"viewCode": "Ver Código"
+		},
+		"noProjects": "No hay proyectos",
+		"noProjectsDescription": "No se encontraron proyectos en esta categoría.",
+		"footer": "© {{year}} AjnebAlRevés · Portfolio de Proyectos"
+	},
+	"contact": {
+		"title": "Contacto",
+		"description": "¿Tienes alguna pregunta o propuesta? Me encantaría escucharte. Completa el formulario y te responderé lo antes posible.",
+		"form": {
+			"name": "Nombre completo",
+			"email": "Email",
+			"subject": "Asunto",
+			"message": "Mensaje",
+			"namePlaceholder": "Tu nombre completo",
+			"emailPlaceholder": "tu@email.com",
+			"honeypotLabel": "No llenar si eres humano:",
+			"subjectPlaceholder": "¿De qué quieres hablar?",
+			"messagePlaceholder": "Cuéntame tu idea, proyecto o pregunta...",
+			"submit": "Enviar Mensaje",
+			"submitting": "Enviando...",
+			"characterCount": "Mínimo 10 caracteres. Actual: {{count}}"
+		},
+		"validation": {
+			"nameRequired": "El nombre es obligatorio",
+			"nameMinLength": "El nombre debe tener al menos 2 caracteres",
+			"emailRequired": "El email es obligatorio",
+			"emailInvalid": "Por favor ingresa un email válido",
+			"subjectRequired": "El asunto es obligatorio",
+			"subjectMinLength": "El asunto debe tener al menos 3 caracteres",
+			"messageRequired": "El mensaje es obligatorio",
+			"messageMinLength": "El mensaje debe tener al menos 10 caracteres"
+		},
+		"success": {
+			"title": "¡Mensaje enviado exitosamente!",
+			"description": "Te responderé lo antes posible."
+		},
+		"error": {
+			"title": "Error al enviar el mensaje",
+			"description": "Por favor intenta nuevamente."
+		},
+		"sidebar": {
+			"prayerTitle": "🙌 ¿Puedo orar por ti?",
+			"prayerDescription": "Queremos acompañarte en lo que estés viviendo. Deja tu petición y un equipo estará orando por ti de forma confidencial.",
+			"prayerButton": "Link al Formulario",
+			"contactInfo": "Información de Contacto",
+			"responseTime": "Respuesta en 24-48 horas",
+			"faq": "Preguntas Frecuentes",
+			"faqResponse": "¿Cuánto tardas en responder?",
+			"faqResponseAnswer": "Normalmente respondo en 24-48 horas.",
+			"faqProjects": "¿Qué tipo de proyectos aceptas?",
+			"faqProjectsAnswer": "Desarrollo web, hosting, diseño y consultoría."
+		},
+		"footer": "© {{year}} AjnebAlRevés · Formulario de Contacto"
+	},
+	"cristoteama": {
+		"title": "Cristo Te Ama",
+		"subtitle": "Un amor real, que no falla y siempre está de tu lado.",
+		"messages": {
+			"message1": "Cristo te ama. Tu ex no. 😉",
+			"message2": "Su amor es 24/7, sin modo avión. 📶",
+			"message3": "Con Él no hay ghosting, siempre responde. 💬",
+			"message4": "Lo que otros dejaron, Él lo restaura. 🔄",
+			"message5": "Cristo no solo te ama… te cambia la vida. 🚀"
+		},
+		"features": {
+			"love": {
+				"title": "Un Amor sin filtros",
+				"description": "No importa tu pasado, Dios te ama tal como eres"
+			},
+			"power": {
+				"title": "Su poder te transforma",
+				"description": "No es teoría, es experiencia real que cambia tu vida"
+			},
+			"purpose": {
+				"title": "Te da un propósito",
+				"description": "Descubre para qué fuiste creado y vive con sentido"
+			}
+		},
+		"verse": {
+			"title": "📖 Versículo para vos hoy",
+			"newVerse": "Dame otro versículo"
+		},
+		"cta": {
+			"title": "💬 ¿Listo para conocer a Alguien que nunca te va a soltar?",
+			"subtitle": "No es religión, es relación real.",
+			"button": "Quiero vivirlo",
+			"disclaimer": "Sin compromisos, solo una conversación real"
+		},
+		"footer": "© {{year}} AjnebAlRevés · CristoTeAma - Un mensaje de esperanza para ti ❤️"
+	},
+	"common": {
+		"loading": "Cargando...",
+		"error": "Error",
+		"retry": "Reintentar",
+		"close": "Cerrar",
+		"save": "Guardar",
+		"cancel": "Cancelar",
+		"confirm": "Confirmar",
+		"delete": "Eliminar",
+		"edit": "Editar",
+		"view": "Ver",
+		"share": "Compartir",
+		"copy": "Copiar",
+		"copied": "Copiado",
+		"required": "Obligatorio",
+		"optional": "Opcional"
+	},
+	"dates": {
+		"today": "Hoy",
+		"yesterday": "Ayer",
+		"tomorrow": "Mañana",
+		"daysAgo": "hace {{count}} día",
+		"daysAgo_plural": "hace {{count}} días",
+		"weeksAgo": "hace {{count}} semana",
+		"weeksAgo_plural": "hace {{count}} semanas",
+		"monthsAgo": "hace {{count}} mes",
+		"monthsAgo_plural": "hace {{count}} meses",
+		"yearsAgo": "hace {{count}} año",
+		"yearsAgo_plural": "hace {{count}} años"
+	}
 }
