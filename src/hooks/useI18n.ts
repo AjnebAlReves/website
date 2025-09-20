@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -66,7 +67,6 @@ export const useI18n = () => {
 	const getAvailableLanguages = () => [
 		{ code: "es", name: "Español", nativeName: "Español", flag: "🇪🇸" },
 		{ code: "en", name: "English", nativeName: "English", flag: "🇺🇸" },
-		{ code: "ar", name: "Arabic", nativeName: "العربية", flag: "🇸🇦" },
 	];
 
 	// Función para detectar si es RTL
