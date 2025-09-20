@@ -1,6 +1,3 @@
-import type React from "react";
-import { useEffect, useRef, useState, useId } from "react";
-import { Link } from "react-router-dom";
 import {
 	AlertCircle,
 	ArrowLeft,
@@ -14,6 +11,9 @@ import {
 	Sun,
 	User,
 } from "lucide-react";
+import type React from "react";
+import { useEffect, useId, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { useI18n } from "../hooks/useI18n";
 
 interface ContactProps {
@@ -120,26 +120,26 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 		}
 	};
 
-		// Load draft on mount
-		useEffect(() => {
-			try {
-				const raw = localStorage.getItem(DRAFT_KEY);
-				if (raw) {
-					const parsed = JSON.parse(raw);
-					// Only restore if form is empty (avoid overwriting intentional navigation)
-					if (
-						formData.name === "" &&
-						formData.email === "" &&
-						formData.subject === "" &&
-						formData.message === ""
-					) {
-						setFormData(parsed);
-					}
+	// Load draft on mount
+	useEffect(() => {
+		try {
+			const raw = localStorage.getItem(DRAFT_KEY);
+			if (raw) {
+				const parsed = JSON.parse(raw);
+				// Only restore if form is empty (avoid overwriting intentional navigation)
+				if (
+					formData.name === "" &&
+					formData.email === "" &&
+					formData.subject === "" &&
+					formData.message === ""
+				) {
+					setFormData(parsed);
 				}
-			} catch {
-				// ignore
 			}
-		}, [formData.name, formData.email, formData.subject, formData.message]);
+		} catch {
+			// ignore
+		}
+	}, [formData.name, formData.email, formData.subject, formData.message]);
 
 	// Helper to actually send the message with retries
 	const sendMessage = async (
@@ -248,9 +248,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 							}`}
 						>
 							<ArrowLeft className="w-4 h-4" />
-							<span className="text-sm font-medium">
-								type="button"
-							</span>
+							<span className="text-sm font-medium">type="button"</span>
 						</Link>
 
 						<button
@@ -327,44 +325,44 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 								)}
 
 								{/* Error Message */}
-												 {submitStatus === "error" && (
-													 <output
-														 className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
-															 isDark
-																 ? "bg-red-500/20 border border-red-500/30 text-red-400"
-																 : "bg-red-50 border border-red-200 text-red-700"
-														 }`}
-														 aria-live="polite"
-													 >
-														 <AlertCircle className="w-5 h-5" />
-														 <div className="flex-1">
-															 <p className="font-medium">Error al enviar el mensaje</p>
-															 <p className="text-sm opacity-90">
-																 {errors.network ||
-																	 errors.server ||
-																	 "Por favor intenta nuevamente."}
-															 </p>
-														 </div>
-														 <div className="flex-shrink-0">
-															 <button
-																 type="button"
-																 onClick={async () => {
-																	 if (!lastAttemptRef.current) return;
-																	 setIsSubmitting(true);
-																	 setSubmitStatus("idle");
-																	 await sendMessage(lastAttemptRef.current, 0);
-																 }}
-																 className={`ml-2 inline-flex items-center gap-2 px-3 py-2 rounded-xl font-medium transition-all duration-200 hover:scale-105 ${
-																	 isDark
-																		 ? "bg-red-600/20 border border-red-600/30 text-red-400"
-																		 : "bg-red-600 text-white hover:bg-red-700"
-																 }`}
-															 >
-																 Reintentar
-															 </button>
-														 </div>
-													 </output>
-												 )}
+								{submitStatus === "error" && (
+									<output
+										className={`mb-6 p-4 rounded-xl flex items-center gap-3 ${
+											isDark
+												? "bg-red-500/20 border border-red-500/30 text-red-400"
+												: "bg-red-50 border border-red-200 text-red-700"
+										}`}
+										aria-live="polite"
+									>
+										<AlertCircle className="w-5 h-5" />
+										<div className="flex-1">
+											<p className="font-medium">Error al enviar el mensaje</p>
+											<p className="text-sm opacity-90">
+												{errors.network ||
+													errors.server ||
+													"Por favor intenta nuevamente."}
+											</p>
+										</div>
+										<div className="flex-shrink-0">
+											<button
+												type="button"
+												onClick={async () => {
+													if (!lastAttemptRef.current) return;
+													setIsSubmitting(true);
+													setSubmitStatus("idle");
+													await sendMessage(lastAttemptRef.current, 0);
+												}}
+												className={`ml-2 inline-flex items-center gap-2 px-3 py-2 rounded-xl font-medium transition-all duration-200 hover:scale-105 ${
+													isDark
+														? "bg-red-600/20 border border-red-600/30 text-red-400"
+														: "bg-red-600 text-white hover:bg-red-700"
+												}`}
+											>
+												Reintentar
+											</button>
+										</div>
+									</output>
+								)}
 
 								{/* ARIA live region for general feedback */}
 								<div aria-live="polite" className="sr-only">
@@ -388,17 +386,17 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 
 									{/* Honeypot Field */}
 									<div className="hidden">
-										  <label htmlFor={idBotField}>
+										<label htmlFor={idBotField}>
 											{t("contact.form.honeypotLabel") ||
 												"No llenar si eres humano:"}
 										</label>
-										  <input id={idBotField} name="bot-field" />
+										<input id={idBotField} name="bot-field" />
 									</div>
 
 									{/* Name Field */}
 									<div>
-															<label
-																htmlFor={idName}
+										<label
+											htmlFor={idName}
 											className={`block text-sm font-medium mb-2 ${
 												isDark ? "text-gray-200" : "text-gray-700"
 											}`}
@@ -411,44 +409,42 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 													isDark ? "text-gray-400" : "text-gray-500"
 												}`}
 											/>
-																	<input
-																		type="text"
-																		id={idName}
-																		name="name"
-																		ref={nameRef}
-																		value={formData.name}
-																		onChange={handleInputChange}
-																		required
-																		minLength={2}
-																		className={`w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
-																			errors.name
-																				? isDark
-																					? "bg-red-500/10 border-red-500/50 text-white placeholder-red-300"
-																					: "bg-red-50 border-red-300 text-gray-900 placeholder-red-400"
-																				: isDark
-																					? "bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30"
-																					: "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400"
-																		}`}
-																		placeholder={t("contact.form.namePlaceholder")}
-																		aria-describedby={
-																			errors.name ? idNameError : undefined
-																		}
-																	/>
+											<input
+												type="text"
+												id={idName}
+												name="name"
+												ref={nameRef}
+												value={formData.name}
+												onChange={handleInputChange}
+												required
+												minLength={2}
+												className={`w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
+													errors.name
+														? isDark
+															? "bg-red-500/10 border-red-500/50 text-white placeholder-red-300"
+															: "bg-red-50 border-red-300 text-gray-900 placeholder-red-400"
+														: isDark
+															? "bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30"
+															: "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400"
+												}`}
+												placeholder={t("contact.form.namePlaceholder")}
+												aria-describedby={errors.name ? idNameError : undefined}
+											/>
 										</div>
-															{errors.name && (
-																<p
-																	id={idNameError}
-																	className={`mt-2 text-sm ${isDark ? "text-red-400" : "text-red-600"}`}
-																>
-																	{errors.name}
-																</p>
-															)}
+										{errors.name && (
+											<p
+												id={idNameError}
+												className={`mt-2 text-sm ${isDark ? "text-red-400" : "text-red-600"}`}
+											>
+												{errors.name}
+											</p>
+										)}
 									</div>
 
 									{/* Email Field */}
 									<div>
-															<label
-																htmlFor={idEmail}
+										<label
+											htmlFor={idEmail}
 											className={`block text-sm font-medium mb-2 ${
 												isDark ? "text-gray-200" : "text-gray-700"
 											}`}
@@ -461,86 +457,86 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 													isDark ? "text-gray-400" : "text-gray-500"
 												}`}
 											/>
-																	<input
-																		type="email"
-																		id={idEmail}
-																		name="email"
-																		ref={emailRef}
-																		value={formData.email}
-																		onChange={handleInputChange}
-																		required
-																		className={`w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
-																			errors.email
-																				? isDark
-																					? "bg-red-500/10 border-red-500/50 text-white placeholder-red-300"
-																					: "bg-red-50 border-red-300 text-gray-900 placeholder-red-400"
-																				: isDark
-																					? "bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30"
-																					: "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400"
-																		}`}
-																		placeholder={t("contact.form.emailPlaceholder")}
-																		aria-describedby={
-																			errors.email ? idEmailError : undefined
-																		}
-																	/>
+											<input
+												type="email"
+												id={idEmail}
+												name="email"
+												ref={emailRef}
+												value={formData.email}
+												onChange={handleInputChange}
+												required
+												className={`w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
+													errors.email
+														? isDark
+															? "bg-red-500/10 border-red-500/50 text-white placeholder-red-300"
+															: "bg-red-50 border-red-300 text-gray-900 placeholder-red-400"
+														: isDark
+															? "bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30"
+															: "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400"
+												}`}
+												placeholder={t("contact.form.emailPlaceholder")}
+												aria-describedby={
+													errors.email ? idEmailError : undefined
+												}
+											/>
 										</div>
-															{errors.email && (
-																<p
-																	id={idEmailError}
-																	className={`mt-2 text-sm ${isDark ? "text-red-400" : "text-red-600"}`}
-																>
-																	{errors.email}
-																</p>
-															)}
+										{errors.email && (
+											<p
+												id={idEmailError}
+												className={`mt-2 text-sm ${isDark ? "text-red-400" : "text-red-600"}`}
+											>
+												{errors.email}
+											</p>
+										)}
 									</div>
 
 									{/* Subject Field */}
 									<div>
-															<label
-																htmlFor={idSubject}
+										<label
+											htmlFor={idSubject}
 											className={`block text-sm font-medium mb-2 ${
 												isDark ? "text-gray-200" : "text-gray-700"
 											}`}
 										>
 											{t("contact.form.subject")} *
 										</label>
-															<input
-																type="text"
-																id={idSubject}
-																name="subject"
-																ref={subjectRef}
-																value={formData.subject}
-																onChange={handleInputChange}
-																required
-																minLength={3}
-																className={`w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
-																	errors.subject
-																		? isDark
-																			? "bg-red-500/10 border-red-500/50 text-white placeholder-red-300"
-																			: "bg-red-50 border-red-300 text-gray-900 placeholder-red-400"
-																		: isDark
-																			? "bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30"
-																			: "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400"
-																}`}
-																placeholder={t("contact.form.subjectPlaceholder")}
-																aria-describedby={
-																	errors.subject ? idSubjectError : undefined
-																}
-															/>
-															{errors.subject && (
-																<p
-																	id={idSubjectError}
-																	className={`mt-2 text-sm ${isDark ? "text-red-400" : "text-red-600"}`}
-																>
-																	{errors.subject}
-																</p>
-															)}
+										<input
+											type="text"
+											id={idSubject}
+											name="subject"
+											ref={subjectRef}
+											value={formData.subject}
+											onChange={handleInputChange}
+											required
+											minLength={3}
+											className={`w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 ${
+												errors.subject
+													? isDark
+														? "bg-red-500/10 border-red-500/50 text-white placeholder-red-300"
+														: "bg-red-50 border-red-300 text-gray-900 placeholder-red-400"
+													: isDark
+														? "bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30"
+														: "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400"
+											}`}
+											placeholder={t("contact.form.subjectPlaceholder")}
+											aria-describedby={
+												errors.subject ? idSubjectError : undefined
+											}
+										/>
+										{errors.subject && (
+											<p
+												id={idSubjectError}
+												className={`mt-2 text-sm ${isDark ? "text-red-400" : "text-red-600"}`}
+											>
+												{errors.subject}
+											</p>
+										)}
 									</div>
 
 									{/* Message Field */}
 									<div>
-															<label
-																htmlFor={idMessage}
+										<label
+											htmlFor={idMessage}
 											className={`block text-sm font-medium mb-2 ${
 												isDark ? "text-gray-200" : "text-gray-700"
 											}`}
@@ -553,38 +549,38 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 													isDark ? "text-gray-400" : "text-gray-500"
 												}`}
 											/>
-																	<textarea
-																		id={idMessage}
-																		name="message"
-																		ref={messageRef}
-																		value={formData.message}
-																		onChange={handleInputChange}
-																		required
-																		minLength={10}
-																		rows={6}
-																		className={`w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-vertical ${
-																			errors.message
-																				? isDark
-																					? "bg-red-500/10 border-red-500/50 text-white placeholder-red-300"
-																					: "bg-red-50 border-red-300 text-gray-900 placeholder-red-400"
-																				: isDark
-																					? "bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30"
-																					: "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400"
-																		}`}
-																		placeholder={t("contact.form.messagePlaceholder")}
-																		aria-describedby={
-																			errors.message ? idMessageError : undefined
-																		}
-																	/>
+											<textarea
+												id={idMessage}
+												name="message"
+												ref={messageRef}
+												value={formData.message}
+												onChange={handleInputChange}
+												required
+												minLength={10}
+												rows={6}
+												className={`w-full pl-12 pr-4 py-3 rounded-xl border transition-all duration-300 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-vertical ${
+													errors.message
+														? isDark
+															? "bg-red-500/10 border-red-500/50 text-white placeholder-red-300"
+															: "bg-red-50 border-red-300 text-gray-900 placeholder-red-400"
+														: isDark
+															? "bg-white/5 border-white/20 text-white placeholder-gray-400 hover:border-white/30"
+															: "bg-gray-50 border-gray-300 text-gray-900 placeholder-gray-500 hover:border-gray-400"
+												}`}
+												placeholder={t("contact.form.messagePlaceholder")}
+												aria-describedby={
+													errors.message ? idMessageError : undefined
+												}
+											/>
 										</div>
-															{errors.message && (
-																<p
-																	id={idMessageError}
-																	className={`mt-2 text-sm ${isDark ? "text-red-400" : "text-red-600"}`}
-																>
-																	{errors.message}
-																</p>
-															)}
+										{errors.message && (
+											<p
+												id={idMessageError}
+												className={`mt-2 text-sm ${isDark ? "text-red-400" : "text-red-600"}`}
+											>
+												{errors.message}
+											</p>
+										)}
 										<p
 											className={`mt-2 text-xs ${isDark ? "text-gray-400" : "text-gray-500"}`}
 										>

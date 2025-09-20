@@ -114,7 +114,11 @@ export const generateRTLClass = (
 export const tailwindRTLConfig = {
 	plugins: [
 		// Plugin para soporte RTL
-		({ addUtilities }: any) => {
+		({
+			addUtilities,
+		}: {
+			addUtilities: (utils: Record<string, unknown>) => void;
+		}) => {
 			const newUtilities = {
 				".rtl": {
 					direction: "rtl",

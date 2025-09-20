@@ -67,13 +67,22 @@ function HomePage() {
 		return null;
 	};
 
-	const mappedLinks = linksData.map((link: { href: string; icon: string; text: string; description?: string; descriptionKey?: string; external: boolean }) => ({
-		...link,
-		icon: getIcon(link.icon),
-		description: link.descriptionKey
-			? t(link.descriptionKey)
-			: link.description,
-	}));
+	const mappedLinks = linksData.map(
+		(link: {
+			href: string;
+			icon: string;
+			text: string;
+			description?: string;
+			descriptionKey?: string;
+			external: boolean;
+		}) => ({
+			...link,
+			icon: getIcon(link.icon),
+			description: link.descriptionKey
+				? t(link.descriptionKey)
+				: link.description,
+		}),
+	);
 
 	return (
 		<div
@@ -91,22 +100,22 @@ function HomePage() {
 					}`}
 				>
 					<LanguageSwitcher isDark={isDark} />
-								<button
-									type="button"
-									onClick={toggleTheme}
-									className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
-										isDark
-											? "bg-white/10 border border-white/20 hover:bg-white/20"
-											: "bg-gray-900/10 border border-gray-900/20 hover:bg-gray-900/20"
-									}`}
-									aria-label={t("navigation.toggleTheme")}
-								>
-									{isDark ? (
-										<Sun className="w-5 h-5" />
-									) : (
-										<Moon className="w-5 h-5" />
-									)}
-								</button>
+					<button
+						type="button"
+						onClick={toggleTheme}
+						className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
+							isDark
+								? "bg-white/10 border border-white/20 hover:bg-white/20"
+								: "bg-gray-900/10 border border-gray-900/20 hover:bg-gray-900/20"
+						}`}
+						aria-label={t("navigation.toggleTheme")}
+					>
+						{isDark ? (
+							<Sun className="w-5 h-5" />
+						) : (
+							<Moon className="w-5 h-5" />
+						)}
+					</button>
 				</div>
 
 				{/* Bento Grid Layout */}
@@ -129,18 +138,18 @@ function HomePage() {
 						/>
 
 						{/* Link Cards */}
-								{mappedLinks.map((link) => (
-									<BentoCard
-										key={link.href || link.text}
-										isDark={isDark}
-										icon={link.icon}
-										title={link.text}
-										description={link.description}
-										href={link.href}
-										external={link.external}
-										// className logic can be improved if needed
-									/>
-								))}
+						{mappedLinks.map((link) => (
+							<BentoCard
+								key={link.href || link.text}
+								isDark={isDark}
+								icon={link.icon}
+								title={link.text}
+								description={link.description}
+								href={link.href}
+								external={link.external}
+								// className logic can be improved if needed
+							/>
+						))}
 					</div>
 
 					{/* Footer */}
@@ -255,16 +264,16 @@ function App() {
 							transition={{ duration: 0.4 }}
 						>
 							<ThemeWrapper>
-										{(isDark, toggleTheme) => (
-											<CristoTeAma
-												onNavigateHome={() => window.history.back()}
-												onNavigateContact={() => {
-													window.location.href = "/contacto";
-												}}
-												isDark={isDark}
-												toggleTheme={toggleTheme}
-											/>
-										)}
+								{(isDark, toggleTheme) => (
+									<CristoTeAma
+										onNavigateHome={() => window.history.back()}
+										onNavigateContact={() => {
+											window.location.href = "/contacto";
+										}}
+										isDark={isDark}
+										toggleTheme={toggleTheme}
+									/>
+								)}
 							</ThemeWrapper>
 						</motion.div>
 					}

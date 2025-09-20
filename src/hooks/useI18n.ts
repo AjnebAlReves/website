@@ -70,13 +70,16 @@ export const useI18n = () => {
 	];
 
 	// Función para detectar si es RTL
-	const isRTL = () => i18n.language === "ar";
+	const isRTL = React.useCallback(
+		() => i18n.language === "ar",
+		[i18n.language],
+	);
 
 	// Configurar dirección del documento al cambiar idioma
 	useEffect(() => {
 		document.documentElement.dir = isRTL() ? "rtl" : "ltr";
 		document.documentElement.lang = i18n.language;
-	}, [i18n.language]);
+	}, [i18n.language, isRTL]);
 
 	return {
 		t,

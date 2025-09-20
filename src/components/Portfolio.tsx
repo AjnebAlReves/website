@@ -15,7 +15,7 @@ import {
 	Video,
 } from "lucide-react";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface Project {
@@ -37,11 +37,7 @@ interface PortfolioProps {
 	toggleTheme: () => void;
 }
 
-const Portfolio: React.FC<PortfolioProps> = ({
-	onNavigateHome,
-	isDark,
-	toggleTheme,
-}) => {
+const Portfolio: React.FC<PortfolioProps> = ({ isDark, toggleTheme }) => {
 	const [selectedCategory, setSelectedCategory] = useState<
 		"all" | "featured" | "other"
 	>("all");
@@ -174,6 +170,7 @@ const Portfolio: React.FC<PortfolioProps> = ({
 						</Link>
 
 						<button
+							type="button"
 							onClick={toggleTheme}
 							className={`p-3 rounded-full transition-all duration-300 hover:scale-110 ${
 								isDark
@@ -230,8 +227,11 @@ const Portfolio: React.FC<PortfolioProps> = ({
 							},
 						].map(({ key, label, count }) => (
 							<button
+								type="button"
 								key={key}
-								onClick={() => setSelectedCategory(key as any)}
+								onClick={() =>
+									setSelectedCategory(key as "featured" | "other" | "all")
+								}
 								className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 flex items-center gap-2 ${
 									selectedCategory === key
 										? isDark
@@ -334,9 +334,9 @@ const Portfolio: React.FC<PortfolioProps> = ({
 
 									{/* Tags */}
 									<div className="flex flex-wrap gap-2 mb-6">
-										{project.tags.map((tag, tagIndex) => (
+										{project.tags.map((tag) => (
 											<span
-												key={tagIndex}
+												key={tag}
 												className={`px-2 py-1 text-xs rounded-lg ${
 													isDark
 														? "bg-white/5 text-gray-400 border border-white/10"
