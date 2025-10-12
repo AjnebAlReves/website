@@ -13,11 +13,9 @@ import {
 } from "lucide-react";
 import type React from "react";
 import { useEffect, useId, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 import { useI18n } from "../hooks/useI18n";
 
 interface ContactProps {
-	onNavigateHome: () => void;
 	isDark: boolean;
 	toggleTheme: () => void;
 }
@@ -239,8 +237,8 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 				<div className="max-w-4xl mx-auto">
 					{/* Navigation */}
 					<nav className="flex items-center justify-between mb-12">
-						<Link
-							to="/"
+						<a
+							href="/"
 							className={`flex items-center gap-2 px-4 py-2 rounded-xl transition-all duration-300 hover:scale-105 ${
 								isDark
 									? "bg-white/10 border border-white/20 hover:bg-white/20"
@@ -249,7 +247,7 @@ const Contact: React.FC<ContactProps> = ({ isDark, toggleTheme }) => {
 						>
 							<ArrowLeft className="w-4 h-4" />
 							<span className="text-sm font-medium">type="button"</span>
-						</Link>
+						</a>
 
 						<button
 							type="button"
