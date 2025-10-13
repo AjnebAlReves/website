@@ -1,0 +1,60 @@
+---
+const personalImageAlt = "Benja T."
+import Badge from "@/components/Badge.astro"
+import InstagramIcon from "@/components/icons/Instagram.astro"
+import MailIcon from "@/components/icons/Mail.astro"
+import SocialPill from "@/components/SocialPill.astro"
+import GitHubIcon from "@/components/icons/GitHub.astro"
+---
+
+<div class="max-w-xl">
+  <div class="flex gap-4 mb-4">
+    <img
+      class="rounded-full shadow-lg size-16"
+      src="/me.png"
+      alt={personalImageAlt}
+    />
+    <a
+      href="https://flyxnodes.xyz"
+      target="_blank"
+      rel="noopener"
+      class="flex items-center transition md:justify-center md:hover:scale-105"
+    >
+      <Badge>Fundador de FlyxNodes</Badge>
+    </a>
+  </div>
+
+  <h1
+    class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
+  >
+    Hey, soy Benja 👋
+  </h1>
+
+  <p
+    class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
+  >
+    <strong>Diseñador, programador y creador de FlyxNodes</strong>.  
+    Desde los 12 años me metí en el mundo del código y el diseño, 
+    y hoy combino ambas pasiones para crear experiencias digitales 
+    con propósito.  
+    Parte del <strong>equipo multimedia de mi iglesia</strong> 🎥, 
+    donde uso la creatividad para comunicar fe y tecnología de forma clara.
+  </p>
+
+  <nav class="flex flex-wrap gap-4 mt-8">
+    <SocialPill href="mailto:hi@byalreves.lat">
+      <MailIcon class="size-4" />
+      Contáctame
+    </SocialPill>
+
+    <SocialPill href="https://github.com/ajnebalreves">
+      <GitHubIcon class="size-4" />
+      GitHub
+    </SocialPill>
+
+    <SocialPill href="https://instagram.com/ajnebalreves">
+      <InstagramIcon class="size-4" />
+      Instagram
+    </SocialPill>
+  </nav>
+</div>

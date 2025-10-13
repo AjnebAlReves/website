@@ -1,0 +1,39 @@
+---
+import ExperienceItem from "./ExperienceItem.astro"
+
+const EXPERIENCE = [
+  {
+    date: "Actualmente...",
+    title: "CEO & Fundador",
+    company: "FlyxNodes",
+    description:
+      "Lidero el desarrollo y crecimiento de FlyxNodes, una plataforma de hosting enfocada en ofrecer servicios para bots, servidores de Minecraft, y proyectos web. Me encargo del diseño, la estrategia y la infraestructura técnica, asegurando una experiencia estable y accesible para los usuarios.",
+    link: "https://flyxnodes.xyz",
+  },
+  {
+    date: "2024 — Presente",
+    title: "Diseñador Gráfico y Multimedia",
+    company: "Iglesia Asamblea Apostólica",
+    description:
+      "Responsable de la comunicación visual y multimedia. Produzco contenido audiovisual para servicios y redes sociales, y gestiono presentaciones con letras, pasajes bíblicos y recursos visuales durante eventos.",
+  },
+  {
+    date: "2023 — Presente",
+    title: "Desarrollador Full Stack / Bot Developer",
+    company: "Proyectos Personales",
+    description:
+      "Desarrollo bots de automatización, dashboards y sistemas de gestión usando Node.js, React, Astro y TailwindCSS. Algunos de mis proyectos incluyen FlyxBot, un asistente de soporte automatizado, y herramientas internas para migración de servidores.",
+    link: "https://github.com/ajnebalreves",
+  },
+]
+---
+
+<ol class="relative mt-16">
+  {
+    EXPERIENCE.map((experience) => (
+      <li>
+        <ExperienceItem {...experience} />
+      </li>
+    ))
+  }
+</ol>
