@@ -1,0 +1,117 @@
+---
+import Layout from '@/layouts/Layout.astro'
+import SectionContainer from '@/components/SectionContainer.astro'
+import TitleSection from '@/components/TitleSection.astro'
+import MailIcon from '@/components/icons/Mail.astro'
+
+// Set this to your API endpoint (can be full URL or relative)
+const CONTACT_API = 'https://eok6mbw1n9jwv47.m.pipedream.net'
+---
+
+<Layout title="Contacto — Envíame un mensaje" description="Página de contacto">
+  <main class="px-4">
+    <SectionContainer class="py-16 md:py-36">
+      <TitleSection>
+        <MailIcon class="size-8" />
+        Contáctame
+      </TitleSection>
+
+      <div class="w-full max-w-2xl mx-auto bg-white dark:bg-gray-900 rounded-2xl shadow-md p-8">
+        <p class="mt-0 text-sm text-gray-600 dark:text-gray-400">Envía un mensaje y te responderé a la brevedad.</p>
+
+        <form id="contact-form" data-endpoint={CONTACT_API} class="mt-6 space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <label class="block">
+            <span class="sr-only">Nombre</span>
+            <input name="name" required class="w-full rounded-lg border px-3 py-2" placeholder="Tu nombre" />
+          </label>
+
+          <label class="block">
+            <span class="sr-only">Email</span>
+            <input name="email" type="email" required class="w-full rounded-lg border px-3 py-2" placeholder="tu@correo.com" />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="sr-only">Asunto</span>
+          <input name="subject" required class="w-full rounded-lg border px-3 py-2" placeholder="Asunto" />
+        </label>
+
+        <!-- Honeypot anti-spam field (hidden from users) -->
+        <div style="display:none;" aria-hidden="true">
+          <label>Deja este campo vacío
+            <input name="website" />
+          </label>
+        </div>
+
+        <label class="block">
+          <span class="sr-only">Mensaje</span>
+          <textarea name="message" rows="6" required class="w-full rounded-lg border px-3 py-2" placeholder="¿En qué puedo ayudarte?"></textarea>
+        </label>
+
+        <div class="flex items-center gap-4">
+          <button id="submit-btn" type="submit" class="inline-flex items-center gap-2 bg-gray-100 text-gray-800 border px-4 py-2 rounded-xl hover:bg-gray-800 hover:text-white transition">Enviar</button>
+          <div id="status" class="text-sm text-gray-600 dark:text-gray-400" aria-live="polite"></div>
+        </div>
+      </form>
+
+      <!-- client-side form submission -->
+      <script type="module">
+        const form = document.getElementById('contact-form')
+        const statusEl = document.getElementById('status')
+        const submitBtn = document.getElementById('submit-btn')
+        const endpoint = form.dataset.endpoint || '/api/contact'
+
+        form.addEventListener('submit', async (e) => {
+          e.preventDefault()
+          statusEl.textContent = ''
+
+          const data = new FormData(form)
+          // Honeypot check
+          if (data.get('website')) {
+            statusEl.textContent = 'Mensaje detectado como spam.'
+            return
+          }
+
+          const payload = {
+            name: String(data.get('name') || '').trim(),
+            email: String(data.get('email') || '').trim(),
+            subject: String(data.get('subject') || '').trim(),
+            message: String(data.get('message') || '').trim(),
+          }
+
+          // simple client-side validation
+          if (!payload.name || !payload.email || !payload.subject || !payload.message) {
+            statusEl.textContent = 'Completa todos los campos.'
+            return
+          }
+
+          submitBtn.disabled = true
+          submitBtn.classList.add('opacity-60')
+
+          try {
+            const res = await fetch(endpoint, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            })
+
+            if (!res.ok) {
+              const err = await res.text()
+              statusEl.textContent = `Error: ${err || res.statusText}`
+            } else {
+              statusEl.textContent = 'Mensaje enviado. ¡Gracias!'
+              form.reset()
+            }
+          } catch (err) {
+            statusEl.textContent = 'Error al enviar. Intenta de nuevo más tarde.'
+          } finally {
+            submitBtn.disabled = false
+            submitBtn.classList.remove('opacity-60')
+          }
+        })
+      </script>
+      </div>
+    </SectionContainer>
+  </main>
+</Layout>

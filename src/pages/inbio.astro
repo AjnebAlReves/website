@@ -1,0 +1,63 @@
+---
+import Layout from "@/layouts/Layout.astro"
+
+import AboutMe from "@/components/AboutMe.astro"
+import Briefcase from "@/components/icons/Briefcase.astro"
+import CodeIcon from "@/components/icons/Code.astro"
+import Experience from "@/components/Experience.astro"
+import ProfileCheck from "@/components/icons/ProfileCheck.astro"
+import Projects from "@/components/Projects.astro"
+import SectionContainer from "@/components/SectionContainer.astro"
+import Hero from "@/components/Hero.astro"
+import TitleSection from "@/components/TitleSection.astro"
+import LinkItem from "@/components/LinkItem.astro"
+import LinkButton from "@/components/LinkButton.astro"
+import GitHubIcon from "@/components/icons/GitHub.astro"
+import InstagramIcon from "@/components/icons/Instagram.astro"
+import MailIcon from "@/components/icons/Mail.astro"
+import LinkIcon from "@/components/icons/Link.astro"
+
+const profile = {
+  name: "Benja T.",
+  handle: "@ajnebalreves",
+  avatar: "/me.png",
+  bio: "Diseñador y desarrollador web."
+}
+
+const links = [
+  { title: "GitHub", href: "https://github.com/ajnebalreves", subtitle: "Código abierto", icon: GitHubIcon },
+  { title: "FlyxNodes", href: "https://flyxnodes.xyz", subtitle: "Hosting gratuito para bots y proyectos", icon: GitHubIcon },
+  { title: "Portfolio", href: "/", subtitle: "Proyectos y trabajos", icon: LinkIcon },
+  { title: "Contactar", href: "mailto:hi@byalreves.lat", subtitle: "Envíame un correo", icon: MailIcon },
+  { title: "Instagram", href: "https://instagram.com/ajnebalreves", subtitle: "Fotos y reels", icon: InstagramIcon },
+]
+---
+
+<Layout title={`Link-in-bio — ${profile.name}`} description={`Enlaces rápidos de ${profile.name}`}>
+  <main class="px-4">
+    <SectionContainer class="py-16 md:py-36">
+      <div class="max-w-xl mx-auto text-center">
+        <img src={profile.avatar} alt={profile.name} class="mx-auto rounded-full shadow-lg w-36 h-36 object-cover" />
+
+        <h1 class="mt-6 text-4xl font-bold tracking-tight text-gray-800 dark:text-white">{profile.name}</h1>
+        <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">{profile.handle}</p>
+
+        <p class="mt-4 text-lg text-gray-700 dark:text-gray-300">{profile.bio}</p>
+
+        <nav class="mt-8 space-y-3 px-2">
+          {links.map((l) => (
+            <LinkItem href={l.href} title={l.title} subtitle={l.subtitle}>
+              <span slot="icon" class="inline-flex items-center justify-center w-10 h-10 bg-white dark:bg-gray-900 rounded-full shadow-sm">
+                <l.icon class="w-5 h-5 mx-auto text-gray-700 dark:text-gray-200" />
+              </span>
+            </LinkItem>
+          ))}
+        </nav>
+
+        <div class="mt-8">
+          <LinkButton href="/">Ir al sitio</LinkButton>
+        </div>
+      </div>
+    </SectionContainer>
+  </main>
+</Layout>
