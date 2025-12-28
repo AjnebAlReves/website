@@ -1,6 +1,5 @@
 ---
 import Layout from "@/layouts/Layout.astro"
-
 import AboutMe from "@/components/AboutMe.astro"
 import Briefcase from "@/components/icons/Briefcase.astro"
 import CodeIcon from "@/components/icons/Code.astro"
@@ -13,39 +12,51 @@ import TitleSection from "@/components/TitleSection.astro"
 ---
 
 <Layout
-  title="Porfolio de ajnebalreves - Desarrollador y Programador Web con 15 años de experiencia"
-  description="Contrata a ajnebalreves para crear tu aplicación web o móvil. Desarrollador Web y Creador de Contenido. Especializado en crear aplicaciones únicas."
+  title="Porfolio de ajnebalreves - Desarrollador y Programador Web"
+  description="Contrata a ajnebalreves para crear tu aplicación web o móvil. Especialista en branding, hosting y desarrollo de sistemas escalables."
 >
   <main class="px-4">
     <SectionContainer class="py-16 md:py-36">
-      <Hero>
-      </slot>
-    </Hero>
+      <Hero />
     </SectionContainer>
+
     <div class="space-y-24">
-    <SectionContainer id="experiencia">
-      <TitleSection>
-        <Briefcase class="size-8" />
-        Experiencia laboral
-      </TitleSection>
-      <Experience />
-    </SectionContainer>
+      <SectionContainer id="experiencia">
+        <TitleSection>
+          <Briefcase class="size-8" />
+          Experiencia laboral
+        </TitleSection>
+        <Experience />
+      </SectionContainer>
 
-    <SectionContainer id="proyectos">
-      <TitleSection>
-        <CodeIcon class="size-7" />
-        Proyectos
-      </TitleSection>
-      <Projects />
-    </SectionContainer>
+      <div class="flex justify-center py-4">
+        <script is:inline>
+          window.atOptions = {
+            'key' : '43138f8aadeff9fff8faafce2ef68f19',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script is:inline src="https://www.highperformanceformat.com/43138f8aadeff9fff8faafce2ef68f19/invoke.js"></script>
+      </div>
 
-    <SectionContainer id="sobre-mi">
-      <TitleSection>
-        <ProfileCheck class="size-8" />
-        Sobre mí
-      </TitleSection>
-      <AboutMe />
-    </SectionContainer>
-  </div>
+      <SectionContainer id="proyectos">
+        <TitleSection>
+          <CodeIcon class="size-7" />
+          Proyectos destacados
+        </TitleSection>
+        <Projects />
+      </SectionContainer>
+
+      <SectionContainer id="sobre-mi">
+        <TitleSection>
+          <ProfileCheck class="size-8" />
+          Sobre mí
+        </TitleSection>
+        <AboutMe />
+      </SectionContainer>
+    </div>
   </main>
 </Layout>
