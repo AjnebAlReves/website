@@ -24,6 +24,35 @@ const { description, title } = Astro.props
     <script async is:inline src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6868536425603417"
      crossorigin="anonymous"></script>
     <ViewTransitions />
+    <script is:inline>
+      const ads = document.querySelectorAll('[data-ad-key]');
+
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+
+          const el = entry.target;
+          const key = el.dataset.adKey;
+
+          window.atOptions = {
+            key,
+            format: 'iframe',
+            height: 50,
+            width: 320,
+            params: {}
+          };
+
+          const s = document.createElement('script');
+          s.src = `https://www.highperformanceformat.com/${key}/invoke.js`;
+          s.async = true;
+
+          el.appendChild(s);
+          observer.unobserve(el);
+        });
+      }, { rootMargin: '100px' });
+
+      ads.forEach(ad => observer.observe(ad));
+    </script>
   </head>
 
   <body class="relative text-black dark:text-white">
@@ -34,18 +63,6 @@ const { description, title } = Astro.props
     >
     </div>
     <Header />
-          <div class="flex justify-center py-4">
-        <script is:inline>
-          window.atOptions = {
-            'key' : '43138f8aadeff9fff8faafce2ef68f19',
-            'format' : 'iframe',
-            'height' : 50,
-            'width' : 320,
-            'params' : {}
-          };
-        </script>
-        <script is:inline src="https://www.highperformanceformat.com/43138f8aadeff9fff8faafce2ef68f19/invoke.js"></script>
-      </div>
     <slot />
     <Footer />
     <style is:global>
@@ -122,6 +139,12 @@ const { description, title } = Astro.props
             border-radius: 9999px;
           }
         }
+        @media (min-width: 768px) {
+          .mobile-ad {
+            display: none;
+          }
+        }
+
       }
     </style>
   </body>
