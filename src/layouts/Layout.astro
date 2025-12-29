@@ -23,37 +23,39 @@ const { description, title } = Astro.props
     <title>{title}</title>
     <script async is:inline src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6868536425603417" crossorigin="anonymous"></script>
     <ViewTransitions />
-        <script is:inline>
+
+    <script is:inline client:load>
       const ads = [
         {
           key: "43138f8aadeff9fff8faafce2ef68f19",
-          format: "iframe",
           width: 320,
           height: 50
         },
         {
           key: "a1fb06ffc2d055175b5476857a7ea98f",
-          format: "iframe",
           width: 468,
           height: 60
         }
       ];
 
-      const pick = ads[Math.floor(Math.random() * ads.length)];
+      const selectedAd = ads[Math.floor(Math.random() * ads.length)];
+      const container = document.getElementById("ads-random");
+
+      if (!container) return;
 
       window.atOptions = {
-        key: pick.key,
-        format: pick.format,
-        width: pick.width,
-        height: pick.height,
+        key: selectedAd.key,
+        format: "iframe",
+        width: selectedAd.width,
+        height: selectedAd.height,
         params: {}
       };
 
-      const s = document.createElement("script");
-      s.src = `https://www.highperformanceformat.com/${pick.key}/invoke.js`;
-      s.async = true;
+      const script = document.createElement("script");
+      script.src = `https://www.highperformanceformat.com/${selectedAd.key}/invoke.js`;
+      script.async = true;
 
-      document.getElementById("ad-slot").appendChild(s);
+      container.appendChild(script);
     </script>
   </head>
 
