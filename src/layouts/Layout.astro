@@ -40,9 +40,7 @@ const { description, title } = Astro.props
 
       const selectedAd = ads[Math.floor(Math.random() * ads.length)];
       const container = document.getElementById("ads-random");
-
-      if (!container) return;
-
+      
       window.atOptions = {
         key: selectedAd.key,
         format: "iframe",
