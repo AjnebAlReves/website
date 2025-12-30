@@ -193,25 +193,24 @@ layout: null
             setTimeout(() => clickCount = 0, 1000);
         });
 
-        // Detección de Adblock REAL
-        let adScriptLoaded = false;
-        
+        // Detección de Adblock REAL - Chequea si el script se bloqueó
         window.addEventListener('load', () => {
-            const checkAdScript = () => {
-                if (typeof atOptions !== 'undefined' || 
-                    typeof invoke !== 'undefined' ||
-                    document.querySelector('script[src*="effectivegatecpm.com"]')?.complete) {
-                    adScriptLoaded = true;
-                }
-            };
-
-            setTimeout(checkAdScript, 3000);
-            
             setTimeout(() => {
-                if (!adScriptLoaded) {
+                // Buscar el script de ads en el DOM
+                const adScript = document.querySelector('script[src*="effectivegatecpm.com/bd/b0/86"]');
+                
+                // Si el script tiene error o no existe contenido cargado
+                if (!adScript) {
                     document.getElementById("ab-banner").style.display = "block";
+                    return;
                 }
-            }, 5000);
+                
+                // Chequear si el script falló al cargar
+                adScript.addEventListener('error', () => {
+                    document.getElementById("ab-banner").style.display = "block";
+                });
+                
+            }, 4000);
         });
 
         // Popunder controlado
