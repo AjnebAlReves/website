@@ -1,97 +1,142 @@
 ---
-/*
-  AFK PAGE
-  - Monetización agresiva controlada
-  - NO index
-  - NO header / footer
-  - Separada del portfolio
+/* AFK PAGE - ByAlReves Studio x FlyxNodes
+  Optimizada para monetización y branding.
 */
+layout: null
 ---
 
 <!doctype html>
 <html lang="es">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AFK mode</title>
-
-    <!-- No indexar -->
+    <title>FlyxNodes | Idle Mode</title>
     <meta name="robots" content="noindex, nofollow" />
 
     <style>
-      body {
-        margin: 0;
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: #0b0b0b;
-        color: #eaeaea;
-        font-family: system-ui, sans-serif;
-        text-align: center;
-      }
+        :root { --amber: #ffbf00; --bg: #0b0b0b; }
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            color: #eaeaea;
+            font-family: 'Onest Variable', system-ui, sans-serif;
+            overflow: hidden;
+        }
 
-      .box {
-        max-width: 420px;
-        padding: 24px;
-        opacity: 0.85;
-      }
+        /* Glow sutil de fondo */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: var(--amber);
+            filter: blur(150px);
+            opacity: 0.1;
+            z-index: -1;
+        }
 
-      .time {
-        font-size: 3rem;
-        font-weight: 600;
-        margin-bottom: 12px;
-        letter-spacing: 0.05em;
-      }
+        .box {
+            z-index: 10;
+            text-align: center;
+            border: 1px solid rgba(255, 191, 0, 0.1);
+            padding: 3rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(10px);
+        }
 
-      .hint {
-        font-size: 0.9rem;
-        opacity: 0.6;
-      }
+        .time {
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--amber);
+            text-shadow: 0 0 20px rgba(255, 191, 0, 0.3);
+            margin: 0;
+        }
+
+        .status {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0.5;
+            margin-top: 10px;
+        }
+
+        /* Banner de Adblock */
+        #ab-banner {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f44336;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            z-index: 100;
+            width: 90%;
+            max-width: 400px;
+        }
     </style>
-  </head>
+</head>
+<body>
 
-  <body>
     <div class="box">
-      <div class="time" id="clock">00:00</div>
-      <div class="hint">Podés dejar esta pestaña abierta</div>
+        <div class="time" id="clock">00:00</div>
+        <div class="status">FlyxNodes Engine Active</div>
     </div>
 
-    <!-- SOCIAL BAR (principal) -->
-    <script
-      async
-      data-cfasync="false"
-      src="https://pl28351302.effectivegatecpm.com/005abbbe83bc52fbb64d769963ac6b6c/invoke.js">
-    </script>
+    <div id="ab-banner">
+        ⚠️ <b>Adblock detectado:</b> Para apoyar el proyecto y mantener los servidores, desactivá tu bloqueador en esta pestaña. 😉
+    </div>
 
-    <!-- Reloj para “vida” visual -->
+    <script is:inline src="https://pl28351302.effectivegatecpm.com/005abbbe83bc52fbb64d769963ac6b6c/invoke.js"></script>
+
     <script is:inline>
-      const clock = document.getElementById("clock");
+        // 1. Reloj
+        const tick = () => {
+            const d = new Date();
+            document.getElementById("clock").textContent = 
+                d.getHours().toString().padStart(2, "0") + ":" + 
+                d.getMinutes().toString().padStart(2, "0");
+        };
+        tick();
+        setInterval(tick, 1000);
 
-      const tick = () => {
-        const d = new Date();
-        clock.textContent =
-          d.getHours().toString().padStart(2, "0") + ":" +
-          d.getMinutes().toString().padStart(2, "0");
-      };
+        // 2. Detector de Adblocker
+        async function checkAdBlock() {
+            let adBlockEnabled = false;
+            const googleAdUrl = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js';
+            try {
+                const response = await fetch(new Request(googleAdUrl), { method: 'HEAD', mode: 'no-cors' });
+                adBlockEnabled = false;
+            } catch (e) {
+                adBlockEnabled = true;
+            }
+            
+            if(adBlockEnabled) {
+                document.getElementById('ab-banner').style.display = 'block';
+            }
+        }
+        checkAdBlock();
 
-      tick();
-      setInterval(tick, 1000);
+        // 3. Popunder controlado
+        if (!sessionStorage.getItem("afk_pop")) {
+            sessionStorage.setItem("afk_pop", "true");
+            setTimeout(() => {
+                const s = document.createElement("script");
+                s.src = "https://pl28351302.effectivegatecpm.com/005abbbe83bc52fbb64d769963ac6b6c/invoke.js";
+                s.async = true;
+                document.head.appendChild(s);
+            }, 6000);
+        }
     </script>
-
-    <!-- POPUNDER CONTROLADO: 1 POR SESIÓN -->
-    <script is:inline>
-      if (!sessionStorage.getItem("afk_pop")) {
-        sessionStorage.setItem("afk_pop", "1");
-
-        setTimeout(() => {
-          const s = document.createElement("script");
-          s.src = "https://pl28351302.effectivegatecpm.com/005abbbe83bc52fbb64d769963ac6b6c/invoke.js";
-          s.async = true;
-          s.setAttribute("data-cfasync", "false");
-          document.body.appendChild(s);
-        }, 8000);
-      }
-    </script>
-  </body>
+</body>
 </html>
