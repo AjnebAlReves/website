@@ -1,3 +1,10 @@
+---
+/* src/pages/afk.astro
+   AFK PAGE - ByAlReves Studio x FlyxNodes
+*/
+layout: null
+---
+
 <!doctype html>
 <html lang="es">
 <head>
@@ -32,7 +39,6 @@
             to { opacity: 1; }
         }
 
-        /* Glow animado */
         body::before {
             content: '';
             position: absolute;
@@ -91,7 +97,6 @@
             font-weight: 300;
         }
 
-        /* Easter egg */
         .easter {
             display: none;
             position: fixed;
@@ -110,7 +115,6 @@
             to { transform: translateX(0); opacity: 1; }
         }
 
-        /* Banner de Adblock */
         #ab-banner {
             display: none;
             position: fixed;
@@ -135,7 +139,6 @@
             to { transform: translate(-50%, 0); opacity: 1; }
         }
 
-        /* Responsive */
         @media (max-width: 600px) {
             .box { padding: 1.5rem 2rem; }
             .status { font-size: 0.75rem; letter-spacing: 2px; }
@@ -157,9 +160,9 @@
         ⚠️ <b>Adblock detectado:</b> Desactivalo acá para mantener los servers online. Gracias kp 😉
     </div>
 
-    <script>
+    <script is:inline>
         // Countdown para refresh de ads (5 minutos)
-        const REFRESH_TIME = 5 * 60; // 5 min en segundos
+        const REFRESH_TIME = 5 * 60;
         let timeLeft = REFRESH_TIME;
         
         const tick = () => {
@@ -168,7 +171,6 @@
             document.getElementById("clock").textContent = `${mins}:${secs}`;
             
             if (timeLeft === 0) {
-                // Refresh de la página para cargar nuevos ads
                 window.location.reload();
             } else {
                 timeLeft--;
@@ -191,14 +193,11 @@
             setTimeout(() => clickCount = 0, 1000);
         });
 
-        // Detección de Adblock REAL - Chequea si el script cargó
+        // Detección de Adblock REAL
         let adScriptLoaded = false;
         
         window.addEventListener('load', () => {
-            // Marcar que el script debería cargar
             const checkAdScript = () => {
-                // Buscar si existe alguna función/variable del script de ads
-                // effectivegatecpm generalmente crea variables globales
                 if (typeof atOptions !== 'undefined' || 
                     typeof invoke !== 'undefined' ||
                     document.querySelector('script[src*="effectivegatecpm.com"]')?.complete) {
@@ -206,10 +205,8 @@
                 }
             };
 
-            // Check inicial
             setTimeout(checkAdScript, 3000);
             
-            // Check final - Si no cargó nada, mostrar banner
             setTimeout(() => {
                 if (!adScriptLoaded) {
                     document.getElementById("ab-banner").style.display = "block";
@@ -230,7 +227,6 @@
         }
     </script>
 
-    <!-- Ad script diferido -->
-    <script async src="https://pl28361288.effectivegatecpm.com/bd/b0/86/bdb086d6c80f71d40d9e84293af445d5.js"></script>
+    <script is:inline src="https://pl28361288.effectivegatecpm.com/bd/b0/86/bdb086d6c80f71d40d9e84293af445d5.js"></script>
 </body>
 </html>
