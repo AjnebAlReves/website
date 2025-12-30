@@ -1,0 +1,97 @@
+---
+/*
+  AFK PAGE
+  - Monetización agresiva controlada
+  - NO index
+  - NO header / footer
+  - Separada del portfolio
+*/
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AFK mode</title>
+
+    <!-- No indexar -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #0b0b0b;
+        color: #eaeaea;
+        font-family: system-ui, sans-serif;
+        text-align: center;
+      }
+
+      .box {
+        max-width: 420px;
+        padding: 24px;
+        opacity: 0.85;
+      }
+
+      .time {
+        font-size: 3rem;
+        font-weight: 600;
+        margin-bottom: 12px;
+        letter-spacing: 0.05em;
+      }
+
+      .hint {
+        font-size: 0.9rem;
+        opacity: 0.6;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="box">
+      <div class="time" id="clock">00:00</div>
+      <div class="hint">Podés dejar esta pestaña abierta</div>
+    </div>
+
+    <!-- SOCIAL BAR (principal) -->
+    <script
+      async
+      data-cfasync="false"
+      src="https://pl28351302.effectivegatecpm.com/005abbbe83bc52fbb64d769963ac6b6c/invoke.js">
+    </script>
+
+    <!-- Reloj para “vida” visual -->
+    <script is:inline>
+      const clock = document.getElementById("clock");
+
+      const tick = () => {
+        const d = new Date();
+        clock.textContent =
+          d.getHours().toString().padStart(2, "0") + ":" +
+          d.getMinutes().toString().padStart(2, "0");
+      };
+
+      tick();
+      setInterval(tick, 1000);
+    </script>
+
+    <!-- POPUNDER CONTROLADO: 1 POR SESIÓN -->
+    <script is:inline>
+      if (!sessionStorage.getItem("afk_pop")) {
+        sessionStorage.setItem("afk_pop", "1");
+
+        setTimeout(() => {
+          const s = document.createElement("script");
+          s.src = "https://pl28351302.effectivegatecpm.com/005abbbe83bc52fbb64d769963ac6b6c/invoke.js";
+          s.async = true;
+          s.setAttribute("data-cfasync", "false");
+          document.body.appendChild(s);
+        }, 8000);
+      }
+    </script>
+  </body>
+</html>
