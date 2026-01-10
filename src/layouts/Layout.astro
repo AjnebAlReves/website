@@ -1,100 +1,151 @@
 ---
-import Header from "../components/Header.astro"
-import Footer from "../components/Footer.astro"
-import { ViewTransitions } from "astro:transitions"
+import Header from "../components/Header.astro";
+import { ClientRouter } from "astro:transitions";
 
-import '../styles/global.css'
+import "../styles/global.css";
 
 interface Props {
-  title: string
-  description: string
+    title: string;
+    description: string;
 }
 
-const { description, title } = Astro.props
+const { description, title } = Astro.props;
 ---
 
 <!doctype html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <title>{title}</title>
-    <ViewTransitions />
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="description" content={description} />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <title>{title}</title>
+        <ClientRouter />
 
-    <!-- Fonts: Inter & JetBrains Mono -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta
+            property="og:image"
+            content="https://byalreves.lat/projects/porfolio.webp"
+        />
+        <meta property="og:url" content="https://byalreves.lat" />
+        <meta property="og:type" content="website" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta
+            name="twitter:image"
+            content="https://byalreves.lat/projects/porfolio.webp"
+        />
+        <meta name="twitter:card" content="summary_large_image" />
 
-    <style>
-        :root { scroll-behavior: smooth; }
-        body { background-color: #050505; color: white; -webkit-font-smoothing: antialiased; }
-        
-        /* Efecto de grano/noise para textura */
-        .noise {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('https://grainy-gradients.vercel.app/noise.svg');
-            opacity: 0.03; pointer-events: none; z-index: 9999;
-        }
+        <!-- Fonts: Inter & JetBrains Mono -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
 
-        /* Patrón de Ñandutí Digital (Placeholder de imagen) */
-        .nanduti-pattern {
-            background-image: radial-gradient(circle at center, #222 1px, transparent 1px);
-            background-size: 20px 20px;
-            opacity: 0.3;
-        }
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "ByAlReves Portfolio",
+                "url": "https://byalreves.lat",
+            }
+        </script>
 
-        .cursor-dot {
-            width: 8px; height: 8px; background: #ffcc00;
-            position: fixed; border-radius: 50%; pointer-events: none;
-            z-index: 10000; transform: translate(-50%, -50%);
-            transition: transform 0.1s ease;
-        }
+        <style>
+            :root {
+                scroll-behavior: smooth;
+            }
+            body {
+                background-color: #050505;
+                color: white;
+                -webkit-font-smoothing: antialiased;
+            }
 
-        /* Clase para imágenes con filtro "Misterioso" */
-        .img-filter {
-            filter: grayscale(1) brightness(0.6) contrast(1.2);
-            transition: filter 0.5s ease;
-        }
-        .project-card:hover .img-filter {
-            filter: grayscale(0.5) brightness(0.8) contrast(1);
-        }
-    </style>
-  </head>
+            /* Efecto de grano/noise para textura */
+            .noise {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: url("https://grainy-gradients.vercel.app/noise.svg");
+                opacity: 0.03;
+                pointer-events: none;
+                z-index: 9999;
+            }
 
-  <body class="overflow-x-hidden">
-    <div class="noise"></div>
-    <div id="cursor" class="cursor-dot hidden md:block"></div>
+            /* Patrón de Ñandutí Digital (Placeholder de imagen) */
+            .nanduti-pattern {
+                background-image: radial-gradient(
+                    circle at center,
+                    #222 1px,
+                    transparent 1px
+                );
+                background-size: 20px 20px;
+                opacity: 0.3;
+            }
 
-    <Header />
-    <slot />
+            .cursor-dot {
+                width: 8px;
+                height: 8px;
+                background: #ffcc00;
+                position: fixed;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 10000;
+                transform: translate(-50%, -50%);
+                transition: transform 0.1s ease;
+            }
 
-    <!-- Scripts -->
-    <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
-    <script is:inline>
+            /* Clase para imágenes con filtro "Misterioso" */
+            .img-filter {
+                filter: grayscale(1) brightness(0.6) contrast(1.2);
+                transition: filter 0.5s ease;
+            }
+            .project-card:hover .img-filter {
+                filter: grayscale(0.5) brightness(0.8) contrast(1);
+            }
+        </style>
+    </head>
 
-        // Custom Cursor Logic
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', (e) => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+    <body class="overflow-x-hidden">
+        <div class="noise"></div>
+        <div id="cursor" class="cursor-dot hidden md:block"></div>
 
-        // Hover Effect para elementos interactivos
-        document.querySelectorAll('a, button, .project-card').forEach(el => {
-            el.addEventListener('mouseenter', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(5)';
-                cursor.style.backgroundColor = 'rgba(255, 204, 0, 0.2)';
-                cursor.style.border = '1px solid #ffcc00';
+        <Header />
+        <slot />
+
+        <!-- Scripts -->
+        <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
+        <script is:inline>
+            // Custom Cursor Logic
+            const cursor = document.getElementById("cursor");
+            document.addEventListener("mousemove", (e) => {
+                cursor.style.left = e.clientX + "px";
+                cursor.style.top = e.clientY + "px";
             });
-            el.addEventListener('mouseleave', () => {
-                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                cursor.style.backgroundColor = '#ffcc00';
-                cursor.style.border = 'none';
-            });
-        });
-    </script>
-  </body>
+
+            // Hover Effect para elementos interactivos
+            document
+                .querySelectorAll("a, button, .project-card")
+                .forEach((el) => {
+                    el.addEventListener("mouseenter", () => {
+                        cursor.style.transform =
+                            "translate(-50%, -50%) scale(5)";
+                        cursor.style.backgroundColor = "rgba(255, 204, 0, 0.2)";
+                        cursor.style.border = "1px solid #ffcc00";
+                    });
+                    el.addEventListener("mouseleave", () => {
+                        cursor.style.transform =
+                            "translate(-50%, -50%) scale(1)";
+                        cursor.style.backgroundColor = "#ffcc00";
+                        cursor.style.border = "none";
+                    });
+                });
+        </script>
+    </body>
 </html>
