@@ -1,60 +1,39 @@
 ---
-const personalImageAlt = "Benja T."
-import Badge from "@/components/Badge.astro"
-import InstagramIcon from "@/components/icons/Instagram.astro"
-import MailIcon from "@/components/icons/Mail.astro"
-import SocialPill from "@/components/SocialPill.astro"
-import GitHubIcon from "@/components/icons/GitHub.astro"
+// No imports needed
 ---
 
-<div class="max-w-xl">
-  <div class="flex gap-4 mb-4">
-    <img
-      class="rounded-full shadow-lg size-16"
-      src="/me.png"
-      alt={personalImageAlt}
-    />
-    <a
-      href="https://flyxnodes.xyz"
-      target="_blank"
-      rel="noopener"
-      class="flex items-center transition md:justify-center md:hover:scale-105"
-    >
-      <Badge>Fundador de FlyxNodes</Badge>
-    </a>
-  </div>
+<!-- Hero -->
+<header class="min-h-screen flex items-center px-6 pt-20 relative overflow-hidden">
+    <!-- Decoración Sutil: Coordenadas de Asunción -->
+    <div class="absolute right-[-5%] top-[20%] rotate-90 font-mono text-[15vh] text-neutral-900 font-black select-none opacity-20">
+        25.2637° S
+    </div>
 
-  <h1
-    class="text-4xl font-bold tracking-tight text-gray-800 sm:text-5xl dark:text-white"
-  >
-    Ha'upei, soy Benja 👋
-  </h1>
+    <div class="max-w-7xl mx-auto w-full z-10">
+        <div class="flex items-center space-x-3 mb-6" data-aos="fade-right">
+            <span class="font-mono text-accent text-xs tracking-widest uppercase">Tech & Creative Studio</span>
+            <span class="h-px w-12 bg-neutral-800"></span>
+            <span class="font-mono text-neutral-500 text-xs">Asunción, PY</span>
+        </div>
+        
+        <h1 class="text-6xl md:text-[9rem] font-black leading-[0.85] tracking-tighter mb-12" data-aos="fade-up" data-aos-delay="100">
+            Mbarete<br>
+            <span class="text-neutral-800 tracking-widest uppercase text-[0.4em] block mt-4">Code & Design</span>
+            Systems<span class="text-accent">.</span>
+        </h1>
 
-  <p
-    class="mt-6 text-xl text-gray-800 dark:[&>strong]:text-yellow-200 [&>strong]:text-yellow-500 [&>strong]:font-semibold dark:text-gray-300"
-  >
-    <strong>Diseñador, programador y creador de FlyxNodes</strong>.  
-    Desde los 12 años me metí en el mundo del código y el diseño, 
-    y hoy combino ambas pasiones para crear experiencias digitales 
-    con propósito.  
-    Parte del <strong>equipo multimedia de mi iglesia</strong> 🎥, 
-    donde uso la creatividad para comunicar fe y tecnología de forma clara.
-  </p>
-
-  <nav class="flex flex-wrap gap-4 mt-8">
-    <SocialPill href="mailto:hi@byalreves.lat">
-      <MailIcon class="size-4" />
-      Contáctame
-    </SocialPill>
-
-    <SocialPill href="https://github.com/ajnebalreves">
-      <GitHubIcon class="size-4" />
-      GitHub
-    </SocialPill>
-
-    <SocialPill href="https://instagram.com/ajnebalreves">
-      <InstagramIcon class="size-4" />
-      Instagram
-    </SocialPill>
-  </nav>
-</div>
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+            <p class="max-w-md text-neutral-400 text-lg leading-relaxed" data-aos="fade-up" data-aos-delay="200">
+                Construyendo el futuro de <span class="text-white italic">FlyxNodes</span>. Mezclando la precisión del código con la calidez de un buen tereré de mañana. 
+            </p>
+            <div class="flex items-center space-x-6" data-aos="fade-up" data-aos-delay="300">
+                <a href="#proyectos" class="group flex items-center space-x-3 font-bold text-sm uppercase tracking-tighter">
+                    <span>Explorar proyectos</span>
+                    <span class="p-4 rounded-full border border-neutral-800 group-hover:bg-accent group-hover:text-black transition-all">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </div>
+</header>

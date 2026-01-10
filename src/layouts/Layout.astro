@@ -1,9 +1,9 @@
 ---
-import "@fontsource-variable/onest"
-
 import Header from "../components/Header.astro"
 import Footer from "../components/Footer.astro"
 import { ViewTransitions } from "astro:transitions"
+
+import '../styles/global.css'
 
 interface Props {
   title: string
@@ -18,132 +18,92 @@ const { description, title } = Astro.props
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
-    <script async is:inline src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6868536425603417" crossorigin="anonymous"></script>
     <ViewTransitions />
 
-    <script is:inline>
-      const ads = [
-        {
-          key: "43138f8aadeff9fff8faafce2ef68f19",
-          width: 320,
-          height: 50
-        },
-        {
-          key: "a1fb06ffc2d055175b5476857a7ea98f",
-          width: 468,
-          height: 60
+    <!-- Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <!-- AOS para animaciones de scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        :root { scroll-behavior: smooth; }
+        body { background-color: #050505; color: white; -webkit-font-smoothing: antialiased; }
+        
+        /* Efecto de grano/noise para textura */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.03; pointer-events: none; z-index: 9999;
         }
-      ];
 
-      const selectedAd = ads[Math.floor(Math.random() * ads.length)];
-      const container = document.getElementById("ads-random");
-      
-      window.atOptions = {
-        key: selectedAd.key,
-        format: "iframe",
-        width: selectedAd.width,
-        height: selectedAd.height,
-        params: {}
-      };
+        /* Patrón de Ñandutí Digital (Placeholder de imagen) */
+        .nanduti-pattern {
+            background-image: radial-gradient(circle at center, #222 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
 
-      const script = document.createElement("script");
-      script.src = `https://www.highperformanceformat.com/${selectedAd.key}/invoke.js`;
-      script.async = true;
+        .cursor-dot {
+            width: 8px; height: 8px; background: #ffcc00;
+            position: fixed; border-radius: 50%; pointer-events: none;
+            z-index: 10000; transform: translate(-50%, -50%);
+            transition: transform 0.1s ease;
+        }
 
-      container.appendChild(script);
-    </script>
+        /* Clase para imágenes con filtro "Misterioso" */
+        .img-filter {
+            filter: grayscale(1) brightness(0.6) contrast(1.2);
+            transition: filter 0.5s ease;
+        }
+        .project-card:hover .img-filter {
+            filter: grayscale(0.5) brightness(0.8) contrast(1);
+        }
+    </style>
   </head>
 
-  <body class="relative text-black dark:text-white">
-    <div class="fixed inset-0 z-[-2] min-h-screen w-full bg-gray-50 dark:bg-gray-950 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(255, 241, 216, 0.5),rgba(255,255,255,0.9))] dark:bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(198, 154, 119, 0.3),rgba(255,255,255,0))]">
-    </div>
-    
+  <body class="overflow-x-hidden">
+    <div class="noise"></div>
+    <div id="cursor" class="cursor-dot hidden md:block"></div>
+
     <Header />
     <slot />
     <Footer />
-    <style is:global>
-      :root {
-        color-scheme: light dark;
-      }
 
-      html {
-        font-family: "Onest Variable", system-ui, sans-serif;
-        scroll-behavior: smooth;
-      }
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script is:inline>
+        // Init AOS
+        AOS.init({
+            duration: 1200,
+            once: true,
+            easing: 'ease-in-out-cubic'
+        });
 
-      body {
-        color: rgba(19, 19, 19, 1);
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        overscroll-behavior: none;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-      }
-      /* Usar fixed para el background evita cálculos de scroll innecesarios */
-      .bg-fixed-layer { position: fixed; inset: 0; }
+        // Custom Cursor Logic
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
 
-      @media (prefers-reduced-motion: reduce) {
-        html {
-          scroll-behavior: auto;
-        }
-      }
-
-      @media (prefers-color-scheme: dark) {
-        body {
-          color: rgba(255, 255, 255, 0.9);
-        }
-      }
-
-      #header-nav {
-        animation: blur linear both 0.5s;
-        animation-timeline: scroll();
-        animation-range: 0 500px;
-      }
-
-      @keyframes blur {
-        to {
-          backdrop-filter: blur(20px);
-          border-width: 1px;
-          border-color: rgba(0, 0, 0);
-          padding: 0.25rem 0.75rem;
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          background-color: rgb(229, 229, 229);
-          border-radius: 9999px;
-        }
-      }
-
-      @media (prefers-color-scheme: dark) {
-        @keyframes blur {
-          from {
-            border: 0px;
-          }
-          to {
-            box-shadow:
-              0px 5px 50px -5px rgba(0, 0, 0, 0.1),
-              0px 0px 0 1px rgba(0, 0, 0, 0.3);
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(20px);
-            border-width: 1px;
-            border-color: rgba(0, 0, 0);
-            padding-left: 0.75rem;
-            padding-right: 0.75rem;
-            padding-top: 0.25rem;
-            padding-bottom: 0.25rem;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.3);
-            border-radius: 9999px;
-          }
-        }
-      }
-    </style>
+        // Hover Effect para elementos interactivos
+        document.querySelectorAll('a, button, .project-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(5)';
+                cursor.style.backgroundColor = 'rgba(255, 204, 0, 0.2)';
+                cursor.style.border = '1px solid #ffcc00';
+            });
+            el.addEventListener('mouseleave', () => {
+                cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                cursor.style.backgroundColor = '#ffcc00';
+                cursor.style.border = 'none';
+            });
+        });
+    </script>
   </body>
 </html>
