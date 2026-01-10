@@ -27,8 +27,6 @@ const { description, title } = Astro.props
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
-    <!-- AOS para animaciones de scroll -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
         :root { scroll-behavior: smooth; }
@@ -72,17 +70,10 @@ const { description, title } = Astro.props
 
     <Header />
     <slot />
-    <Footer />
 
     <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <!-- <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script> -->
     <script is:inline>
-        // Init AOS
-        AOS.init({
-            duration: 1200,
-            once: true,
-            easing: 'ease-in-out-cubic'
-        });
 
         // Custom Cursor Logic
         const cursor = document.getElementById('cursor');
