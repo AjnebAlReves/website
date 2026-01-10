@@ -1,0 +1,43 @@
+---
+import Layout from "@/layouts/Layout.astro"
+
+const posts = Object.values(import.meta.glob('../../content/blog/*.md', { eager: true }))
+---
+
+<Layout
+  title="Blog — B. Digital Portfolio"
+  description="Reflexiones sobre desarrollo web, diseño y cultura paraguaya."
+>
+  <section class="py-32 px-6">
+    <div class="max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-16">
+        Blog<span class="text-accent">.</span>
+      </h1>
+
+      <div class="space-y-12">
+        {posts.map(post => (
+          <article class="border-b border-neutral-800 pb-12">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+              <h2 class="text-2xl font-bold">
+                <a href={`/blog/${post.frontmatter.slug || post.file.split('/').pop().replace('.md', '')}`} class="hover:text-accent transition-colors">
+                  {post.frontmatter.title}
+                </a>
+              </h2>
+              <time class="text-neutral-500 font-mono text-sm" datetime={post.frontmatter.pubDate}>
+                {new Date(post.frontmatter.pubDate).toLocaleDateString('es-ES', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric'
+                })}
+              </time>
+            </div>
+            <p class="text-neutral-400 mb-4">{post.frontmatter.description}</p>
+            <a href={`/blog/${post.frontmatter.slug || post.file.split('/').pop().replace('.md', '')}`} class="text-accent font-mono text-sm uppercase tracking-wider hover:underline">
+              Leer más →
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>

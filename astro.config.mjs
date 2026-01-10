@@ -7,7 +7,7 @@ import robotsTxt from "astro-robots-txt"
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), robotsTxt()],
-  site: 'https://porfolio.dev/',
+  site: 'https://byalreves.lat/',
 
   vite: {
     resolve: {
@@ -15,5 +15,15 @@ export default defineConfig({
         '@': path.resolve('./src')
       }
     }
+  },
+  markdown: {
+    remarkPlugins: [],
+    rehypePlugins: [],
+    shikiConfig: {
+      theme: 'dracula',
+      wrap: true
+    },
+    // Asegúrate de que esto esté habilitado
+    syntaxHighlight: 'shiki',
   }
 })

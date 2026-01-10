@@ -1,0 +1,174 @@
+---
+import Layout from "@/layouts/Layout.astro";
+
+export async function getStaticPaths() {
+    const posts = Object.values(
+        import.meta.glob("../../content/blog/*.md", { eager: true }),
+    );
+
+    return posts.map((post: any) => {
+        const slug =
+            post.frontmatter.slug ||
+            post.file.split("/").pop().replace(".md", "");
+        return {
+            params: { slug },
+            props: { post },
+        };
+    });
+}
+
+const { post } = Astro.props;
+const { Content, rawContent } = post; // rawContent nos sirve para calcular el tiempo
+
+// --- Lógica de Tiempo de Lectura ---
+const wordsPerMinute = 150;
+const text = rawContent(); // Obtiene el string plano del markdown
+const cleanText = text.replace(/<\/?[^>]+(>|$)/g, ""); // Limpia etiquetas HTML si las hay
+const wordCount = cleanText.split(/\s+/g).length;
+const readingTime = Math.ceil(wordCount / wordsPerMinute);
+---
+
+<Layout
+    title={`${post.frontmatter.title} — ByAlReves`}
+    description={post.frontmatter.description}
+>
+    <article class="py-24 md:py-32 px-6 animate-fade-in">
+        <div class="max-w-3xl mx-auto">
+            <header class="mb-12">
+                <div
+                    class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500"
+                >
+                    <time
+                        datetime={post.frontmatter.pubDate}
+                        class="text-accent border-r border-neutral-800 pr-4"
+                    >
+                        {
+                            new Date(
+                                post.frontmatter.pubDate,
+                            ).toLocaleDateString("es-PY", {
+                                year: "numeric",
+                                month: "short",
+                                day: "numeric",
+                            })
+                        }
+                    </time>
+                    <span class="flex items-center gap-1.5">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="lucide lucide-clock"
+                            alt="reloj"
+                            ><circle cx="12" cy="12" r="10"
+                            ></circle><polyline points="12 6 12 12 16 14"
+                            ></polyline></svg
+                        >
+                        {readingTime} min de lectura
+                    </span>
+                </div>
+
+                <h1
+                    class="text-5xl md:text-7xl font-black tracking-tighter mb-6 leading-[0.85] text-white"
+                >
+                    {post.frontmatter.title}
+                </h1>
+
+                <p
+                    class="text-xl text-neutral-400 leading-relaxed font-light italic border-l-2 border-accent pl-6 py-2"
+                >
+                    {post.frontmatter.description}
+                </p>
+            </header>
+
+            {
+                post.frontmatter.heroImage && (
+                    <div class="relative group mb-16 overflow-hidden rounded-2xl border border-neutral-800 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                        <img
+                            src={post.frontmatter.heroImage}
+                            alt={post.frontmatter.title}
+                            class="w-full aspect-[16/9] object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
+                    </div>
+                )
+            }
+
+            <div
+                class="prose prose-lg prose-invert max-w-none
+            prose-headings:font-black prose-headings:tracking-tight
+            prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-6
+            prose-p:text-neutral-300 prose-p:leading-relaxed
+            prose-strong:text-white prose-strong:font-bold
+            prose-em:text-neutral-400 prose-em:italic
+            prose-a:text-accent prose-a:underline prose-a:underline-offset-4
+            prose-blockquote:border-accent prose-blockquote:bg-neutral-900/30
+            prose-blockquote:py-1 prose-blockquote:rounded-r-lg
+            prose-code:text-amber-400 prose-code:bg-neutral-900
+            prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
+            prose-code:before:content-[''] prose-code:after:content-['']
+            prose-pre:border prose-pre:border-neutral-800 prose-pre:bg-[#0d0d0d]
+            prose-li:marker:text-accent
+            prose-ul:list-disc prose-ol:list-decimal"
+            >
+                <Content />
+            </div>
+
+            <footer
+                class="mt-24 pt-12 border-t border-neutral-800 flex flex-col md:flex-row justify-between items-center"
+            >
+                <a
+                    href="/blog"
+                    class="group flex items-center gap-3 text-neutral-500 hover:text-white transition-colors font-mono text-xs tracking-widest uppercase"
+                >
+                    <span
+                        class="p-2 rounded-full border border-neutral-800 group-hover:border-accent transition-colors"
+                    >
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            ><path d="m15 18-6-6 6-6"></path></svg
+                        >
+                    </span>
+                    Volver a la bitácora
+                </a>
+            </footer>
+        </div>
+    </article>
+</Layout>
+
+<style is:global>
+    /* Personalización extra para bloques de código */
+    pre {
+        padding: 1.5rem !important;
+        border-radius: 1rem !important;
+    }
+
+    /* Animación suave */
+    .animate-fade-in {
+        animation: slideUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    @keyframes slideUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>
