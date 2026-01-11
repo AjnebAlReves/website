@@ -1,101 +1,197 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 
+// 1. Tipado e Importación
 interface Post {
     frontmatter: {
         title: string;
         description: string;
         pubDate: string;
+        tags?: string[]; // Nueva propiedad
+        heroImage?: string;
         slug?: string;
     };
     file: string;
 }
 
-const posts = Object.values(
-    import.meta.glob("../../content/blog/*.md", { eager: true }),
-) as any[];
+const rawPosts = Object.values(
+    import.meta.glob<Post>("../../content/blog/*.md", { eager: true }),
+);
+
+// 2. Procesamiento de Posts
+const posts = rawPosts
+    .sort(
+        (a, b) =>
+            new Date(b.frontmatter.pubDate).getTime() -
+            new Date(a.frontmatter.pubDate).getTime(),
+    )
+    .map((post) => ({
+        ...post.frontmatter,
+        slug:
+            post.frontmatter.slug ||
+            post.file.split("/").pop()?.replace(".md", ""),
+    }));
+
+// 3. Extraer Tags únicos
+const allTags = [...new Set(posts.flatMap((post) => post.tags || []))].sort();
 ---
 
-<Layout
-    title="Blog — B. Digital Portfolio"
-    description="Reflexiones sobre desarrollo web, diseño y cultura paraguaya."
->
+<Layout title="Blog — B. Digital Portfolio" description="Mi bitácora del pensamiento. Escribo cosas que sean interesantes o solo desahogarme.">
     <section class="py-32 px-6">
         <div class="max-w-4xl mx-auto">
-            <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-16">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-8">
                 Blog<span class="text-accent">.</span>
             </h1>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+            <div class="mb-16 space-y-6">
+                <input
+                    type="text"
+                    id="blog-search"
+                    placeholder="Buscar artículos por título o descripción..."
+                    class="w-full bg-neutral-900 border border-neutral-800 rounded-xl px-6 py-4 text-white focus:border-accent outline-none transition-all font-mono text-sm"
+                />
+
+                <div class="flex flex-wrap gap-2" id="tags-container">
+                    <button
+                        data-tag="all"
+                        class="tag-filter active px-4 py-1.5 rounded-full border border-neutral-800 text-xs font-mono transition-all hover:border-accent"
+                    >
+                        Todos
+                    </button>
+                    {
+                        allTags.map((tag) => (
+                            <button
+                                data-tag={tag}
+                                class="tag-filter px-4 py-1.5 rounded-full border border-neutral-800 text-xs font-mono transition-all hover:border-accent text-neutral-400"
+                            >
+                                #{tag}
+                            </button>
+                        ))
+                    }
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16" id="blog-grid">
                 {
-                    posts && posts.length > 0 ? (
-                        posts.map((post) => (
-                            <div class="project-card group">
-                                <div class="aspect-[16/10] overflow-hidden bg-neutral-900 rounded-2xl mb-8 relative">
-                                    <div class="absolute inset-0 bg-neutral-900 flex items-center justify-center font-black text-[12vw] text-neutral-800 select-none group-hover:text-accent/10 transition-colors">
-                                        {post.frontmatter.heroImage ? (
-                                            <img
-                                                src={post.frontmatter.heroImage}
-                                                alt={post.frontmatter.title}
-                                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                            />
-                                        ) : (
-                                            <span class="text-4xl">📝</span>
-                                        )}
+                    posts.map((post) => (
+                        <article
+                            class="post-item group flex flex-col"
+                            data-title={post.title.toLowerCase()}
+                            data-description={post.description.toLowerCase()}
+                            data-tags={JSON.stringify(post.tags || [])}
+                        >
+                            <a
+                                href={`/blog/${post.slug}`}
+                                class="block mb-8 overflow-hidden rounded-2xl bg-neutral-900 aspect-[16/10]"
+                            >
+                                {post.heroImage ? (
+                                    <img
+                                        src={post.heroImage}
+                                        alt={post.title}
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                    />
+                                ) : (
+                                    <div class="w-full h-full flex items-center justify-center bg-neutral-900 text-4xl">
+                                        📝
                                     </div>
-                                </div>
-                                <div class="flex justify-between items-start">
-                                    <div>
-                                        <h3 class="text-3xl font-bold tracking-tighter mb-2">
-                                            <a
-                                                href={`/blog/${post.frontmatter.slug || post.file.split("/").pop().replace(".md", "")}`}
-                                                class="hover:text-accent transition-colors"
-                                            >
-                                                {post.frontmatter.title}
-                                            </a>
-                                        </h3>
-                                        <p class="text-neutral-500 font-mono text-xs">
-                                            {post.frontmatter.description}
-                                        </p>
-                                        <time
-                                            class="text-neutral-400 font-mono text-xs mt-2"
-                                            datetime={post.frontmatter.pubDate}
-                                        >
-                                            {new Date(
-                                                post.frontmatter.pubDate,
-                                            ).toLocaleDateString("es-ES", {
-                                                year: "numeric",
-                                                month: "long",
-                                                day: "numeric",
-                                            })}
-                                        </time>
-                                    </div>
+                                )}
+                            </a>
+                            <div class="flex flex-col flex-1">
+                                <h3 class="text-3xl font-bold tracking-tighter mb-2">
                                     <a
-                                        href={`/blog/${post.frontmatter.slug || post.file.split("/").pop().replace(".md", "")}`}
-                                        class="p-3 border border-neutral-800 rounded-full hover:bg-white hover:text-black transition-colors"
+                                        href={`/blog/${post.slug}`}
+                                        class="hover:text-accent transition-colors"
                                     >
-                                        <svg
-                                            class="w-5 h-5"
-                                            fill="none"
-                                            stroke="currentColor"
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path
-                                                stroke-linecap="round"
-                                                stroke-linejoin="round"
-                                                stroke-width="2"
-                                                d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
-                                            />
-                                        </svg>
+                                        {post.title}
                                     </a>
+                                </h3>
+                                <p class="text-neutral-500 font-mono text-xs line-clamp-2 mb-4 italic">
+                                    {post.description}
+                                </p>
+                                <div class="flex flex-wrap gap-2 mt-auto">
+                                    {post.tags?.map((tag) => (
+                                        <span class="text-[10px] uppercase tracking-widest text-accent/60">
+                                            #{tag}
+                                        </span>
+                                    ))}
                                 </div>
                             </div>
-                        ))
-                    ) : (
-                        <p>No hay posts disponibles.</p>
-                    )
+                        </article>
+                    ))
                 }
+            </div>
+
+            <div
+                id="no-results"
+                class="hidden py-20 text-center border border-dashed border-neutral-800 rounded-2xl"
+            >
+                <p class="text-neutral-500 italic">
+                    No se encontraron artículos que coincidan.
+                </p>
             </div>
         </div>
     </section>
 </Layout>
+
+<style>
+    .tag-filter.active {
+        @apply bg-accent text-black border-accent;
+    }
+</style>
+
+<script>
+    const searchInput = document.getElementById(
+        "blog-search",
+    ) as HTMLInputElement;
+    const tagButtons = document.querySelectorAll(".tag-filter");
+    const posts = document.querySelectorAll(".post-item");
+    const noResults = document.getElementById("no-results");
+
+    let currentTag = "all";
+    let searchTerm = "";
+
+    function filterPosts() {
+        let hasVisible = false;
+
+        posts.forEach((post) => {
+            const el = post as HTMLElement;
+            const title = el.dataset.title || "";
+            const desc = el.dataset.description || "";
+            const tags = JSON.parse(el.dataset.tags || "[]");
+
+            const matchesSearch =
+                title.includes(searchTerm) || desc.includes(searchTerm);
+            const matchesTag =
+                currentTag === "all" || tags.includes(currentTag);
+
+            if (matchesSearch && matchesTag) {
+                el.style.display = "flex";
+                hasVisible = true;
+            } else {
+                el.style.display = "none";
+            }
+        });
+
+        noResults?.classList.toggle("hidden", hasVisible);
+    }
+
+    searchInput?.addEventListener("input", (e) => {
+        searchTerm = (e.target as HTMLInputElement).value.toLowerCase();
+        filterPosts();
+    });
+
+    tagButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+            tagButtons.forEach((b) =>
+                b.classList.remove("active", "text-black"),
+            );
+            tagButtons.forEach((b) => b.classList.add("text-neutral-400"));
+
+            btn.classList.add("active");
+            btn.classList.remove("text-neutral-400");
+
+            currentTag = (btn as HTMLElement).dataset.tag || "all";
+            filterPosts();
+        });
+    });
+</script>

@@ -7,9 +7,10 @@ import "../styles/global.css";
 interface Props {
     title: string;
     description: string;
+    ogImg?: string;
 }
 
-const { description, title } = Astro.props;
+const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
 ---
 
 <!doctype html>
@@ -26,7 +27,7 @@ const { description, title } = Astro.props;
         <meta property="og:description" content={description} />
         <meta
             property="og:image"
-            content="https://byalreves.lat/projects/porfolio.webp"
+            content={ogImg}
         />
         <meta property="og:url" content="https://byalreves.lat" />
         <meta property="og:type" content="website" />
@@ -34,7 +35,7 @@ const { description, title } = Astro.props;
         <meta name="twitter:description" content={description} />
         <meta
             name="twitter:image"
-            content="https://byalreves.lat/projects/porfolio.webp"
+            content={ogImg}
         />
         <meta name="twitter:card" content="summary_large_image" />
 
