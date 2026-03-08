@@ -1,40 +1,72 @@
 ---
-// No imports needed
+// Hero.astro - Minimalista, directo, con acento cultural sutil
 ---
 
-<!-- Hero -->
-<header class="min-h-screen flex items-center px-6 pt-20 relative overflow-hidden">
-    <!-- Decoración Sutil: Coordenadas de Asunción -->
-    <div class="absolute right-[-5%] top-[20%] rotate-90 font-mono text-[15vh] text-neutral-900 font-black select-none opacity-20">
-        25.2637° S
-        <img src="/paraguay.svg" alt="Paraguay Silhouette" class="w-16 h-16 inline-block"/>
-    </div>
+<header class="min-h-screen flex items-center px-6 md:px-12 py-20">
+    <div class="max-w-4xl">
+        <!-- Subtítulo: Ubicación y rol -->
+        <p class="text-sm text-neutral-400 mb-8 tracking-wide">
+            Asunción, Paraguay · Tech & Design · <span id="age">17.00000000</span> años
+        </p>
 
-    <div class="max-w-7xl mx-auto w-full z-10">
-        <div class="flex items-center space-x-3 mb-6">
-            <span class="font-mono text-accent text-xs tracking-widest uppercase">Tech & Creative Studio</span>
-            <span class="h-px w-12 bg-neutral-800"></span>
-            <span class="font-mono text-neutral-500 text-xs">Asunción, PY</span>
-        </div>
-        
-        <h1 class="text-6xl md:text-[9rem] font-black leading-[0.85] tracking-tighter mb-12">
-            Mbarete<br>
-            <span class="text-gray-400 tracking-widest uppercase text-[0.4em] block mt-4">Code & Design</span>
-            Systems<span class="text-accent">.</span>
+        <!-- Nombre principal: Simple, impactante -->
+        <h1 class="text-6xl md:text-7xl font-black mb-6 leading-tight">
+            Benja<span class="text-amber-400">.</span>
         </h1>
 
-        <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
-            <p class="max-w-md text-neutral-400 text-lg leading-relaxed">
-                Construyendo el futuro de <span class="text-white italic">FlyxNodes</span>. Mezclando la precisión del código con la calidez de un buen tereré de mañana. 
-            </p>
-            <div class="flex items-center space-x-6">
-                <a href="#proyectos" class="group flex items-center space-x-3 font-bold text-sm uppercase tracking-tighter">
-                    <span>Explorar proyectos</span>
-                    <span class="p-4 rounded-full border border-neutral-800 group-hover:bg-accent group-hover:text-black transition-all">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                    </span>
-                </a>
+        <!-- Descripción: Dos líneas que hablan de lo que construyes -->
+        <p class="text-lg md:text-xl text-neutral-300 max-w-2xl mb-12 leading-relaxed font-light">
+            Construyendo infraestructura para <span class="font-semibold text-white">FlyxNodes</span>. 
+            Diseñando identidades para <span class="font-semibold text-white">ByAlReves Studio</span>.
+            <br />
+            <span class="text-neutral-500 text-sm mt-2 block">Full-stack developer. UX/UI designer. Terrañero.</span>
+        </p>
+
+        <!-- CTA: Minimalista, solo lo necesario -->
+        <div class="flex gap-6 items-center">
+            <a href="#proyectos" class="text-sm text-neutral-300 border-b border-amber-400 hover:text-amber-400 transition pb-1">
+                Ver proyectos →
+            </a>
+            <a href="#about" class="text-sm text-neutral-400 hover:text-neutral-300 transition">
+                Sobre mí
+            </a>
+        </div>
+
+        <!-- Divider sutil: Solo una línea -->
+        <div class="mt-16 pt-8 border-t border-neutral-800"></div>
+
+        <!-- Stats: Información clave, nada más -->
+        <div class="grid grid-cols-3 gap-8 mt-8 text-xs text-neutral-500">
+            <div>
+                <p class="font-mono mb-1">10+</p>
+                <p class="text-neutral-600">Proyectos completados</p>
+            </div>
+            <div>
+                <p class="font-mono mb-1">3</p>
+                <p class="text-neutral-600">Años en desarrollo</p>
+            </div>
+            <div>
+                <p class="font-mono mb-1">24×7</p>
+                <p class="text-neutral-600">Ops & Servidor</p>
             </div>
         </div>
     </div>
 </header>
+
+<script>
+    // Edad exacta dinámica (trasladado desde Layout)
+    const birthDate = new Date('2008-10-31T15:00:00Z'); 
+    
+    function updateAge() {
+        const now = new Date();
+        const diffInMs = (now as any) - (birthDate as any);
+        const ageInYears = diffInMs / (1000 * 60 * 60 * 24 * 365.25);
+        const ageElement = document.getElementById('age');
+        if (ageElement) {
+            ageElement.innerText = ageInYears.toFixed(8);
+        }
+    }
+
+    setInterval(updateAge, 500);
+    updateAge();
+</script>

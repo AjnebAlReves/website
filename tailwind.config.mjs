@@ -5,13 +5,17 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				dark: '#050505',
-				accent: '#ffcc00', // Ámbar Flyx
-				paraguay: '#d52b1e', // Un rojo sutil para detalles
+				dark: '#000000',
+				accent: '#fbbf24', // Ámbar (equivalente a amber-400 en Tailwind)
+				paraguay: '#dc2626', // Rojo Paraguay
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
 				mono: ['JetBrains Mono', 'monospace'],
+			},
+			spacing: {
+				'safe-top': 'max(env(safe-area-inset-top), 1rem)',
+				'safe-bottom': 'max(env(safe-area-inset-bottom), 1rem)',
 			}
 		},
 	},
