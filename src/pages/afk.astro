@@ -1,0 +1,231 @@
+---
+/* src/pages/afk.astro
+   AFK PAGE - ByAlReves Studio x FlyxNodes
+*/
+layout: null
+---
+
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FlyxNodes | Idle Mode</title>
+    <meta name="robots" content="noindex, nofollow" />
+    <style>
+        :root { 
+            --amber: #ffbf00; 
+            --bg: #0b0b0b; 
+        }
+        
+        * { box-sizing: border-box; }
+        
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg);
+            color: #eaeaea;
+            font-family: 'Onest Variable', system-ui, sans-serif;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to { opacity: 1; }
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, var(--amber) 0%, transparent 70%);
+            filter: blur(120px);
+            opacity: 0;
+            animation: glowPulse 4s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.05; transform: scale(1); }
+            50% { opacity: 0.15; transform: scale(1.1); }
+        }
+
+        .box {
+            z-index: 10;
+            text-align: center;
+            border: 1px solid rgba(255, 191, 0, 0.15);
+            padding: 2rem 3rem;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transform: scale(0.95);
+            animation: boxEnter 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.2s forwards;
+        }
+
+        @keyframes boxEnter {
+            to { transform: scale(1); }
+        }
+
+        .time {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 700;
+            color: var(--amber);
+            text-shadow: 0 0 30px rgba(255, 191, 0, 0.4);
+            margin: 0;
+            letter-spacing: 0.05em;
+            animation: timePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes timePulse {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 191, 0, 0.3); }
+            50% { text-shadow: 0 0 40px rgba(255, 191, 0, 0.6); }
+        }
+
+        .status {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            opacity: 0.4;
+            margin-top: 12px;
+            font-weight: 300;
+        }
+
+        .easter {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 191, 0, 0.1);
+            border: 1px solid var(--amber);
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(120%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        #ab-banner {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #f44336, #e91e63);
+            color: white;
+            padding: 14px 24px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            box-shadow: 0 10px 40px rgba(244, 67, 54, 0.4);
+            z-index: 100;
+            width: 90%;
+            max-width: 420px;
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from { transform: translate(-50%, 120%); opacity: 0; }
+            to { transform: translate(-50%, 0); opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .box { padding: 1.5rem 2rem; }
+            .status { font-size: 0.75rem; letter-spacing: 2px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="box">
+        <div class="time" id="clock">05:00</div>
+        <div class="status">Next Ad Refresh</div>
+    </div>
+
+    <div class="easter" id="easter">
+        🚀 <b>FlyxNodes</b> On Top
+    </div>
+
+    <div id="ab-banner">
+        ⚠️ <b>Adblock detectado:</b> Desactivalo acá para mantener los servers online. Gracias 😉
+    </div>
+
+    <script is:inline>
+        // Countdown para refresh de ads (5 minutos)
+        const REFRESH_TIME = 0.5 * 60;
+        let timeLeft = REFRESH_TIME;
+        
+        const tick = () => {
+            const mins = Math.floor(timeLeft / 60).toString().padStart(2, "0");
+            const secs = (timeLeft % 60).toString().padStart(2, "0");
+            document.getElementById("clock").textContent = `${mins}:${secs}`;
+            
+            if (timeLeft === 0) {
+                window.location.reload();
+            } else {
+                timeLeft--;
+            }
+        };
+        
+        tick();
+        setInterval(tick, 1000);
+
+        // Easter egg - Triple click
+        let clickCount = 0;
+        document.querySelector('.box').addEventListener('click', () => {
+            clickCount++;
+            if (clickCount === 3) {
+                const easter = document.getElementById('easter');
+                easter.style.display = 'block';
+                setTimeout(() => easter.style.display = 'none', 3000);
+                clickCount = 0;
+            }
+            setTimeout(() => clickCount = 0, 1000);
+        });
+
+        // Detección de Adblock REAL - Chequea si el script se bloqueó
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                // Buscar el script de ads en el DOM
+                const adScript = document.querySelector('script[src*="effectivegatecpm.com/bd/b0/86"]');
+                
+                // Si el script tiene error o no existe contenido cargado
+                if (!adScript) {
+                    document.getElementById("ab-banner").style.display = "block";
+                    return;
+                }
+                
+                // Chequear si el script falló al cargar
+                adScript.addEventListener('error', () => {
+                    document.getElementById("ab-banner").style.display = "block";
+                });
+                
+            }, 4000);
+        });
+
+        // Popunder controlado
+        if (!sessionStorage.getItem("afk_pop")) {
+            sessionStorage.setItem("afk_pop", "1");
+            
+            setTimeout(() => {
+                const s = document.createElement("script");
+                s.src = "https://pl28351302.effectivegatecpm.com/005abbbe83bc52fbb64d769963ac6b6c/invoke.js";
+                s.async = true;
+                document.body.appendChild(s);
+            }, 8000);
+        }
+    </script>
+
+    <script is:inline src="https://pl28361288.effectivegatecpm.com/bd/b0/86/bdb086d6c80f71d40d9e84293af445d5.js"></script>
+</body>
+</html>

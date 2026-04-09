@@ -11,197 +11,73 @@ interface Props {
 const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content={description} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:image" content={ogImg} />
-        <title>{title}</title>
-        <link
-            href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap"
-            rel="stylesheet"
-        />
-        <link
-            href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
-            rel="stylesheet"
-        />
-        <style>
-            * {
-                box-sizing: border-box;
-            }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={description}>
+    <meta property="og:title" content={title}>
+    <meta property="og:description" content={description}>
+    <meta property="og:image" content={ogImg}>
+    <title>{title}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
 
-            html,
-            body {
-                margin: 0;
-                padding: 0;
-            }
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
 
-            body {
-                background-color: #000000;
-                color: #ffffff;
-                font-family: "Inter", sans-serif;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
 
-            /* Links globales: minimalista */
-            a {
-                transition:
-                    color 0.2s ease,
-                    border-color 0.2s ease;
-                text-decoration: none;
-            }
+        /* Links globales: minimalista */
+        a {
+            transition: color 0.2s ease, border-color 0.2s ease;
+            text-decoration: none;
+        }
 
-            /* Scroll smooth */
-            html {
-                scroll-behavior: smooth;
-            }
+        /* Scroll smooth */
+        html {
+            scroll-behavior: smooth;
+        }
 
-            /* Remover outline por defecto en navegación */
-            nav a:focus {
-                outline: 2px solid #fbbf24;
-                outline-offset: 2px;
-            }
-                    <style>
-            @keyframes slide-down {
-                from {
-                    transform: translateY(-100%);
-                    opacity: 0;
-                }
-                to {
-                    transform: translateY(0);
-                    opacity: 1;
-                }
-            }
+        /* Remover outline por defecto en navegación */
+        nav a:focus {
+            outline: 2px solid #fbbf24;
+            outline-offset: 2px;
+        }
+    </style>
+    <ClientRouter />
+</head>
+<body class="flex flex-col min-h-screen">
 
-            .animate-slide-down {
-                animation: slide-down 0.3s ease-out forwards;
-            }
-        </style>
-        <ClientRouter />
-    </head>
-    <body class="flex flex-col min-h-screen">
-        <div
-            id="domain-notice"
-            class="hidden fixed top-0 left-0 right-0 z-50 animate-slide-down"
-        >
-            <div
-                class="bg-gradient-to-r from-amber-500 to-amber-600 text-black px-6 py-3 shadow-lg"
-            >
-                <div
-                    class="max-w-7xl mx-auto flex items-center justify-between gap-4"
-                >
-                    <div class="flex items-center gap-3 flex-1">
-                        <svg
-                            class="w-5 h-5 flex-shrink-0"
-                            fill="currentColor"
-                            viewBox="0 0 20 20"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"
-                                clip-rule="evenodd"></path>
-                        </svg>
-                        <p class="text-sm font-medium" id="notice-text"></p>
-                    </div>
-                    <button
-                        id="close-notice"
-                        class="text-black hover:text-neutral-800 transition-colors flex-shrink-0"
-                        aria-label="Cerrar aviso"
-                    >
-                        <svg
-                            class="w-5 h-5"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+    <!-- Navegación: Minimalista, top-right -->
+    <nav class="px-6 md:px-12 py-6 flex justify-between items-center border-b border-neutral-900">
+        <a href="/" class="font-black text-lg hover:text-amber-400 transition">
+            Benja<span class="text-amber-400">.</span>
+        </a>
+        <div class="flex gap-8">
+            <a href="#proyectos" class="text-xs text-neutral-400 hover:text-neutral-200 transition">Proyectos</a>
+            <a href="#about" class="text-xs text-neutral-400 hover:text-neutral-200 transition">Sobre mí</a>
+            <a href="/blog" class="text-xs text-neutral-400 hover:text-neutral-200 transition">Blog</a>
         </div>
+    </nav>
 
-        <!-- Navegación: Minimalista, top-right -->
-        <nav
-            class="px-6 md:px-12 py-6 flex justify-between items-center border-b border-neutral-900"
-        >
-            <a
-                href="/"
-                class="font-black text-lg hover:text-amber-400 transition"
-            >
-                Benja<span class="text-amber-400">.</span>
-            </a>
-            <div class="flex gap-8">
-                <a
-                    href="#proyectos"
-                    class="text-xs text-neutral-400 hover:text-neutral-200 transition"
-                    >Proyectos</a
-                >
-                <a
-                    href="#about"
-                    class="text-xs text-neutral-400 hover:text-neutral-200 transition"
-                    >Sobre mí</a
-                >
-                <a
-                    href="/blog"
-                    class="text-xs text-neutral-400 hover:text-neutral-200 transition"
-                    >Blog</a
-                >
-            </div>
-        </nav>
-
-        <!-- Content: Flujo directo, sin centrado forzado -->
-        <main class="flex-grow">
-            <slot />
-        </main>
-        <script is:inline>
-            const STORAGE_KEY = "domain-notice-dismissed";
-            const EXPIRY_DATE = new Date("2026-03-14");
-
-            const notice = document.getElementById("domain-notice");
-            const noticeText = document.getElementById("notice-text");
-            const closeBtn = document.getElementById("close-notice");
-
-            // Verificar si el usuario ya cerró el aviso
-            const isDismissed = localStorage.getItem(STORAGE_KEY);
-
-            // Obtener el dominio actual
-            const currentDomain = window.location.hostname;
-
-            function showNotice(message) {
-                if (noticeText && notice) {
-                    noticeText.textContent = message;
-                    notice.classList.remove("hidden");
-                }
-            }
-
-            // Lógica principal
-            if (!isDismissed) {
-                    // Calcular días restantes
-                    const today = new Date();
-                    const daysLeft = Math.ceil(
-                        (EXPIRY_DATE.getTime() - today.getTime()) /
-                            (1000 * 60 * 60 * 24),
-                    );
-
-                    showNotice(daysLeft > 0
-                        ? `⚠️ El dominio byalreves.lat vence el 14 de marzo debido a su alto costo. La web migrará a byalreves.pages.dev (${daysLeft} días restantes).`
-                        : `⚠️ El dominio byalreves.lat ha vencido debido a su alto coste de renovación. La web ha migrado a byalreves.pages.dev y esta web no está disponible.`);
-                    }
-            // Cerrar aviso
-            closeBtn?.addEventListener("click", () => {
-                localStorage.setItem(STORAGE_KEY, "true");
-                notice?.classList.add("hidden");
-            });
-        </script>
-    </body>
+    <!-- Content: Flujo directo, sin centrado forzado -->
+    <main class="flex-grow">
+        <slot />
+    </main>
+</body>
 </html>

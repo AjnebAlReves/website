@@ -2,8 +2,8 @@
 title: "Errores comunes en servidores con Plugins y/o Mods"
 description: "Guía actualizada de los errores más frecuentes al montar un servidor de Minecraft con plugins o mods, y cómo resolverlos."
 author: "Ajneb Al Revés"
-publishDate: 2025-03-15
-updatedDate: 2025-03-15
+publishDate: 2026-03-15
+updatedDate: 2026-03-15
 tags: ["minecraft", "servidores", "plugins", "mods", "flyxnodes", "guía"]
 ---
 
