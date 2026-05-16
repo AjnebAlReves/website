@@ -84,6 +84,12 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
 </head>
 <body class="flex flex-col min-h-screen overflow-x-hidden">
     <div class="noise"></div>
+    <div
+        id="bt31-easter-egg"
+        class="pointer-events-none fixed bottom-6 right-6 z-50 hidden rounded-full border border-amber-500/50 bg-black/85 px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] text-amber-300"
+    >
+        BT31 unlocked
+    </div>
 
     <!-- Navegación: Minimalista, top-right -->
     <nav class="relative z-10 px-6 md:px-12 py-6 flex justify-between items-center border-b border-neutral-900">
@@ -101,5 +107,26 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
     <main class="relative z-10 flex-grow">
         <slot />
     </main>
+    <script>
+        const egg = document.getElementById("bt31-easter-egg");
+        let buffer = "";
+        let timeoutId: ReturnType<typeof setTimeout> | null = null;
+
+        window.addEventListener("keydown", (event) => {
+            if (event.ctrlKey || event.metaKey || event.altKey) return;
+            const key = event.key.toLowerCase();
+            if (!/^[a-z0-9]$/.test(key)) return;
+
+            buffer = (buffer + key).slice(-4);
+            if (buffer !== "bt31" || !egg) return;
+
+            egg.classList.remove("hidden");
+            if (timeoutId) clearTimeout(timeoutId);
+            timeoutId = setTimeout(() => {
+                egg.classList.add("hidden");
+            }, 2200);
+            buffer = "";
+        });
+    </script>
 </body>
 </html>
