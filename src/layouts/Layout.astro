@@ -21,7 +21,6 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
     <meta property="og:description" content={description}>
     <meta property="og:image" content={ogImg}>
     <title>{title}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -40,6 +39,7 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
             font-family: 'Inter', sans-serif;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
+            background-image: radial-gradient(circle at 15% -10%, rgba(251, 191, 36, 0.07), transparent 32%);
         }
 
         /* Links globales: minimalista */
@@ -58,13 +58,35 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
             outline: 2px solid #fbbf24;
             outline-offset: 2px;
         }
+
+        /* Efecto de grano/noise para textura */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("https://grainy-gradients.vercel.app/noise.svg");
+            opacity: 0.018;
+            mix-blend-mode: soft-light;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Patrón de Ñandutí Digital */
+        .nanduti-pattern {
+            background-image: radial-gradient(circle at center, #222 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.3;
+        }
     </style>
     <ClientRouter />
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="flex flex-col min-h-screen overflow-x-hidden">
+    <div class="noise"></div>
 
     <!-- Navegación: Minimalista, top-right -->
-    <nav class="px-6 md:px-12 py-6 flex justify-between items-center border-b border-neutral-900">
+    <nav class="relative z-10 px-6 md:px-12 py-6 flex justify-between items-center border-b border-neutral-900">
         <a href="/" class="font-black text-lg hover:text-amber-400 transition">
             Benja<span class="text-amber-400">.</span>
         </a>
@@ -76,7 +98,7 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
     </nav>
 
     <!-- Content: Flujo directo, sin centrado forzado -->
-    <main class="flex-grow">
+    <main class="relative z-10 flex-grow">
         <slot />
     </main>
 </body>

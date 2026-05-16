@@ -1,135 +1,94 @@
 ---
-// AboutMe.astro - Texto limpio, sin decoraciones excesivas
+// AboutMe.astro - Identidad paraguaya con estructura editorial clara
 ---
 
-<section id="about" class="py-20 px-6 md:px-12 bg-neutral-950">
-    <div class="max-w-4xl mx-auto">
-        <!-- Título -->
-        <h2 class="text-4xl md:text-5xl font-black mb-12">Sobre mí</h2>
+<section id="about" class="relative overflow-hidden border-t border-neutral-900 bg-neutral-950 px-6 py-28 md:px-12 md:py-36">
+    <div class="pointer-events-none absolute inset-0">
+        <div class="absolute -right-16 top-16 h-72 w-72 opacity-[0.045] md:h-96 md:w-96">
+            <img src="/nanduti.svg" alt="Patron nanduti" class="h-full w-full object-contain" />
+        </div>
+        <div class="absolute bottom-10 left-8 hidden font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-700 md:block">
+            Terere & Coding
+        </div>
+    </div>
 
-        <!-- Content: Grid simple -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <!-- Columna 1: Quién soy -->
-            <div class="md:col-span-2">
-                <div class="space-y-6 text-neutral-300 leading-relaxed">
-                    <p>
-                        Soy Benjamín, full-stack developer y diseñador UX/UI desde Asunción, Paraguay. 
-                        Tengo <span id="age-about" class="font-mono">17</span> años y llevo 3 años construyendo proyectos que combinan 
-                        código bien escrito con interfaces intuitivas.
-                    </p>
-
-                    <p>
-                        Mi enfoque es el <span class="font-semibold">minimalismo funcional</span>: diseños limpios que no distraen, 
-                        infraestructura escalable que resiste, y experiencias que funcionan sin necesidad de efectos visuales.
-                    </p>
-
-                    <p>
-                        Actualmente trabajo en dos frentes:
-                    </p>
-                    <ul class="space-y-2 text-sm">
-                        <li class="flex gap-3">
-                            <span class="text-amber-400">→</span>
-                            <span><strong>FlyxNodes:</strong> Infraestructura cloud descentralizada. Arquitectura de servidores, optimización de performance, operaciones 24/7.</span>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-amber-400">→</span>
-                            <span><strong>ByAlReves Studio:</strong> Agencia de diseño y branding. Identidades visuales, web design, consultoría para startups locales.</span>
-                        </li>
-                    </ul>
-
-                    <p class="text-neutral-400 text-sm border-l border-neutral-700 pl-4 italic">
-                        Creo que el mejor código es el que no necesita ser reescrito. El mejor diseño es el que nadie nota porque simplemente funciona.
-                    </p>
-                </div>
+    <div class="relative z-10 mx-auto max-w-6xl">
+        <div class="mb-14 grid gap-10 md:grid-cols-12 md:gap-12">
+            <div class="md:col-span-8">
+                <p class="mb-6 font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">Sobre mi / Rohayhu coding</p>
+                <h2 class="text-4xl font-black leading-[1.05] tracking-tighter text-white md:text-6xl">
+                    Hago que la tecnologia
+                    <span class="block text-neutral-400">tenga peso cultural.</span>
+                </h2>
+                <p class="mt-8 max-w-2xl text-base leading-relaxed text-neutral-300 md:text-lg">
+                    Soy Benjamin, developer y designer desde Asuncion. Me interesa construir sistemas utiles, pero tambien memorables:
+                    productos que rindan en produccion y al mismo tiempo tengan voz propia.
+                </p>
             </div>
 
-            <!-- Columna 2: Skills & Stack -->
-            <div>
-                <div class="bg-neutral-900 border border-neutral-800 p-6">
-                    <h3 class="text-sm font-bold uppercase tracking-wider mb-6 text-neutral-300">Stack Técnico</h3>
-                    
-                    <div class="space-y-4">
-                        <div>
-                            <p class="text-xs text-neutral-500 uppercase mb-2">Frontend</p>
-                            <p class="text-sm text-neutral-300">React, Astro, Next.js, Tailwind CSS, TypeScript</p>
-                        </div>
-                        
-                        <div>
-                            <p class="text-xs text-neutral-500 uppercase mb-2">Backend</p>
-                            <p class="text-sm text-neutral-300">Node.js, Express, PostgreSQL, Docker</p>
-                        </div>
-                        
-                        <div>
-                            <p class="text-xs text-neutral-500 uppercase mb-2">Diseño</p>
-                            <p class="text-sm text-neutral-300">Figma, UI/UX, Brand Design, Prototipado</p>
-                        </div>
-
-                        <div>
-                            <p class="text-xs text-neutral-500 uppercase mb-2">DevOps</p>
-                            <p class="text-sm text-neutral-300">Linux, Docker, CI/CD, Cloud Ops</p>
-                        </div>
+            <aside class="md:col-span-4 md:border-l md:border-neutral-800 md:pl-8">
+                <div class="space-y-7">
+                    <div>
+                        <p class="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-neutral-500">Esencia</p>
+                        <p class="text-sm font-semibold text-amber-400">Terere & Coding</p>
+                    </div>
+                    <div>
+                        <p class="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-neutral-500">Base</p>
+                        <p class="text-sm text-neutral-300">Asuncion, Paraguay</p>
+                    </div>
+                    <div>
+                        <p class="mb-2 font-mono text-[10px] uppercase tracking-[0.22em] text-neutral-500">Foco</p>
+                        <p class="text-sm text-neutral-300">Infraestructura, producto web y direccion visual.</p>
                     </div>
                 </div>
-
-                <!-- Divider -->
-                <div class="border-t border-neutral-800 my-6"></div>
-
-                <!-- Quick Facts -->
-                <div class="space-y-3 text-sm">
-                    <div class="flex justify-between">
-                        <span class="text-neutral-500">Código desde</span>
-                        <span class="font-mono text-neutral-300">2021</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-neutral-500">Proyectos</span>
-                        <span class="font-mono text-neutral-300">10+</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-neutral-500">Clientes</span>
-                        <span class="font-mono text-neutral-300">5+</span>
-                    </div>
-                    <div class="flex justify-between">
-                        <span class="text-neutral-500">Ubicación</span>
-                        <span class="font-mono text-neutral-300">🇵🇾 PY</span>
-                    </div>
-                </div>
-            </div>
+            </aside>
         </div>
 
-        <!-- Valor de propuesta -->
-        <div class="mt-16 pt-12 border-t border-neutral-800">
-            <h3 class="text-xl font-bold mb-6">Por qué trabajar conmigo</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div>
-                    <p class="font-mono text-xs text-amber-400 mb-2">01. Velocidad</p>
-                    <p class="text-sm text-neutral-400">Entrego resultados sin comprometer calidad. Full-stack significa que no hay bottlenecks de comunicación.</p>
+        <div class="grid gap-6 border-t border-neutral-800 pt-10 md:grid-cols-3">
+            <article class="rounded-2xl border border-neutral-800/80 bg-neutral-900/40 p-6">
+                <p class="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-amber-400">01 / Criterio</p>
+                <p class="text-sm leading-relaxed text-neutral-300">
+                    No persigo tendencias vacias. Cada decision de UX, codigo o infraestructura tiene un porque.
+                </p>
+            </article>
+            <article class="rounded-2xl border border-neutral-800/80 bg-neutral-900/40 p-6">
+                <p class="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-amber-400">02 / Ejecucion</p>
+                <p class="text-sm leading-relaxed text-neutral-300">
+                    De idea a deploy sin perder calidad. Diseño, implementacion y operaciones en una sola linea de trabajo.
+                </p>
+            </article>
+            <article class="rounded-2xl border border-neutral-800/80 bg-neutral-900/40 p-6">
+                <p class="mb-3 font-mono text-[10px] uppercase tracking-[0.2em] text-amber-400">03 / Identidad</p>
+                <p class="text-sm leading-relaxed text-neutral-300">
+                    Me importa que el producto se vea propio: rembiapo serio, con lenguaje local y direccion artistica real.
+                </p>
+            </article>
+        </div>
+
+        <div class="mt-10 grid gap-6 border-t border-neutral-800 pt-10 md:grid-cols-2">
+            <article class="rounded-2xl border border-neutral-800/80 bg-black/30 p-6">
+                <p class="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">Como trabajo</p>
+                <ul class="space-y-3 text-sm text-neutral-300">
+                    <li>1. Alineamos objetivo de negocio y criterio visual.</li>
+                    <li>2. Prototipo rapido para validar direccion.</li>
+                    <li>3. Implementacion full-stack con foco en rendimiento.</li>
+                    <li>4. Entrega con base solida para escalar.</li>
+                </ul>
+            </article>
+
+            <article class="rounded-2xl border border-neutral-800/80 bg-black/30 p-6">
+                <p class="mb-4 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">Ahora mismo</p>
+                <div class="space-y-4 text-sm leading-relaxed text-neutral-300">
+                    <p>
+                        En <span class="text-white">Nellyx</span> estoy afinando infraestructura y experiencia de cliente para que el producto
+                        se sienta robusto desde el primer contacto.
+                    </p>
+                    <p>
+                        En <span class="text-white">Nellyx</span> estoy construyendo piezas de marca y web que no parezcan plantilla:
+                        cada detalle tiene intencion.
+                    </p>
                 </div>
-                <div>
-                    <p class="font-mono text-xs text-amber-400 mb-2">02. Criterio</p>
-                    <p class="text-sm text-neutral-400">No agrego features porque sí. Cada decisión tiene justificación técnica o de UX.</p>
-                </div>
-                <div>
-                    <p class="font-mono text-xs text-amber-400 mb-2">03. Mantenibilidad</p>
-                    <p class="text-sm text-neutral-400">Código limpio, documentado, testeable. Lo que entrego es fácil de escalar después.</p>
-                </div>
-            </div>
+            </article>
         </div>
     </div>
 </section>
-
-<script>
-    // Actualizar edad en la sección About
-    const birthDate = new Date('2008-10-31T15:00:00Z');
-    
-    function updateAboutAge() {
-        const now = new Date();
-        const diffInMs = (now as any) - (birthDate as any);
-        const ageInYears = Math.floor(diffInMs / (1000 * 60 * 60 * 24 * 365.25));
-        const ageElement = document.getElementById('age-about');
-        if (ageElement) {
-            ageElement.innerText = ageInYears.toString();
-        }
-    }
-
-    updateAboutAge();
-</script>

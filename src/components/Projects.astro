@@ -1,110 +1,96 @@
 ---
-// Projects.astro - Grid limpio, sin efectos complejos
+const tags = {
+    Infra: { name: "Infra", class: "bg-neutral-800 text-neutral-200" },
+    Branding: { name: "Branding", class: "bg-neutral-100 text-black" },
+    Creative: { name: "Creative", class: "bg-black text-white border border-neutral-700" },
+    Product: { name: "Product", class: "bg-amber-500 text-black" },
+    Web: { name: "Web", class: "bg-neutral-700 text-neutral-100" },
+};
+
+const projects = [
+    {
+        title: "Nellyx Infra",
+        description: "Infraestructura cloud y operaciones de alto rendimiento.",
+        detail: "Arquitectura, performance y resiliencia para cargas reales.",
+        impact: "Stack desplegado para operar estable bajo demanda variable.",
+        link: "https://nellyx.xyz",
+        image: "/projects/nellyx.webp",
+        imageAlt: "Nellyx proyecto de infraestructura",
+        tags: [tags.Infra, tags.Product, tags.Web],
+    },
+    {
+        title: "Nellyx Brand",
+        description: "Direccion visual y sistemas de marca digitales.",
+        detail: "Narrativa visual, branding y experiencia web con identidad.",
+        impact: "Sistema visual reutilizable para mantener consistencia en cada touchpoint.",
+        link: "https://nellyx.xyz",
+        image: "/projects/nellyx.webp",
+        imageAlt: "Nellyx branding",
+        tags: [tags.Branding, tags.Creative, tags.Product],
+    },
+    {
+        title: "LarrVendors",
+        description: "Marketplace web enfocado en conversion y claridad.",
+        detail: "Flujos de compra, estructura comercial y experiencia responsive.",
+        impact: "Recorrido de compra simplificado para reducir friccion y abandono.",
+        link: "https://larrvendorss.netlify.app",
+        image: "/projects/larr.webp",
+        imageAlt: "LarrVendors marketplace",
+        tags: [tags.Web, tags.Product, tags.Creative],
+    },
+];
 ---
 
-<section id="proyectos" class="py-20 px-6 md:px-12 bg-black">
-    <div class="max-w-6xl mx-auto">
-        <!-- Sección título -->
-        <div class="mb-16">
-            <h2 class="text-4xl md:text-5xl font-black mb-4">Proyectos</h2>
-            <p class="text-neutral-400 text-sm">Trabajo seleccionado que representa mi enfoque en infraestructura y diseño.</p>
+<section id="proyectos" class="border-t border-neutral-900 px-6 py-28 md:px-12 md:py-32">
+    <div class="mx-auto max-w-7xl">
+        <div class="mb-14 flex flex-wrap items-end justify-between gap-6">
+            <div>
+                <p class="mb-3 font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">Selected Rembiapo</p>
+                <h2 class="text-4xl font-black tracking-tighter md:text-5xl">Proyectos con direccion<span class="text-amber-500">.</span></h2>
+            </div>
+            <p class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-600">Asuncion built / 03 piezas</p>
         </div>
 
-        <!-- Grid: 2 columnas en mobile, 2+ en desktop -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Project 1: FlyxNodes -->
-            <a href="https://flyxnodes.xyz" target="_blank" rel="noopener noreferrer" class="group">
-                <div class="bg-neutral-900 border border-neutral-800 hover:border-amber-400 transition p-8 h-full flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-amber-400 transition">
-                            FlyxNodes
-                        </h3>
-                        <p class="text-neutral-400 text-sm mb-4">
-                            Infraestructura cloud descentralizada. Arquitectura de servidor, optimización de performance, planes escalables.
-                        </p>
-                    </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Node.js</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Docker</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">PostgreSQL</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Infraestructura</span>
-                    </div>
-                </div>
-            </a>
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
+            {
+                projects.map(({ title, description, detail, impact, link, image, imageAlt, tags }) => (
+                    <article class="group overflow-hidden rounded-2xl border border-neutral-800/90 bg-neutral-900/40 transition hover:border-neutral-700">
+                        <a href={link} target="_blank" rel="noopener noreferrer" class="block">
+                            <div class="relative aspect-[16/10] overflow-hidden border-b border-neutral-800/90">
+                                <img
+                                    src={image}
+                                    alt={imageAlt}
+                                    class="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                />
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent"></div>
+                                <div class="absolute bottom-4 left-4 flex flex-wrap gap-2">
+                                    {tags.map((tag) => (
+                                        <span class={`rounded-full px-3 py-1 font-mono text-[10px] uppercase tracking-[0.08em] ${tag.class}`}>
+                                            {tag.name}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
 
-            <!-- Project 2: ByAlReves Studio -->
-            <a href="https://byalreves.studio" target="_blank" rel="noopener noreferrer" class="group">
-                <div class="bg-neutral-900 border border-neutral-800 hover:border-amber-400 transition p-8 h-full flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-amber-400 transition">
-                            ByAlReves Studio
-                        </h3>
-                        <p class="text-neutral-400 text-sm mb-4">
-                            Agencia de diseño y branding. Identidades visuales, web design, consultoría creativa para startups.
-                        </p>
-                    </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Figma</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">React</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Brand</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Design</span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Project 3: LarrVendors -->
-            <a href="#" class="group">
-                <div class="bg-neutral-900 border border-neutral-800 hover:border-amber-400 transition p-8 h-full flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-amber-400 transition">
-                            LarrVendors
-                        </h3>
-                        <p class="text-neutral-400 text-sm mb-4">
-                            Plataforma de marketplace descentralizado. Sistema de pagos, gestión de vendors, frontend escalable.
-                        </p>
-                    </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Astro</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Blockchain</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Web3</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Pagos</span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- Project 4: Blog/Content -->
-            <a href="/blog" class="group">
-                <div class="bg-neutral-900 border border-neutral-800 hover:border-amber-400 transition p-8 h-full flex flex-col justify-between">
-                    <div>
-                        <h3 class="text-xl font-bold mb-2 group-hover:text-amber-400 transition">
-                            Blog & Artículos
-                        </h3>
-                        <p class="text-neutral-400 text-sm mb-4">
-                            Escribo sobre desarrollo, diseño, infraestructura y reflexiones sobre tecnología en Latinoamérica.
-                        </p>
-                    </div>
-                    <div class="flex gap-2 flex-wrap">
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Tech</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Opinión</span>
-                        <span class="text-xs bg-neutral-800 text-neutral-300 px-2 py-1">Educación</span>
-                    </div>
-                </div>
-            </a>
+                            <div class="p-6 md:p-7">
+                                <div class="mb-3 flex items-center justify-between gap-4">
+                                    <h3 class="text-2xl font-bold tracking-tight transition group-hover:text-amber-400">{title}</h3>
+                                    <span class="rounded-full border border-neutral-700 p-2 text-neutral-300 transition group-hover:border-amber-500 group-hover:text-amber-400">
+                                        <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                        </svg>
+                                    </span>
+                                </div>
+                                <p class="mb-2 text-sm text-neutral-300">{description}</p>
+                                <p class="font-mono text-xs uppercase tracking-[0.08em] text-neutral-500">{detail}</p>
+                                <p class="mt-3 border-t border-neutral-800 pt-3 text-xs leading-relaxed text-neutral-400">
+                                    {impact}
+                                </p>
+                            </div>
+                        </a>
+                    </article>
+                ))
+            }
         </div>
     </div>
 </section>
-
-<style>
-    /* Sin efectos complejos, solo transiciones suaves */
-    a {
-        text-decoration: none;
-    }
-
-    .group:hover h3 {
-        color: #fbbf24;
-    }
-
-    .group:hover .bg-neutral-900 {
-        background-color: rgba(17, 24, 39, 0.6);
-    }
-</style>
