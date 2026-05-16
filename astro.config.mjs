@@ -4,6 +4,8 @@ import path from 'path'
 
 import robotsTxt from "astro-robots-txt"
 
+import cloudflare from "@astrojs/cloudflare";
+
 // https://astro.build/config
 export default defineConfig({
   integrations: [tailwind(), robotsTxt()],
@@ -16,6 +18,7 @@ export default defineConfig({
       }
     }
   },
+
   markdown: {
     remarkPlugins: [],
     rehypePlugins: [],
@@ -25,5 +28,7 @@ export default defineConfig({
     },
     // Asegúrate de que esto esté habilitado
     syntaxHighlight: 'shiki',
-  }
+  },
+
+  adapter: cloudflare()
 })
