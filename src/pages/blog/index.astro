@@ -6,7 +6,8 @@ interface Post {
     frontmatter: {
         title: string;
         description: string;
-        pubDate: string;
+        pubDate?: string;
+        publishDate?: string;
         tags?: string[]; // Nueva propiedad
         heroImage?: string;
         slug?: string;
@@ -20,11 +21,15 @@ const rawPosts = Object.values(
 
 // 2. Procesamiento de Posts
 const posts = rawPosts
-    .sort(
-        (a, b) =>
-            new Date(b.frontmatter.pubDate).getTime() -
-            new Date(a.frontmatter.pubDate).getTime(),
-    )
+    .sort((a, b) => {
+        const aDate = new Date(
+            a.frontmatter.pubDate || a.frontmatter.publishDate || 0,
+        ).getTime();
+        const bDate = new Date(
+            b.frontmatter.pubDate || b.frontmatter.publishDate || 0,
+        ).getTime();
+        return bDate - aDate;
+    })
     .map((post) => ({
         ...post.frontmatter,
         slug:
@@ -135,7 +140,9 @@ const allTags = [...new Set(posts.flatMap((post) => post.tags || []))].sort();
 
 <style>
     .tag-filter.active {
-        @apply bg-accent text-black border-accent;
+        background-color: #fbbf24;
+        border-color: #fbbf24;
+        color: #000;
     }
 </style>
 

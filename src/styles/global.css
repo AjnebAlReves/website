@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 /* Optimizaciones de tipografía */
 @supports (font-variant-numeric: tabular-nums) {

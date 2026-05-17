@@ -1,20 +1,25 @@
 import { defineConfig } from 'astro/config'
-import tailwind from "@astrojs/tailwind"
+import tailwindcss from "@tailwindcss/vite"
 import path from 'path'
 
 import robotsTxt from "astro-robots-txt"
 
+import tailwindcss from '@tailwindcss/vite';
+
 // https://astro.build/config
 export default defineConfig({
-  integrations: [tailwind(), robotsTxt()],
+  integrations: [robotsTxt()],
   site: 'https://byalreves.lat/',
 
   vite: {
+    plugins: [tailwindcss()],
     resolve: {
       alias: {
         '@': path.resolve('./src')
       }
-    }
+    },
+
+    plugins: [tailwindcss()]
   },
   markdown: {
     remarkPlugins: [],

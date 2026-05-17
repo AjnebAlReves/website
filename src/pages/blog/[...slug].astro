@@ -1,6 +1,5 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
     const posts = Object.values(
@@ -18,6 +17,16 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, rawContent, frontmatter } = post;
+const postDate = frontmatter.pubDate || frontmatter.publishDate;
+const parsedDate = postDate ? new Date(postDate) : null;
+const hasValidDate = parsedDate && !Number.isNaN(parsedDate.getTime());
+const formattedDate = hasValidDate
+    ? parsedDate.toLocaleDateString("es-PY", {
+          year: "numeric",
+          month: "short",
+          day: "numeric",
+      })
+    : "Sin fecha";
 
 // --- Lógica de Lectura Centralizada ---
 // Tip: Podrías mover esto a un archivo util.ts
@@ -32,7 +41,7 @@ const readingTime = getReadingTime(rawContent());
 ---
 
 <Layout
-    title={`${frontmatter.title} — ByAlReves`}
+    title={`${frontmatter.title} — Benjamin T.`}
     description={frontmatter.description}
     ogImg={frontmatter.heroImage}
 
@@ -41,10 +50,8 @@ const readingTime = getReadingTime(rawContent());
         <div class="max-w-3xl mx-auto">
             <header class="mb-12">
                 <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mb-8 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">
-                    <time datetime={frontmatter.pubDate} class="text-accent border-r border-neutral-800 pr-4">
-                        {new Date(frontmatter.pubDate).toLocaleDateString("es-PY", {
-                            year: "numeric", month: "short", day: "numeric",
-                        })}
+                    <time datetime={hasValidDate ? parsedDate.toISOString() : undefined} class="text-accent border-r border-neutral-800 pr-4">
+                        {formattedDate}
                     </time>
                     <span class="flex items-center gap-1.5 border-r border-neutral-800 pr-4">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="opacity-70">
@@ -100,8 +107,8 @@ const readingTime = getReadingTime(rawContent());
                 <div class="flex flex-col items-center justify-center py-8 bg-neutral-900/20 rounded-2xl border border-neutral-800/50">
                    <p class="font-mono text-[10px] uppercase tracking-widest text-neutral-500 mb-4">¿Te gustó el artículo? Compártelo</p>
                    <div class="flex gap-4">
-                       <button onclick={`window.open('https://twitter.com/intent/tweet?text=${"Mira este artículo de ByAlReves: " + frontmatter.title}&url=${Astro.url}')`} class="text-neutral-400 hover:text-white transition-colors">Twitter</button>
-                       <button onclick={`navigator.clipboard.writeText('${"Artículo de ByAlReves: " + frontmatter.title} ${Astro.url}')`} class="text-neutral-400 hover:text-white transition-colors">Copiar Link</button>
+                       <button onclick={`window.open('https://twitter.com/intent/tweet?text=${"Mira este artículo de Benjamin T.: " + frontmatter.title}&url=${Astro.url}')`} class="text-neutral-400 hover:text-white transition-colors">Twitter</button>
+                       <button onclick={`navigator.clipboard.writeText('${"Artículo de Benjamin T.: " + frontmatter.title} ${Astro.url}')`} class="text-neutral-400 hover:text-white transition-colors">Copiar Link</button>
                    </div>
                 </div>
 

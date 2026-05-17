@@ -79,6 +79,53 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
             background-size: 20px 20px;
             opacity: 0.3;
         }
+
+        .name-lockup {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .birthday-hat {
+            position: absolute;
+            top: -0.95rem;
+            right: -0.55rem;
+            width: 0.78rem;
+            height: 0.9rem;
+            background: linear-gradient(140deg, #f59e0b, #fbbf24);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            border-radius: 1px;
+            transform: rotate(18deg);
+            display: none;
+            pointer-events: none;
+            box-shadow: 0 1px 0 rgba(0, 0, 0, 0.35);
+        }
+
+        .birthday-hat::before {
+            content: "";
+            position: absolute;
+            top: 0.22rem;
+            left: 0.1rem;
+            width: 0.58rem;
+            height: 1px;
+            background: rgba(0, 0, 0, 0.22);
+            transform: rotate(-21deg);
+        }
+
+        .birthday-hat::after {
+            content: "";
+            position: absolute;
+            top: -0.18rem;
+            left: 0.31rem;
+            width: 0.16rem;
+            height: 0.16rem;
+            background: #fde68a;
+            border-radius: 999px;
+        }
+
+        .birthday-week .birthday-hat {
+            display: inline-block;
+        }
     </style>
     <ClientRouter />
 </head>
@@ -93,8 +140,9 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
 
     <!-- Navegación: Minimalista, top-right -->
     <nav class="relative z-10 px-6 md:px-12 py-6 flex justify-between items-center border-b border-neutral-900">
-        <a href="/" class="font-black text-lg hover:text-amber-400 transition">
+        <a id="brand-name" href="/" class="font-black text-lg hover:text-amber-400 transition name-lockup">
             Benja<span class="text-amber-400">.</span>
+            <span class="birthday-hat" aria-hidden="true"></span>
         </a>
         <div class="flex gap-8">
             <a href="#proyectos" class="text-xs text-neutral-400 hover:text-neutral-200 transition">Proyectos</a>
@@ -111,6 +159,18 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
         const egg = document.getElementById("bt31-easter-egg");
         let buffer = "";
         let timeoutId: ReturnType<typeof setTimeout> | null = null;
+        const brand = document.getElementById("brand-name");
+
+        function isBirthdayWeek(date: Date) {
+            const year = date.getFullYear();
+            const start = new Date(year, 9, 28);
+            const end = new Date(year, 10, 3, 23, 59, 59, 999);
+            return date >= start && date <= end;
+        }
+
+        if (brand && isBirthdayWeek(new Date())) {
+            brand.classList.add("birthday-week");
+        }
 
         window.addEventListener("keydown", (event) => {
             if (event.ctrlKey || event.metaKey || event.altKey) return;
