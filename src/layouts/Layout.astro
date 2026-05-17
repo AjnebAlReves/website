@@ -156,6 +156,24 @@ const { description, title, ogImg = "/projects/porfolio.webp" } = Astro.props;
         <slot />
     </main>
     <script>
+        const allowedHosts = new Set([
+            "byalreves.pages.dev",
+            "bt31.pages.dev",
+            "localhost",
+            "127.0.0.1",
+        ]);
+        const canonicalHost = "bt31.pages.dev";
+        const { hostname, pathname, search, hash, protocol } = window.location;
+
+        if (
+            (protocol === "http:" || protocol === "https:") &&
+            !allowedHosts.has(hostname)
+        ) {
+            window.location.replace(
+                `https://${canonicalHost}${pathname}${search}${hash}`,
+            );
+        }
+
         const egg = document.getElementById("bt31-easter-egg");
         let buffer = "";
         let timeoutId: ReturnType<typeof setTimeout> | null = null;
