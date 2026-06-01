@@ -1,10 +1,11 @@
 ---
+import DonateButton from "@/components/DonateButton.astro"
 const year = new Date().getFullYear();
 ---
 
 <footer class="border-t border-neutral-900 bg-black px-6 py-14 md:px-12">
     <div class="mx-auto max-w-6xl">
-        <div class="mb-12 grid grid-cols-1 gap-12 md:grid-cols-3">
+        <div class="mb-12 grid grid-cols-1 gap-12 md:grid-cols-4">
             <div>
                 <h3 class="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">Contacto</h3>
                 <div class="space-y-2">
@@ -55,6 +56,16 @@ const year = new Date().getFullYear();
                     <p class="text-xs italic text-neutral-500">
                         Terrañero. Creative technologist. BT31.
                     </p>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="mb-4 font-mono text-xs uppercase tracking-[0.2em] text-neutral-500">Apoyar</h3>
+                <div class="space-y-3">
+                    <p class="text-sm text-neutral-400">
+                        Si mi trabajo te es util, podes invitarme un terere.
+                    </p>
+                    <DonateButton />
                 </div>
             </div>
         </div>

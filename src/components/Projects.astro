@@ -5,6 +5,8 @@ const tags = {
     Creative: { name: "Creative", class: "bg-black text-white border border-neutral-700" },
     Product: { name: "Product", class: "bg-amber-500 text-black" },
     Web: { name: "Web", class: "bg-neutral-700 text-neutral-100" },
+    Minecraft: { name: "Minecraft", class: "bg-emerald-900/60 text-emerald-300 border border-emerald-800/50" },
+    App: { name: "App", class: "bg-sky-900/60 text-sky-300 border border-sky-800/50" },
 };
 
 const projects = [
@@ -38,6 +40,26 @@ const projects = [
         imageAlt: "LarrVendors marketplace",
         tags: [tags.Web, tags.Product, tags.Creative],
     },
+    {
+        title: "StaffControl",
+        description: "Modern moderation and staff management plugin for Minecraft servers.",
+        detail: "Staff mode, vanish, reports, staff chat, inspection, tickets, alerts.",
+        impact: "Arquitectura limpia, compatibilidad a largo plazo y enfoque en mantenibilidad.",
+        link: "https://github.com/AjnebAlReves/StaffControl/",
+        image: "/projects/wip.svg",
+        imageAlt: "StaffControl plugin placeholder",
+        tags: [tags.Minecraft, tags.Product],
+    },
+    {
+        title: "Churchtils",
+        description: "Utilidades para Iglesias: todo en uno para necesidades multimedia congregacionales.",
+        detail: "Proyectar letras, sorteos, eventos y transmision en vivo desde un mismo programa.",
+        impact: "Solucion integrada en Python para simplificar la gestion tecnica de la iglesia.",
+        link: "https://github.com/AjnebAlReves/churchtils",
+        image: "/projects/wip.svg",
+        imageAlt: "Churchtils app placeholder",
+        tags: [tags.App, tags.Product, tags.Creative],
+    },
 ];
 ---
 
@@ -48,7 +70,7 @@ const projects = [
                 <p class="mb-3 font-mono text-xs uppercase tracking-[0.28em] text-neutral-500">Selected Rembiapo</p>
                 <h2 class="text-4xl font-black tracking-tighter md:text-5xl">Proyectos con direccion<span class="text-amber-500">.</span></h2>
             </div>
-            <p class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-600">Asuncion built / 03 piezas</p>
+            <p class="font-mono text-xs uppercase tracking-[0.2em] text-neutral-600">Asuncion built / 05 piezas</p>
         </div>
 
         <div class="grid grid-cols-1 gap-10 md:grid-cols-2">

@@ -1,0 +1,7 @@
+<svg width="800" height="500" viewBox="0 0 800 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="800" height="500" fill="#111111"/>
+  <path d="M400 180c-60 0-110 50-110 110s50 110 110 110 110-50 110-110-50-110-110-110zm0 200c-50 0-90-40-90-90s40-90 90-90 90 40 90 90-40 90-90 90z" fill="#222222"/>
+  <path d="M385 250h30v60h-30z" fill="#333333"/>
+  <path d="M400 320c-20 0-37 8-50 20h100c-13-12-30-20-50-20z" fill="#333333"/>
+  <text x="400" y="420" text-anchor="middle" fill="#444444" font-family="monospace" font-size="14" letter-spacing="2">WIP</text>
+</svg>
