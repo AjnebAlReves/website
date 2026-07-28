@@ -1,0 +1,343 @@
+---
+import Layout from "@/layouts/Layout.astro";
+---
+
+<Layout
+    title="Encender el homelab — BT31"
+    description="Instrucciones para encender el homelab y verificar su funcionamiento con Tailscale."
+    noindex={true}
+>
+    <article class="py-20 md:py-28 px-6">
+        <div class="max-w-2xl mx-auto">
+            <header class="mb-14">
+                <h1 class="text-4xl md:text-5xl font-black tracking-tighter mb-4 leading-[0.9]">
+                    Encender el homelab
+                </h1>
+                <p class="text-neutral-400 font-mono text-sm border-l-2 border-amber-400 pl-5 py-2">
+                    Guía rápida para prender la laptop HP y verificar que esté online vía Tailscale.
+                </p>
+            </header>
+
+            <!-- Introducción -->
+            <section class="mb-14 p-5 rounded-xl bg-neutral-900/50 border border-neutral-800">
+                <p class="text-neutral-300 text-sm leading-relaxed m-0">
+                    El homelab es una laptop HP que <strong class="text-white">solo funciona con el cargador conectado 24/7</strong>.
+                    El botón de encendido está <strong class="text-white">separado del teclado</strong> (en el lateral o frontal del equipo).
+                    No necesita monitor, mouse ni teclado — arranca automáticamente y Tailscale se conecta solo.
+                </p>
+            </section>
+
+            <!-- Paso 1 -->
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-5">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-400 text-black font-black text-sm flex items-center justify-center">1</span>
+                    <h2 class="text-xl font-bold tracking-tight m-0">Conectar el cargador</h2>
+                </div>
+                <p class="text-neutral-400 text-sm ml-11 mb-5">
+                    Si la laptop no está recibiendo corriente, no va a encender. Revisá que el cargador esté bien conectado tanto a la pared como al puerto de carga de la laptop.
+                </p>
+                <div class="ml-11 mb-5 space-y-3">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-0.5 accent-amber-400" />
+                        <span class="text-sm text-neutral-400 group-hover:text-neutral-200 transition-colors">Cargador conectado a la toma de corriente</span>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-0.5 accent-amber-400" />
+                        <span class="text-sm text-neutral-400 group-hover:text-neutral-200 transition-colors">Cargador conectado al puerto de la laptop</span>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-0.5 accent-amber-400" />
+                        <span class="text-sm text-neutral-400 group-hover:text-neutral-200 transition-colors">El LED de carga está encendido<span class="text-neutral-600 ml-1">(ver abajo)</span></span>
+                    </label>
+                </div>
+
+                <!-- Mockup: LED de carga -->
+                <div class="ml-11 p-5 rounded-xl bg-neutral-900/70 border border-neutral-800/60 flex items-center gap-5">
+                    <div class="flex-shrink-0 relative">
+                        <div class="w-4 h-4 rounded-full bg-green-400 shadow-[0_0_12px_rgba(74,222,128,0.6)]"></div>
+                    </div>
+                    <div class="text-xs font-mono">
+                        <span class="text-green-400 font-semibold">LED de carga encendido</span>
+                        <span class="text-neutral-600 block mt-0.5">Indica que la laptop está recibiendo corriente</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paso 2 -->
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-5">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-400 text-black font-black text-sm flex items-center justify-center">2</span>
+                    <h2 class="text-xl font-bold tracking-tight m-0">Presionar el botón de encendido</h2>
+                </div>
+                <p class="text-neutral-400 text-sm ml-11 mb-5">
+                    El botón de encendido <strong class="text-white">no está en el teclado</strong>. Está en el borde lateral o frontal de la laptop.
+                    Buscá un botón físico, pequeño, generalmente redondo o rectangular. Presionalo una vez y soltalo.
+                </p>
+                <div class="ml-11 space-y-3 mb-5">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-0.5 accent-amber-400" />
+                        <span class="text-sm text-neutral-400 group-hover:text-neutral-200 transition-colors">Botón de encendido presionado (un toque, no lo mantengas)</span>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-0.5 accent-amber-400" />
+                        <span class="text-sm text-neutral-400 group-hover:text-neutral-200 transition-colors">El ventilador o algún LED indicador se activó</span>
+                    </label>
+                </div>
+
+                <!-- Mockup: Botón de encendido -->
+                <div class="ml-11 p-5 rounded-xl bg-neutral-900/70 border border-neutral-800/60">
+                    <div class="flex items-center gap-5">
+                        <div class="flex-shrink-0 w-14 h-10 rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center relative">
+                            <div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] text-neutral-500 font-mono whitespace-nowrap">botón de encendido</div>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-300">
+                                <path d="M12 2v10" />
+                                <path d="M18.4 6.6a9 9 0 1 1-12.77.04" />
+                            </svg>
+                        </div>
+                        <div class="text-xs text-neutral-500 font-mono">
+                            <span class="text-neutral-300 font-semibold">Botón físico separado</span>
+                            <span class="block mt-0.5 text-neutral-600">No está en el teclado — está en el borde del equipo</span>
+                        </div>
+                    </div>
+                    <!-- Ilustración simple de laptop -->
+                    <div class="mt-5 pt-4 border-t border-neutral-800">
+                        <div class="relative mx-auto max-w-[200px]">
+                            <div class="bg-neutral-800 rounded-t-lg h-24 border border-neutral-700 relative overflow-hidden">
+                                <div class="absolute bottom-2 left-1/2 -translate-x-1/2 w-16 h-1 rounded bg-neutral-600"></div>
+                                <span class="absolute top-2 left-3 text-[8px] text-neutral-600 font-mono">pantalla (cerrada)</span>
+                            </div>
+                            <div class="bg-neutral-800 rounded-b-lg h-6 border-x border-b border-neutral-700 relative">
+                                <div class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-3 rounded-sm bg-neutral-700 border border-neutral-600 flex items-center justify-center">
+                                    <svg width="6" height="6" viewBox="0 0 24 24" fill="none" stroke="#a3a3a3" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M12 2v10" />
+                                        <path d="M18.4 6.6a9 9 0 1 1-12.77.04" />
+                                    </svg>
+                                </div>
+                                <span class="absolute right-10 top-1/2 -translate-y-1/2 text-[7px] text-neutral-600 font-mono">botón</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Paso 3 -->
+            <div class="mb-12">
+                <div class="flex items-center gap-3 mb-5">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-400 text-black font-black text-sm flex items-center justify-center">3</span>
+                    <h2 class="text-xl font-bold tracking-tight m-0">Esperar que inicie</h2>
+                </div>
+                <p class="text-neutral-400 text-sm ml-11 mb-4">
+                    La laptop tarda entre <strong class="text-white">1 y 3 minutos</strong> en arrancar completamente.
+                    Tailscale está configurado para iniciarse automáticamente con el sistema — no necesitas hacer nada más.
+                </p>
+                <div class="ml-11 flex items-center gap-3 p-4 rounded-xl bg-neutral-900/50 border border-neutral-800/50">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" class="flex-shrink-0">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span class="text-xs text-neutral-500 font-mono">Tiempo estimado: <strong class="text-neutral-300">~2 minutos</strong> desde que presionás el botón</span>
+                </div>
+            </div>
+
+            <!-- Paso 4 -->
+            <div class="mb-14">
+                <div class="flex items-center gap-3 mb-5">
+                    <span class="flex-shrink-0 w-8 h-8 rounded-full bg-amber-400 text-black font-black text-sm flex items-center justify-center">4</span>
+                    <h2 class="text-xl font-bold tracking-tight m-0">Verificar con Tailscale</h2>
+                </div>
+                <p class="text-neutral-400 text-sm ml-11 mb-5">
+                    Desde tu teléfono u otro dispositivo, abrí la app de Tailscale. La laptop debería aparecer en la lista de dispositivos con un indicador <span class="text-green-400 font-semibold">verde</span>.
+                </p>
+                <div class="ml-11 space-y-3 mb-5">
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-0.5 accent-amber-400" />
+                        <span class="text-sm text-neutral-400 group-hover:text-neutral-200 transition-colors">Tailscale app abierta en el dispositivo desde el que verificás</span>
+                    </label>
+                    <label class="flex items-start gap-3 cursor-pointer group">
+                        <input type="checkbox" class="mt-0.5 accent-amber-400" />
+                        <span class="text-sm text-neutral-400 group-hover:text-neutral-200 transition-colors">La laptop HP aparece como <strong class="text-green-400 font-semibold">conectada</strong> (verde)</span>
+                    </label>
+                </div>
+
+                <!-- Mockup: Tailscale UI -->
+                <div class="ml-11 rounded-xl overflow-hidden border border-neutral-700/80 shadow-xl">
+                    <!-- Barra superior -->
+                    <div class="bg-neutral-800/90 px-4 py-3 flex items-center justify-between border-b border-neutral-700">
+                        <div class="flex items-center gap-2.5">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242" />
+                                <path d="M12 12v9" />
+                                <path d="m8 17 4 4 4-4" />
+                            </svg>
+                            <span class="text-sm font-semibold text-white">Tailscale</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <div class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.5)]"></div>
+                            <span class="text-[11px] text-green-400 font-mono">Conectado</span>
+                        </div>
+                    </div>
+                    <!-- Buscador -->
+                    <div class="bg-neutral-900 px-4 py-2.5 border-b border-neutral-800">
+                        <div class="bg-neutral-800 rounded-lg px-3 py-1.5 flex items-center gap-2">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <path d="m21 21-4.3-4.3" />
+                            </svg>
+                            <span class="text-xs text-neutral-600">Buscar dispositivos...</span>
+                        </div>
+                    </div>
+                    <!-- Lista de dispositivos -->
+                    <div class="bg-neutral-900/80 divide-y divide-neutral-800/60">
+                        <!-- Dispositivo: Celular -->
+                        <div class="px-4 py-3 flex items-center gap-3 opacity-60">
+                            <div class="w-7 h-7 rounded-lg bg-neutral-800 flex items-center justify-center">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2" />
+                                    <line x1="12" y1="18" x2="12.01" y2="18" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-sm text-neutral-500 font-medium">iPhone de Benja</div>
+                                <div class="text-[10px] text-neutral-700 font-mono">100.64.0.1</div>
+                            </div>
+                            <div class="w-2 h-2 rounded-full bg-green-400"></div>
+                        </div>
+                        <!-- Dispositivo: Laptop HP (ESTE) -->
+                        <div class="px-4 py-3 flex items-center gap-3 bg-neutral-800/30">
+                            <div class="w-7 h-7 rounded-lg bg-neutral-800 flex items-center justify-center">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                    <line x1="2" y1="20" x2="22" y2="20" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-sm font-semibold text-white">homelab-hp</div>
+                                <div class="text-[10px] text-neutral-500 font-mono">100.64.0.2</div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <span class="text-[10px] text-green-400 font-mono">online</span>
+                                <div class="w-2 h-2 rounded-full bg-green-400 shadow-[0_0_6px_rgba(74,222,128,0.6)]"></div>
+                            </div>
+                        </div>
+                        <!-- Dispositivo: Servidor -->
+                        <div class="px-4 py-3 flex items-center gap-3 opacity-60">
+                            <div class="w-7 h-7 rounded-lg bg-neutral-800 flex items-center justify-center">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                                    <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                                    <line x1="6" y1="6" x2="6.01" y2="6" />
+                                    <line x1="6" y1="18" x2="6.01" y2="18" />
+                                </svg>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <div class="text-sm text-neutral-500 font-medium">servidor-proxmox</div>
+                                <div class="text-[10px] text-neutral-700 font-mono">100.64.0.3</div>
+                            </div>
+                            <div class="w-2 h-2 rounded-full bg-neutral-700"></div>
+                        </div>
+                    </div>
+                    <!-- Pie -->
+                    <div class="bg-neutral-850 px-4 py-2 border-t border-neutral-800 flex justify-between">
+                        <span class="text-[10px] text-neutral-600 font-mono">3 dispositivos</span>
+                        <span class="text-[10px] text-neutral-600 font-mono">Tailscale 1.80</span>
+                    </div>
+                </div>
+                <p class="text-xs text-neutral-600 mt-3 ml-11 italic">
+                    Buscá <strong class="text-neutral-400 not-italic">homelab-hp</strong> en la lista. Si el círculo está verde <span class="inline-block w-2 h-2 rounded-full bg-green-400 align-middle mx-1"></span>, está online.
+                </p>
+            </div>
+
+            <!-- Checklist rápido -->
+            <div class="mb-14 p-5 rounded-xl border border-green-800/40 bg-green-950/20">
+                <h3 class="text-sm font-bold text-green-400 tracking-wider uppercase mb-4 flex items-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    Checklist de verificación
+                </h3>
+                <ul class="space-y-2 m-0">
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-green-400 font-bold">01</span>
+                        <span class="text-neutral-300">Cargador conectado y LED encendido</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-green-400 font-bold">02</span>
+                        <span class="text-neutral-300">Botón de encendido presionado</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-green-400 font-bold">03</span>
+                        <span class="text-neutral-300">Esperar ~2 minutos</span>
+                    </li>
+                    <li class="flex items-center gap-3 text-sm">
+                        <span class="text-green-400 font-bold">04</span>
+                        <span class="text-neutral-300">Tailscale muestra <span class="text-green-400">homelab-hp</span> como online</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Problemas comunes -->
+            <div class="mb-10">
+                <h3 class="text-sm font-bold text-neutral-400 tracking-wider uppercase mb-5 flex items-center gap-2">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <line x1="12" y1="8" x2="12" y2="12" />
+                        <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    Problemas comunes
+                </h3>
+                <div class="space-y-3">
+                    <div class="p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
+                        <div class="flex items-start gap-3">
+                            <span class="text-red-400 font-mono text-xs font-bold flex-shrink-0 mt-0.5">LED apagado</span>
+                            <p class="text-sm text-neutral-400 m-0">El cargador no está haciendo contacto. Desconectalo y conectalo de nuevo en ambos extremos. Probá otro tomacorriente.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
+                        <div class="flex items-start gap-3">
+                            <span class="text-red-400 font-mono text-xs font-bold flex-shrink-0 mt-0.5">No aparece en Tailscale</span>
+                            <p class="text-sm text-neutral-400 m-0">Esperá un par de minutos más. Si sigue sin aparecer, la laptop puede estar sin internet o Tailscale no arrancó automáticamente. Verificá que el router/casa tenga conexión.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
+                        <div class="flex items-start gap-3">
+                            <span class="text-red-400 font-mono text-xs font-bold flex-shrink-0 mt-0.5">No enciende</span>
+                            <p class="text-sm text-neutral-400 m-0">Mantené el botón de encendido presionado 10 segundos, soltalo y volvé a presionar normalmente. Si sigue sin encender, el problema puede ser la fuente de alimentación o la batería agotada.</p>
+                        </div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-neutral-900/40 border border-neutral-800/60">
+                        <div class="flex items-start gap-3">
+                            <span class="text-red-400 font-mono text-xs font-bold flex-shrink-0 mt-0.5">Indicador gris en Tailscale</span>
+                            <p class="text-sm text-neutral-400 m-0">El dispositivo está apagado o sin conexión a internet. Repetí los pasos 1 y 2 para asegurarte de que la laptop esté encendida.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer de la página -->
+            <div class="pt-8 border-t border-neutral-800 text-center">
+                <p class="text-[10px] text-neutral-600 font-mono tracking-wider">
+                    Última actualización: julio 2026
+                </p>
+            </div>
+        </div>
+    </article>
+</Layout>
+
+<style>
+    /* Evita que el navegador haga scroll a los checkboxes al clickear labels */
+    label:has(input[type="checkbox"]) {
+        user-select: none;
+    }
+</style>
+
+<script>
+    // Persistir checkboxes en localStorage
+    document.querySelectorAll<HTMLInputElement>('input[type="checkbox"]').forEach((cb) => {
+        const key = `homelab-${cb.closest("label")?.querySelector("span")?.textContent?.trim().slice(0, 40) || Math.random()}`;
+        const stored = localStorage.getItem(key);
+        if (stored === "true") cb.checked = true;
+        cb.addEventListener("change", () => {
+            localStorage.setItem(key, String(cb.checked));
+        });
+    });
+</script>

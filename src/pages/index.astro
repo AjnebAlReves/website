@@ -4,12 +4,25 @@ import Hero from "@/components/Hero.astro"
 import Projects from "@/components/Projects.astro"
 import AboutMe from "@/components/AboutMe.astro"
 import Footer from "@/components/Footer.astro"
+
+const siteUrl = "https://byalreves.lat";
 ---
 
 <Layout
   title="B. — Digital Portfolio | Paraguay"
   description="Tech & Creative Designer. Construyendo el futuro de Nellyx. Mezclando la precisión del código con la calidez de un buen tereré."
+  canonical={siteUrl}
 >
+  <script is:inline type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Benja",
+  "url": "https://byalreves.lat",
+  "image": "https://byalreves.lat/me.png",
+  "sameAs": ["https://github.com/AjnebAlReves"],
+  "jobTitle": "Creative Technologist",
+  "knowsAbout": ["Infrastructure", "Cloud Computing", "Branding", "Systems Design"]
+}</script>
   <Hero />
   <AboutMe />
   <Projects />

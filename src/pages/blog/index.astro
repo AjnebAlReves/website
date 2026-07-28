@@ -41,7 +41,15 @@ const posts = rawPosts
 const allTags = [...new Set(posts.flatMap((post) => post.tags || []))].sort();
 ---
 
-<Layout title="Blog — B. Digital Portfolio" description="Mi bitácora del pensamiento. Escribo cosas que sean interesantes o solo desahogarme.">
+<Layout title="Blog — B. Digital Portfolio" description="Mi bitácora del pensamiento. Escribo cosas que sean interesantes o solo desahogarme." canonical="https://byalreves.lat/blog">
+    <script is:inline type="application/ld+json" set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: "https://byalreves.lat" },
+            { "@type": "ListItem", position: 2, name: "Blog", item: "https://byalreves.lat/blog" },
+        ],
+    })} />
     <section class="py-32 px-6">
         <div class="max-w-4xl mx-auto">
             <h1 class="text-4xl md:text-6xl font-black tracking-tighter mb-8">
