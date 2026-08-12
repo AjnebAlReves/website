@@ -21,9 +21,9 @@ import Layout from "@/layouts/Layout.astro";
             <!-- Introducción -->
             <section class="mb-14 p-5 rounded-xl bg-neutral-900/50 border border-neutral-800">
                 <p class="text-neutral-300 text-sm leading-relaxed m-0">
-                    El homelab es una laptop HP que <strong class="text-white">solo funciona con el cargador conectado 24/7</strong>.
+                    El "homelab" es una laptop HP que <strong class="text-white">solo funciona con el cargador conectado 24/7</strong>.
                     El botón de encendido está <strong class="text-white">separado del teclado</strong> (en el lateral o frontal del equipo).
-                    No necesita monitor, mouse ni teclado — arranca automáticamente y Tailscale se conecta solo.
+                    No necesita monitor, mouse ni teclado — arranca automáticamente y se conecta solo a la app Tailscale.
                 </p>
             </section>
 
@@ -54,7 +54,7 @@ import Layout from "@/layouts/Layout.astro";
                 <!-- Mockup: LED de carga -->
                 <div class="ml-11 p-5 rounded-xl bg-neutral-900/70 border border-neutral-800/60 flex items-center gap-5">
                     <div class="flex-shrink-0 relative">
-                        <div class="w-4 h-4 rounded-full bg-green-400 shadow-[0_0_12px_rgba(74,222,128,0.6)]"></div>
+                        <div class="w-4 h-4 rounded-full bg-gray-200 shadow-[0_0_12px_rgba(74,222,128,0.6)]"></div>
                     </div>
                     <div class="text-xs font-mono">
                         <span class="text-green-400 font-semibold">LED de carga encendido</span>
@@ -88,15 +88,14 @@ import Layout from "@/layouts/Layout.astro";
                 <div class="ml-11 p-5 rounded-xl bg-neutral-900/70 border border-neutral-800/60">
                     <div class="flex items-center gap-5">
                         <div class="flex-shrink-0 w-14 h-10 rounded-lg bg-neutral-800 border border-neutral-700 flex items-center justify-center relative">
-                            <div class="absolute -top-6 left-1/2 -translate-x-1/2 text-[9px] text-neutral-500 font-mono whitespace-nowrap">botón de encendido</div>
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-neutral-300">
                                 <path d="M12 2v10" />
                                 <path d="M18.4 6.6a9 9 0 1 1-12.77.04" />
                             </svg>
                         </div>
                         <div class="text-xs text-neutral-500 font-mono">
-                            <span class="text-neutral-300 font-semibold">Botón físico separado</span>
-                            <span class="block mt-0.5 text-neutral-600">No está en el teclado — está en el borde del equipo</span>
+                            <span class="text-neutral-300 font-semibold">Botón de encendido</span>
+                            <span class="block mt-0.5 text-neutral-600">No está en el teclado — está en el borde superior izquierdo del equipo</span>
                         </div>
                     </div>
                     <!-- Ilustración simple de laptop -->
@@ -197,8 +196,8 @@ import Layout from "@/layouts/Layout.astro";
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <div class="text-sm text-neutral-500 font-medium">iPhone de Benja</div>
-                                <div class="text-[10px] text-neutral-700 font-mono">100.64.0.1</div>
+                                <div class="text-sm text-neutral-500 font-medium">bt31</div>
+                                <div class="text-[10px] text-neutral-700 font-mono">100.87.1.2</div>
                             </div>
                             <div class="w-2 h-2 rounded-full bg-green-400"></div>
                         </div>
@@ -211,7 +210,7 @@ import Layout from "@/layouts/Layout.astro";
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <div class="text-sm font-semibold text-white">homelab-hp</div>
+                                <div class="text-sm font-semibold text-white">nellyxlabo</div>
                                 <div class="text-[10px] text-neutral-500 font-mono">100.64.0.2</div>
                             </div>
                             <div class="flex items-center gap-2">
@@ -230,20 +229,16 @@ import Layout from "@/layouts/Layout.astro";
                                 </svg>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <div class="text-sm text-neutral-500 font-medium">servidor-proxmox</div>
-                                <div class="text-[10px] text-neutral-700 font-mono">100.64.0.3</div>
+                                <div class="text-sm text-neutral-500 font-medium">na-fl1</div>
+                                <div class="text-[10px] text-neutral-700 font-mono">100.89.10.1</div>
                             </div>
                             <div class="w-2 h-2 rounded-full bg-neutral-700"></div>
                         </div>
                     </div>
                     <!-- Pie -->
-                    <div class="bg-neutral-850 px-4 py-2 border-t border-neutral-800 flex justify-between">
-                        <span class="text-[10px] text-neutral-600 font-mono">3 dispositivos</span>
-                        <span class="text-[10px] text-neutral-600 font-mono">Tailscale 1.80</span>
-                    </div>
                 </div>
                 <p class="text-xs text-neutral-600 mt-3 ml-11 italic">
-                    Buscá <strong class="text-neutral-400 not-italic">homelab-hp</strong> en la lista. Si el círculo está verde <span class="inline-block w-2 h-2 rounded-full bg-green-400 align-middle mx-1"></span>, está online.
+                    Buscá <strong class="text-neutral-400 not-italic">nellyxlabo</strong> en la lista. Si el círculo está verde <span class="inline-block w-2 h-2 rounded-full bg-green-400 align-middle mx-1"></span>, está online.
                 </p>
             </div>
 
