@@ -79,6 +79,21 @@ const { description, title, ogImg = "/projects/porfolio.webp", noindex, canonica
             z-index: 1;
         }
 
+        /* Cursor custom */
+        .cursor-dot {
+            position: fixed;
+            top: -50px;
+            left: -50px;
+            width: 10px;
+            height: 10px;
+            border-radius: 999px;
+            background-color: #ffcc00;
+            pointer-events: none;
+            z-index: 100;
+            transform: translate(-50%, -50%);
+            transition: transform 0.2s ease, background-color 0.2s ease, border 0.2s ease;
+        }
+
         /* Patrón de Ñandutí Digital */
         .nanduti-pattern {
             background-image: radial-gradient(circle at center, #222 1px, transparent 1px);
@@ -138,22 +153,30 @@ const { description, title, ogImg = "/projects/porfolio.webp", noindex, canonica
 <body class="flex flex-col min-h-screen overflow-x-hidden">
     <div class="noise"></div>
     <div
+        id="cursor"
+        class="cursor-dot hidden md:block"
+        aria-hidden="true"
+    ></div>
+    <div
         id="bt31-easter-egg"
         class="pointer-events-none fixed bottom-6 right-6 z-50 hidden rounded-full border border-amber-500/50 bg-black/85 px-4 py-2 font-mono text-xs uppercase tracking-[0.2em] text-amber-300"
     >
         BT31 unlocked
     </div>
 
-    <!-- Navegación: Minimalista, top-right -->
-    <nav class="relative z-10 px-6 md:px-12 py-6 flex justify-between items-center border-b border-neutral-900">
-        <a id="brand-name" href="/" class="font-black text-lg hover:text-amber-400 transition name-lockup">
-            Benja<span class="text-amber-400">.</span>
-            <span class="birthday-hat" aria-hidden="true"></span>
-        </a>
-        <div class="flex gap-8">
-            <a href="#proyectos" class="text-xs text-neutral-400 hover:text-neutral-200 transition">Proyectos</a>
-            <a href="#about" class="text-xs text-neutral-400 hover:text-neutral-200 transition">Sobre mí</a>
-            <a href="/blog" class="text-xs text-neutral-400 hover:text-neutral-200 transition">Blog</a>
+    <!-- Navegación: fija, blend-difference, estilo ByAlReves -->
+    <nav class="fixed top-0 z-40 w-full px-6 py-8 mix-blend-difference">
+        <div class="mx-auto flex max-w-7xl items-center justify-between">
+            <a id="brand-name" href="/" class="name-lockup text-2xl font-black italic tracking-tighter hover:text-accent transition">
+                B<span class="text-accent">.</span>
+                <span class="birthday-hat" aria-hidden="true"></span>
+            </a>
+            <div class="space-x-8 font-mono text-[10px] uppercase tracking-[0.2em]">
+                <a href="#proyectos" class="transition-colors hover:text-accent">Rembiapo</a>
+                <a href="/blog" class="transition-colors hover:text-accent">Blog</a>
+                <a href="#about" class="transition-colors hover:text-accent">Info</a>
+                <a href="#contacto" class="transition-colors hover:text-accent">Contact</a>
+            </div>
         </div>
     </nav>
 
@@ -184,6 +207,30 @@ const { description, title, ogImg = "/projects/porfolio.webp", noindex, canonica
         let buffer = "";
         let timeoutId: ReturnType<typeof setTimeout> | null = null;
         const brand = document.getElementById("brand-name");
+
+        // Custom Cursor Logic
+        const cursor = document.getElementById("cursor");
+        document.addEventListener("mousemove", (e) => {
+            if (!cursor) return;
+            cursor.style.left = e.clientX + "px";
+            cursor.style.top = e.clientY + "px";
+        });
+
+        // Hover Effect para elementos interactivos
+        document.querySelectorAll("a, button, .project-card").forEach((el) => {
+            el.addEventListener("mouseenter", () => {
+                if (!cursor) return;
+                cursor.style.transform = "translate(-50%, -50%) scale(5)";
+                cursor.style.backgroundColor = "rgba(255, 204, 0, 0.2)";
+                cursor.style.border = "1px solid #ffcc00";
+            });
+            el.addEventListener("mouseleave", () => {
+                if (!cursor) return;
+                cursor.style.transform = "translate(-50%, -50%) scale(1)";
+                cursor.style.backgroundColor = "#ffcc00";
+                cursor.style.border = "none";
+            });
+        });
 
         function isBirthdayWeek(date: Date) {
             const year = date.getFullYear();

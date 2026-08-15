@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Tokens de diseño (config CSS-first de Tailwind v4) */
+@theme {
+    --color-accent: #fbbf24; /* Ámbar */
+    --color-paraguay: #dc2626; /* Rojo Paraguay */
+    --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, monospace;
+}
+
 /* Optimizaciones de tipografía */
 @supports (font-variant-numeric: tabular-nums) {
     .font-mono {
