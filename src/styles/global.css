@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Plugins (config CSS-first de Tailwind v4) */
+@plugin "@tailwindcss/typography";
+
 /* Tokens de diseño (config CSS-first de Tailwind v4) */
 @theme {
     --color-accent: #fbbf24; /* Ámbar */
